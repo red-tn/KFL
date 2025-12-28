@@ -16,7 +16,10 @@
       "Bash(powershell.exe -Command \"cd ''F:/KFL''; git push -u origin main\")",
       "Bash(powershell.exe:*)",
       "WebFetch(domain:github.com)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd complete admin panel with Supabase backend\n\n- Full admin dashboard with sidebar navigation\n- Admin authentication via Supabase Auth\n- Settings management \\(site name, contact, pricing, AdSense\\)\n- Activities management \\(CRUD for hunting/fishing\\)\n- Gallery management with image upload to Supabase Storage\n- Contact messages viewer with read/delete functionality\n- Pages content management \\(hero titles, SEO\\)\n- All public pages now fetch dynamic content from Supabase\n- Contact form saves submissions to Supabase database\n- Middleware to protect admin routes\n- Database schema SQL file for easy setup\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ]
   }
 }

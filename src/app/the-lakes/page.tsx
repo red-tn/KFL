@@ -74,7 +74,7 @@ export default async function TheLakesPage() {
 
   // Use database images if available, otherwise fallback
   const galleryImages = dbImages.length > 0
-    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title }))
+    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
     : defaultGalleryImages
 
   return (
