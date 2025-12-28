@@ -1,7 +1,8 @@
 import { Metadata } from 'next'
+import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
-import Gallery from '@/components/ui/Gallery'
+import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getPageContent, getGalleryImages } from '@/lib/data'
@@ -57,12 +58,16 @@ const tips = [
 
 // Fallback images if database is empty
 const defaultGalleryImages = [
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Bass fishing', caption: 'Bass fishing on the lake' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Lake Scott', caption: 'Lake Scott' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Lake Shannon', caption: 'Lake Shannon' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', alt: 'Lake view', caption: 'Peaceful lake view' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Fishing spot', caption: 'Prime fishing spot' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Lake Patrick', caption: 'Lake Patrick' },
+  { src: '/images/IMG_4635.webp', alt: 'Bass fishing', caption: 'Bass Fishing' },
+  { src: '/images/IMG_4617.webp', alt: 'Lake Scott', caption: 'Lake Scott' },
+  { src: '/images/IMG_4628.webp', alt: 'Lake Shannon', caption: 'Lake Shannon' },
+  { src: '/images/IMG_4633.webp', alt: 'Lake Patrick', caption: 'Lake Patrick' },
+  { src: '/images/IMG_4621.webp', alt: 'Lake view', caption: 'Lake View' },
+  { src: '/images/IMG_4622.webp', alt: 'Fishing dock', caption: 'Fishing Dock' },
+  { src: '/images/IMG_4623.webp', alt: 'Lake waters', caption: 'Lake Waters' },
+  { src: '/images/IMG_4624.webp', alt: 'Scenic lake', caption: 'Scenic Lake' },
+  { src: '/images/IMG_4626.webp', alt: 'Peaceful waters', caption: 'Peaceful Waters' },
+  { src: '/images/IMG_4627.webp', alt: 'Fishing spot', caption: 'Prime Fishing Spot' },
 ]
 
 export default async function BassFishingPage() {
@@ -107,8 +112,13 @@ export default async function BassFishingPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="aspect-video rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center shadow-lg">
-              <span className="text-white/40 text-3xl font-bold">Bass Fishing</span>
+            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/IMG_4635.webp"
+                alt="Bass fishing at King's Family Lakes"
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="space-y-4">
               <div className="bg-forest-50 rounded-lg p-6">
@@ -192,7 +202,7 @@ export default async function BassFishingPage() {
             title="Gallery"
             subtitle="See what's biting at King's Family Lakes."
           />
-          <Gallery images={galleryImages} columns={3} />
+          <ScrollableGallery images={galleryImages} />
           <div className="text-center mt-8">
             <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
               View Full Photo Gallery

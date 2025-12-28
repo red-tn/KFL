@@ -1,8 +1,9 @@
 import { Metadata } from 'next'
+import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import PricingCard from '@/components/ui/PricingCard'
-import Gallery from '@/components/ui/Gallery'
+import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getPageContent, getGalleryImages } from '@/lib/data'
@@ -56,12 +57,15 @@ const regulations = [
 
 // Fallback images if database is empty
 const defaultGalleryImages = [
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Turkey hunting grounds', caption: 'Turkey hunting grounds' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', alt: 'Hunting property', caption: 'Hunting property' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Property view', caption: 'Property view' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Grounds', caption: 'Hunting grounds' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Property', caption: 'Property' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Scenic view', caption: 'Scenic view' },
+  { src: '/images/IMG_2294.webp', alt: 'Turkey hunting grounds', caption: 'Turkey Hunting Grounds' },
+  { src: '/images/IMG_2289.webp', alt: 'Hunting property', caption: 'Hunting Property' },
+  { src: '/images/IMG_2290.webp', alt: 'Property view', caption: 'Property View' },
+  { src: '/images/IMG_2292.webp', alt: 'Grounds', caption: 'Hunting Grounds' },
+  { src: '/images/IMG_2296.webp', alt: 'Pasture', caption: 'Manicured Pasture' },
+  { src: '/images/IMG_4617.webp', alt: 'Lake view', caption: 'Lake View' },
+  { src: '/images/IMG_4628.webp', alt: 'Property', caption: 'Property' },
+  { src: '/images/IMG_4633.webp', alt: 'Scenic area', caption: 'Scenic Area' },
+  { src: '/images/IMG_3291.webp', alt: 'Hunting area', caption: 'Hunting Area' },
 ]
 
 export default async function TurkeyHuntingPage() {
@@ -99,8 +103,13 @@ export default async function TurkeyHuntingPage() {
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="lg:order-2">
-              <div className="aspect-video rounded-xl bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center shadow-lg">
-                <span className="text-white/40 text-3xl font-bold">Turkey Hunting</span>
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
+                <Image
+                  src="/images/IMG_2294.webp"
+                  alt="Turkey hunting at King's Family Lakes"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
             <div className="lg:order-1">
@@ -230,7 +239,7 @@ export default async function TurkeyHuntingPage() {
             title="Gallery"
             subtitle="See our hunting grounds and past hunts."
           />
-          <Gallery images={galleryImages} columns={3} />
+          <ScrollableGallery images={galleryImages} />
           <div className="text-center mt-8">
             <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
               View Full Photo Gallery

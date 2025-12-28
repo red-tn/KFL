@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
-import Gallery from '@/components/ui/Gallery'
+import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getPageContent, getGalleryImages } from '@/lib/data'
@@ -17,7 +17,7 @@ const lakes = [
     name: 'Lake Scott',
     size: '~35 acres',
     description: 'The largest of our three lakes, Lake Scott greets you immediately upon entering the property. With extensive tree cover providing shade and multiple docks positioned just a few hundred yards from the first Camp House, it offers convenient year-round fishing.',
-    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg',
+    image: '/images/IMG_4617.webp',
     features: [
       'Largest lake on property',
       'Multiple fishing docks',
@@ -31,7 +31,7 @@ const lakes = [
     name: 'Lake Shannon',
     size: '~15 acres',
     description: 'Located approximately 1/4 mile from Lake Scott, Lake Shannon is nestled in surrounding hills and dense forest offering quiet and peaceful fishing. The shallower waters create a dense fish population, and this lake is known for producing some of our largest Bass specimens.',
-    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg',
+    image: '/images/IMG_4628.webp',
     features: [
       'Trophy bass fishing',
       'Peaceful, secluded setting',
@@ -45,7 +45,7 @@ const lakes = [
     name: 'Lake Patrick',
     size: '~10 acres',
     description: 'Our newest addition, Lake Patrick sits between Scott and Shannon. This recently constructed lake features a growing Large Mouth Bass population and offers excellent fishing opportunities with multiple docks and a dedicated boathouse.',
-    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg',
+    image: '/images/IMG_4633.webp',
     features: [
       'Newest lake',
       'Growing bass population',
@@ -59,12 +59,16 @@ const lakes = [
 
 // Fallback images if database is empty
 const defaultGalleryImages = [
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Lake Scott', caption: 'Lake Scott' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Lake Shannon', caption: 'Lake Shannon' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Lake Patrick', caption: 'Lake Patrick' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Fishing dock', caption: 'Fishing dock' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', alt: 'Lake view', caption: 'Lake view' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Peaceful waters', caption: 'Peaceful waters' },
+  { src: '/images/IMG_4617.webp', alt: 'Lake Scott', caption: 'Lake Scott' },
+  { src: '/images/IMG_4628.webp', alt: 'Lake Shannon', caption: 'Lake Shannon' },
+  { src: '/images/IMG_4633.webp', alt: 'Lake Patrick', caption: 'Lake Patrick' },
+  { src: '/images/IMG_4635.webp', alt: 'Fishing dock', caption: 'Fishing Dock' },
+  { src: '/images/IMG_4621.webp', alt: 'Lake view', caption: 'Lake View' },
+  { src: '/images/IMG_4622.webp', alt: 'Peaceful waters', caption: 'Peaceful Waters' },
+  { src: '/images/IMG_4623.webp', alt: 'Lake waters', caption: 'Lake Waters' },
+  { src: '/images/IMG_4624.webp', alt: 'Scenic lake', caption: 'Scenic Lake' },
+  { src: '/images/IMG_4626.webp', alt: 'Tranquil waters', caption: 'Tranquil Waters' },
+  { src: '/images/IMG_4637.webp', alt: 'Lake shore', caption: 'Lake Shore' },
 ]
 
 export default async function TheLakesPage() {
@@ -182,7 +186,7 @@ export default async function TheLakesPage() {
             title="Lake Gallery"
             subtitle="Take a visual tour of our beautiful private lakes."
           />
-          <Gallery images={galleryImages} columns={3} />
+          <ScrollableGallery images={galleryImages} />
           <div className="text-center mt-8">
             <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
               View Full Photo Gallery

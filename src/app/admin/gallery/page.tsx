@@ -27,6 +27,11 @@ const siteImages = {
     { id: 'lake-shannon', label: 'Lake Shannon', location: 'Lakes Page - Lake Section', path: '/images/IMG_4628.webp', page: '/the-lakes' },
     { id: 'lake-patrick', label: 'Lake Patrick', location: 'Lakes Page - Lake Section', path: '/images/IMG_4633.webp', page: '/the-lakes' },
   ],
+  pageOverviewImages: [
+    { id: 'overview-deer', label: 'Deer Hunting', location: 'Deer Hunting Page - Overview Section', path: '/images/IMG_2290.webp', page: '/deer-hunting' },
+    { id: 'overview-turkey', label: 'Turkey Hunting', location: 'Turkey Hunting Page - Overview Section', path: '/images/IMG_2294.webp', page: '/turkey-hunting' },
+    { id: 'overview-bass', label: 'Bass Fishing', location: 'Bass Fishing Page - Overview Section', path: '/images/IMG_4635.webp', page: '/bass-fishing' },
+  ],
   galleries: {
     lakes: [
       { id: 'gal-lakes-1', path: '/images/IMG_4617.webp', label: 'Lake Scott' },
@@ -330,7 +335,7 @@ export default function GalleryAdminPage() {
       {activeTab === 'overview' && (
         <div className="space-y-8">
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="bg-white rounded-xl p-4 shadow-sm text-center">
               <div className="text-3xl font-bold text-forest-700">{siteImages.heroes.length}</div>
               <div className="text-sm text-gray-500">Hero Images</div>
@@ -342,6 +347,10 @@ export default function GalleryAdminPage() {
             <div className="bg-white rounded-xl p-4 shadow-sm text-center">
               <div className="text-3xl font-bold text-earth-700">{siteImages.lakeImages.length}</div>
               <div className="text-sm text-gray-500">Lake Section</div>
+            </div>
+            <div className="bg-white rounded-xl p-4 shadow-sm text-center">
+              <div className="text-3xl font-bold text-orange-700">{siteImages.pageOverviewImages.length}</div>
+              <div className="text-sm text-gray-500">Page Overviews</div>
             </div>
             <div className="bg-white rounded-xl p-4 shadow-sm text-center">
               <div className="text-3xl font-bold text-gray-700">
@@ -390,6 +399,17 @@ export default function GalleryAdminPage() {
             <p className="text-sm text-gray-500 mb-4">These images appear next to each lake description on the Lakes page</p>
             <div className="grid grid-cols-3 gap-4">
               {siteImages.lakeImages.map((image) => (
+                <ImageCard key={image.id} image={image} onReplace={handleReplace} />
+              ))}
+            </div>
+          </div>
+
+          {/* Page Overview Images */}
+          <div className="bg-white rounded-xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-gray-900 mb-2">Activity Page Overview Images</h2>
+            <p className="text-sm text-gray-500 mb-4">These images appear in the overview section of each activity page (Deer Hunting, Turkey Hunting, Bass Fishing)</p>
+            <div className="grid grid-cols-3 gap-4">
+              {siteImages.pageOverviewImages.map((image) => (
                 <ImageCard key={image.id} image={image} onReplace={handleReplace} />
               ))}
             </div>
