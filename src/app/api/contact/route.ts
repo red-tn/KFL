@@ -1,6 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
+async function sendEmail(to: string, subject: string, html: string) {
+  const resendApiKey = process.env.RESEND_API_KEY
+  if (!resendApiKey) {
+    console.log('RESEND_API_KEY not set, skipping email')
+    return null
+  }
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'King\'s Family Lakes <noreply@kingsfamilylakes.com>',
+        to: [to],
+        subject,
+        html,
+      }),
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      console.error('Resend error:', error)
+      return null
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('Email send error:', error)
+    return null
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -27,6 +62,7 @@ export async function POST(request: NextRequest) {
       phone: phone || null,
       interest: interest || null,
       message,
+      is_read: false,
     })
 
     if (error) {
@@ -37,7 +73,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log('Contact form saved:', {
+    // Send email notification
+    const emailHtml = `
+      <h2>New Contact Form Submission</h2>
+      <p><strong>From:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+      <p><strong>Interest:</strong> ${interest || 'Not specified'}</p>
+      <p><strong>Message:</strong></p>
+      <p>${message.replace(/\n/g, '<br>')}</p>
+      <hr>
+      <p><em>Sent from King's Family Lakes website</em></p>
+    `
+
+    await sendEmail(
+      'papakingj@gmail.com',
+      `New Contact: ${name} - ${interest || 'General Inquiry'}`,
+      emailHtml
+    )
+
+    console.log('Contact form saved and email sent:', {
       name,
       email,
       interest,

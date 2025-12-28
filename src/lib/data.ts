@@ -97,6 +97,7 @@ export async function getGalleryImages(category?: string): Promise<GalleryImage[
     let query = supabase
       .from('gallery_images')
       .select('*')
+      .order('display_order', { ascending: true })
       .order('created_at', { ascending: false })
 
     if (category) {

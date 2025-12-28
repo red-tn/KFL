@@ -13,11 +13,27 @@ const categories = [
   { value: 'lodging', label: 'Lodging' },
 ]
 
+// Default images from the original site
+const defaultImages = [
+  { title: 'Lake Scott', category: 'lakes', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', display_order: 1 },
+  { title: 'Lake Shannon', category: 'lakes', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', display_order: 2 },
+  { title: 'Lake Patrick', category: 'lakes', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', display_order: 3 },
+  { title: 'Fishing Dock', category: 'lakes', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', display_order: 4 },
+  { title: 'Hunting Grounds', category: 'deer-hunting', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', display_order: 1 },
+  { title: 'Property View', category: 'deer-hunting', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', display_order: 2 },
+  { title: 'Turkey Hunting Area', category: 'turkey-hunting', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', display_order: 1 },
+  { title: 'Hunting Property', category: 'turkey-hunting', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', display_order: 2 },
+  { title: 'Bass Fishing', category: 'fishing', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', display_order: 1 },
+  { title: 'Lake View', category: 'fishing', image_url: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', display_order: 2 },
+]
+
 export default function GalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
+  const [seeding, setSeeding] = useState(false)
   const [message, setMessage] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [newImage, setNewImage] = useState({ title: '', category: 'lakes', image_url: '' })
   const supabase = createClient()
 
@@ -92,6 +108,40 @@ export default function GalleryPage() {
     }
   }
 
+  const handleSeedGallery = async () => {
+    if (!confirm('This will add default images from the original site. Continue?')) return
+
+    setSeeding(true)
+    setMessage('')
+
+    const { error } = await supabase.from('gallery_images').insert(defaultImages)
+
+    if (error) {
+      setMessage('Error seeding gallery: ' + error.message)
+    } else {
+      setMessage('Gallery seeded with default images!')
+      fetchImages()
+    }
+    setSeeding(false)
+  }
+
+  const handleUpdateOrder = async (id: string, newOrder: number) => {
+    const { error } = await supabase
+      .from('gallery_images')
+      .update({ display_order: newOrder })
+      .eq('id', id)
+
+    if (error) {
+      setMessage('Error updating order: ' + error.message)
+    } else {
+      fetchImages()
+    }
+  }
+
+  const filteredImages = selectedCategory === 'all'
+    ? images
+    : images.filter(img => img.category === selectedCategory)
+
   if (loading) {
     return <div className="text-center py-12">Loading...</div>
   }
@@ -160,9 +210,35 @@ export default function GalleryPage() {
         )}
       </div>
 
+      {/* Category Filter & Seed Button */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-gray-700">Filter:</span>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="px-3 py-2 rounded-lg border border-gray-300"
+          >
+            <option value="all">All Categories</option>
+            {categories.map((cat) => (
+              <option key={cat.value} value={cat.value}>{cat.label}</option>
+            ))}
+          </select>
+        </div>
+        {images.length === 0 && (
+          <button
+            onClick={handleSeedGallery}
+            disabled={seeding}
+            className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 disabled:opacity-50"
+          >
+            {seeding ? 'Seeding...' : 'Load Default Images'}
+          </button>
+        )}
+      </div>
+
       {/* Gallery Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {images.map((image) => (
+        {filteredImages.map((image) => (
           <div key={image.id} className="bg-white rounded-lg shadow-sm overflow-hidden group relative">
             <img
               src={image.image_url}
@@ -171,7 +247,16 @@ export default function GalleryPage() {
             />
             <div className="p-3">
               <div className="text-sm font-medium text-gray-900 truncate">{image.title || 'Untitled'}</div>
-              <div className="text-xs text-gray-500">{image.category}</div>
+              <div className="text-xs text-gray-500 flex justify-between items-center">
+                <span>{categories.find(c => c.value === image.category)?.label || image.category}</span>
+                <input
+                  type="number"
+                  value={image.display_order || 0}
+                  onChange={(e) => handleUpdateOrder(image.id, parseInt(e.target.value) || 0)}
+                  className="w-12 px-1 py-0.5 text-xs border rounded text-center"
+                  title="Display order"
+                />
+              </div>
             </div>
             <button
               onClick={() => handleDelete(image.id)}
@@ -185,9 +270,11 @@ export default function GalleryPage() {
         ))}
       </div>
 
-      {images.length === 0 && (
+      {filteredImages.length === 0 && (
         <div className="text-center py-12 text-gray-500">
-          No images yet. Upload your first image above.
+          {images.length === 0
+            ? 'No images yet. Click "Load Default Images" or upload your own above.'
+            : 'No images in this category.'}
         </div>
       )}
     </div>
