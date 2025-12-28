@@ -24,7 +24,7 @@ export default function Header() {
       <nav className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center">
             <Image
               src="/images/kfl-logo.png"
               alt="King's Family Lakes"
@@ -32,9 +32,6 @@ export default function Header() {
               height={60}
               className="w-14 h-14"
             />
-            <div className="hidden sm:block">
-              <span className="text-xl font-bold text-forest-800">King&apos;s Family Lakes</span>
-            </div>
           </Link>
 
           {/* Desktop Navigation */}
