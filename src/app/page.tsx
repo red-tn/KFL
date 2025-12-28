@@ -71,7 +71,7 @@ export default async function Home() {
         description: a.short_description || '',
         href: `/${a.slug}`,
         price: a.daily_rate ? `$${a.daily_rate}/day` : 'Free w/ Stay',
-        badge: a.type === 'hunting' ? 'Popular' : undefined,
+        badge: a.type.includes('hunting') ? 'Popular' : undefined,
       }))
     : defaultActivities
 
