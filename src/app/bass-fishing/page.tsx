@@ -60,8 +60,8 @@ const defaultGalleryImages = [
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Bass fishing', caption: 'Bass fishing on the lake' },
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Lake Scott', caption: 'Lake Scott' },
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Lake Shannon', caption: 'Lake Shannon' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4620.jpeg', alt: 'Lake view', caption: 'Peaceful lake view' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4623.jpeg', alt: 'Fishing spot', caption: 'Prime fishing spot' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', alt: 'Lake view', caption: 'Peaceful lake view' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Fishing spot', caption: 'Prime fishing spot' },
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Lake Patrick', caption: 'Lake Patrick' },
 ]
 

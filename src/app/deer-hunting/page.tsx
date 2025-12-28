@@ -60,8 +60,8 @@ const defaultGalleryImages = [
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Property view', caption: 'Property view' },
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Lake and grounds', caption: 'Lake and grounds' },
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Hunting area', caption: 'Hunting area' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4620.jpeg', alt: 'Property', caption: 'Property' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4623.jpeg', alt: 'Scenic view', caption: 'Scenic view' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Property', caption: 'Property' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Scenic view', caption: 'Scenic view' },
 ]
 
 export default async function DeerHuntingPage() {

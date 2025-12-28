@@ -63,8 +63,8 @@ const defaultGalleryImages = [
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Lake Shannon', caption: 'Lake Shannon' },
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Lake Patrick', caption: 'Lake Patrick' },
   { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Fishing dock', caption: 'Fishing dock' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4620.jpeg', alt: 'Lake view', caption: 'Lake view' },
-  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4623.jpeg', alt: 'Peaceful waters', caption: 'Peaceful waters' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', alt: 'Lake view', caption: 'Lake view' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Peaceful waters', caption: 'Peaceful waters' },
 ]
 
 export default async function TheLakesPage() {
