@@ -5,7 +5,7 @@
 A modern website for King's Family Lakes, a hunting and fishing destination in Epes, Alabama.
 
 **Repository:** https://github.com/red-tn/KFL
-**Live Site:** (Pending Vercel deployment)
+**Live Site:** https://kfl.vercel.app (pending)
 **Admin Panel:** `/admin`
 
 ---
