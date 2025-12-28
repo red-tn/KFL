@@ -9,6 +9,7 @@ const quickLinks = [
 ]
 
 const infoLinks = [
+  { name: 'Photo Gallery', href: '/gallery' },
   { name: 'How to Get Here', href: '/directions' },
   { name: 'Contact Us', href: '/contact' },
 ]

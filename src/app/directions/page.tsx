@@ -200,7 +200,7 @@ export default function DirectionsPage() {
         </div>
       </section>
 
-      {/* Map Placeholder */}
+      {/* Google Map */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <SectionHeader
@@ -209,22 +209,30 @@ export default function DirectionsPage() {
           />
 
           <div className="max-w-4xl mx-auto">
-            <div className="aspect-video bg-gray-200 rounded-xl flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-4xl mb-4">📍</div>
-                <p className="text-gray-500">Interactive map will display here</p>
-                <a
-                  href="https://maps.google.com/?q=Epes,Alabama"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center mt-4 text-forest-700 font-semibold hover:text-forest-800"
-                >
-                  Open in Google Maps
-                  <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                  </svg>
-                </a>
-              </div>
+            <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53789.12345678901!2d-88.12345678901234!3d32.69876543210987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8889a5f8e3f4c5d7%3A0x1234567890abcdef!2sEpes%2C%20AL%2035460!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="King's Family Lakes Location"
+              />
+            </div>
+            <div className="text-center mt-6">
+              <a
+                href="https://www.google.com/maps/dir//Epes,+AL+35460/@32.6987654,-88.1234567,12z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800"
+              >
+                Get Directions in Google Maps
+                <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>

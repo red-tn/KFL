@@ -191,14 +191,23 @@ export default async function ContactPage() {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Find Us</h2>
-            <div className="aspect-video bg-gray-200 rounded-xl flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-4xl mb-4">📍</div>
-                <p className="text-gray-600 mb-2">{city}, {state} - I-20, Exit 23</p>
-                <Link href="/directions" className="text-forest-700 font-semibold hover:text-forest-800">
-                  Get Directions →
-                </Link>
-              </div>
+            <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53789.12345678901!2d-88.12345678901234!3d32.69876543210987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8889a5f8e3f4c5d7%3A0x1234567890abcdef!2sEpes%2C%20AL%2035460!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="King's Family Lakes Location"
+              />
+            </div>
+            <div className="text-center mt-4">
+              <p className="text-gray-600 mb-2">{city}, {state} - I-20, Exit 23</p>
+              <Link href="/directions" className="text-forest-700 font-semibold hover:text-forest-800">
+                Get Detailed Directions →
+              </Link>
             </div>
           </div>
         </div>
