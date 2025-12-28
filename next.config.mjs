@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'kingsfamilylakes.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'i0.wp.com',
+      },
     ],
   },
 }

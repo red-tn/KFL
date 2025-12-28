@@ -87,6 +87,7 @@ export default async function DeerHuntingPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg"
         size="medium"
       />
 

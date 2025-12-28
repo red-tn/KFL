@@ -83,6 +83,7 @@ export default function DirectionsPage() {
       <Hero
         title="How to Get Here"
         subtitle="Located in Epes, Alabama - just off Interstate 20, Exit 23. Easy to find, hard to leave."
+        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg"
         size="small"
       />
 

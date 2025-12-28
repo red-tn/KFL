@@ -86,6 +86,7 @@ export default async function Home() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        backgroundVideo="/images/lake-overview.mp4"
         ctaText="Book Your Adventure"
         ctaLink="/contact"
         secondaryCtaText="Explore Activities"

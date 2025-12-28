@@ -87,6 +87,7 @@ export default async function BassFishingPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg"
         size="medium"
       />
 

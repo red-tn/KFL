@@ -28,9 +28,10 @@ export default function Header() {
             <Image
               src="/images/kfl-logo.png"
               alt="King's Family Lakes"
-              width={60}
-              height={60}
-              className="w-14 h-14"
+              width={180}
+              height={50}
+              className="h-10 w-auto"
+              priority
             />
           </Link>
 

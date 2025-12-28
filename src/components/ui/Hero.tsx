@@ -5,6 +5,7 @@ interface HeroProps {
   title: string
   subtitle?: string
   backgroundImage?: string
+  backgroundVideo?: string
   ctaText?: string
   ctaLink?: string
   secondaryCtaText?: string
@@ -16,7 +17,8 @@ interface HeroProps {
 export default function Hero({
   title,
   subtitle,
-  backgroundImage = '/images/hero-default.jpg',
+  backgroundImage,
+  backgroundVideo,
   ctaText,
   ctaLink,
   secondaryCtaText,
@@ -32,26 +34,43 @@ export default function Hero({
 
   return (
     <section className={`relative ${heightClass} flex items-center justify-center overflow-hidden`}>
-      {/* Background Image */}
+      {/* Background Video or Image */}
       <div className="absolute inset-0">
-        <div className="relative w-full h-full bg-forest-900">
-          {/* Placeholder gradient when no image */}
+        {backgroundVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={backgroundVideo} type="video/mp4" />
+          </video>
+        ) : backgroundImage ? (
+          <Image
+            src={backgroundImage}
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+        ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-forest-800 via-forest-900 to-gray-900" />
-        </div>
+        )}
       </div>
 
       {/* Overlay */}
       {overlay && (
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/50" />
       )}
 
       {/* Content */}
       <div className="relative z-10 container-custom text-center text-white">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-gray-100 text-shadow">
+          <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-gray-100 drop-shadow-md">
             {subtitle}
           </p>
         )}

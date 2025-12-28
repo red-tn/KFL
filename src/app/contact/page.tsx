@@ -100,6 +100,7 @@ export default async function ContactPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg"
         size="small"
       />
 

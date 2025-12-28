@@ -82,6 +82,7 @@ export default async function TheLakesPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg"
         size="medium"
       />
 
