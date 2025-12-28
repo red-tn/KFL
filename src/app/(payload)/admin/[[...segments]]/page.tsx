@@ -1,8 +1,6 @@
 /* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-/* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
 import config from '@payload-config'
-import { importMap } from './importMap.js'
-import { RootPage, generatePageMetadata } from '@payloadcms/next/views'
+import { RootPage } from '@payloadcms/next/views'
 import type { Metadata } from 'next'
 
 type Args = {
@@ -14,10 +12,12 @@ type Args = {
   }>
 }
 
-export const generateMetadata = async ({ params, searchParams }: Args): Promise<Metadata> =>
-  generatePageMetadata({ config, params, searchParams })
+export const generateMetadata = async ({ params, searchParams }: Args): Promise<Metadata> => {
+  return {
+    title: "Admin | King's Family Lakes",
+  }
+}
 
-const Page = async ({ params, searchParams }: Args) =>
-  RootPage({ config, importMap, params, searchParams })
-
-export default Page
+export default async function Page({ params, searchParams }: Args) {
+  return <RootPage config={config} params={params} searchParams={searchParams} />
+}
