@@ -61,16 +61,16 @@ export default function Hero({
 
       {/* Overlay */}
       {overlay && (
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/60" />
       )}
 
       {/* Content */}
       <div className="relative z-10 container-custom text-center text-white">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white [text-shadow:_2px_2px_8px_rgb(0_0_0_/_80%)]">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-gray-100 drop-shadow-md">
+          <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-white [text-shadow:_1px_1px_6px_rgb(0_0_0_/_70%)]">
             {subtitle}
           </p>
         )}

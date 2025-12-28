@@ -35,6 +35,7 @@ const defaultActivities = [
     description: 'Three pristine private lakes - Lake Scott, Lake Shannon, and Lake Patrick - offering year-round fishing for Large Mouth Bass and Brim.',
     href: '/the-lakes',
     price: 'Free w/ Stay',
+    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg',
   },
   {
     title: 'Deer Hunting',
@@ -42,18 +43,21 @@ const defaultActivities = [
     href: '/deer-hunting',
     price: '$300/day',
     badge: 'Popular',
+    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg',
   },
   {
     title: 'Turkey Hunting',
     description: 'Premium turkey hunting with fall and spring seasons. Strategically positioned blinds overlooking prime hunting grounds.',
     href: '/turkey-hunting',
     price: '$300/day',
+    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg',
   },
   {
     title: 'Bass Fishing',
     description: 'Cast your line in our private lakes stocked with trophy-sized Large Mouth Bass. Multiple docks and boat access available.',
     href: '/bass-fishing',
     price: 'Free w/ Stay',
+    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg',
   },
 ]
 

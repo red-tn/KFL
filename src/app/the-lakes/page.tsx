@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Gallery from '@/components/ui/Gallery'
@@ -16,6 +17,7 @@ const lakes = [
     name: 'Lake Scott',
     size: '~35 acres',
     description: 'The largest of our three lakes, Lake Scott greets you immediately upon entering the property. With extensive tree cover providing shade and multiple docks positioned just a few hundred yards from the first Camp House, it offers convenient year-round fishing.',
+    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg',
     features: [
       'Largest lake on property',
       'Multiple fishing docks',
@@ -29,6 +31,7 @@ const lakes = [
     name: 'Lake Shannon',
     size: '~15 acres',
     description: 'Located approximately 1/4 mile from Lake Scott, Lake Shannon is nestled in surrounding hills and dense forest offering quiet and peaceful fishing. The shallower waters create a dense fish population, and this lake is known for producing some of our largest Bass specimens.',
+    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg',
     features: [
       'Trophy bass fishing',
       'Peaceful, secluded setting',
@@ -42,6 +45,7 @@ const lakes = [
     name: 'Lake Patrick',
     size: '~10 acres',
     description: 'Our newest addition, Lake Patrick sits between Scott and Shannon. This recently constructed lake features a growing Large Mouth Bass population and offers excellent fishing opportunities with multiple docks and a dedicated boathouse.',
+    image: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg',
     features: [
       'Newest lake',
       'Growing bass population',
@@ -82,7 +86,7 @@ export default async function TheLakesPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg"
+        backgroundVideo="/images/lake-overview.mp4"
         size="medium"
       />
 
@@ -105,10 +109,15 @@ export default async function TheLakesPage() {
                   index % 2 === 1 ? 'md:flex-row-reverse' : ''
                 }`}
               >
-                {/* Image placeholder */}
+                {/* Lake Image */}
                 <div className={`${index % 2 === 1 ? 'md:order-2' : ''}`}>
-                  <div className="aspect-video rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center shadow-lg">
-                    <span className="text-white/40 text-3xl font-bold">{lake.name}</span>
+                  <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
+                    <Image
+                      src={lake.image}
+                      alt={lake.name}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 </div>
 
