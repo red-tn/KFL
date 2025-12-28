@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:kingsfamilylakes.com)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(where:*)",
+      "Bash(where npm)",
+      "Bash(cmd.exe /c \"where node && where npm\")",
+      "Bash(cmd.exe /c \"node --version && npm --version\")",
+      "Bash(powershell.exe -Command \"node --version; npm --version\")",
+      "Bash(powershell.exe -Command \"git --version\")",
+      "Bash(powershell.exe -Command \"cd ''F:/KFL''; git init; git add .; git status\")"
+    ]
+  }
+}
