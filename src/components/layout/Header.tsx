@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 const navigation = [
@@ -23,10 +24,14 @@ export default function Header() {
       <nav className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-12 h-12 bg-forest-700 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">KFL</span>
-            </div>
+          <Link href="/" className="flex items-center space-x-3">
+            <Image
+              src="/images/kfl-logo.png"
+              alt="King's Family Lakes"
+              width={60}
+              height={60}
+              className="w-14 h-14"
+            />
             <div className="hidden sm:block">
               <span className="text-xl font-bold text-forest-800">King&apos;s Family Lakes</span>
             </div>

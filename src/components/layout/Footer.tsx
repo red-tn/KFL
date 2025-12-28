@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const quickLinks = [
   { name: 'The Lakes', href: '/the-lakes' },
@@ -20,10 +21,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-forest-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">KFL</span>
-              </div>
+            <div className="flex items-center space-x-3 mb-4">
+              <Image
+                src="/images/kfl-logo.png"
+                alt="King's Family Lakes"
+                width={50}
+                height={50}
+                className="w-12 h-12"
+              />
               <span className="text-xl font-bold text-white">King&apos;s Family Lakes</span>
             </div>
             <p className="text-sm text-gray-400 mb-4">
