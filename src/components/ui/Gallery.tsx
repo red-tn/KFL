@@ -32,10 +32,12 @@ export default function Gallery({ images, columns = 3 }: GalleryProps) {
             onClick={() => setSelectedImage(image)}
             className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest-500"
           >
-            {/* Placeholder */}
-            <div className="absolute inset-0 bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center">
-              <span className="text-white/30 text-2xl font-bold">Photo</span>
-            </div>
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+            />
             {/* Hover overlay */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
               <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -60,9 +62,14 @@ export default function Gallery({ images, columns = 3 }: GalleryProps) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <div className="max-w-4xl max-h-[90vh] relative">
-            <div className="bg-gradient-to-br from-forest-600 to-forest-800 rounded-lg flex items-center justify-center" style={{ width: '800px', height: '600px', maxWidth: '100%' }}>
-              <span className="text-white/50 text-4xl font-bold">Photo Preview</span>
+          <div className="max-w-4xl max-h-[90vh] relative" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-[90vw] max-w-4xl aspect-[4/3]">
+              <Image
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                fill
+                className="object-contain rounded-lg"
+              />
             </div>
             {selectedImage.caption && (
               <p className="text-white text-center mt-4">{selectedImage.caption}</p>
