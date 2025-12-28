@@ -3,8 +3,33 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
+import { getSiteSettings, getFeaturedActivities, getPageContent } from '@/lib/data'
 
-const activities = [
+const features = [
+  {
+    icon: '🏠',
+    title: 'Comfortable Lodging',
+    description: 'Two fully-equipped camp houses with modern amenities for a comfortable stay.',
+  },
+  {
+    icon: '🎣',
+    title: 'Three Private Lakes',
+    description: 'Lake Scott (35 acres), Lake Shannon, and Lake Patrick - all stocked with bass.',
+  },
+  {
+    icon: '🦌',
+    title: 'Prime Hunting Land',
+    description: 'Hundreds of acres of maintained pastures and forest with strategic blind placements.',
+  },
+  {
+    icon: '📍',
+    title: 'Easy Access',
+    description: 'Located just off I-20 Exit 23 in Epes, Alabama. Easy to find, hard to leave.',
+  },
+]
+
+// Fallback activities if database is empty
+const defaultActivities = [
   {
     title: 'The Lakes',
     description: 'Three pristine private lakes - Lake Scott, Lake Shannon, and Lake Patrick - offering year-round fishing for Large Mouth Bass and Brim.',
@@ -32,35 +57,35 @@ const activities = [
   },
 ]
 
-const features = [
-  {
-    icon: '🏠',
-    title: 'Comfortable Lodging',
-    description: 'Two fully-equipped camp houses with modern amenities for a comfortable stay.',
-  },
-  {
-    icon: '🎣',
-    title: 'Three Private Lakes',
-    description: 'Lake Scott (35 acres), Lake Shannon, and Lake Patrick - all stocked with bass.',
-  },
-  {
-    icon: '🦌',
-    title: 'Prime Hunting Land',
-    description: 'Hundreds of acres of maintained pastures and forest with strategicblind placements.',
-  },
-  {
-    icon: '📍',
-    title: 'Easy Access',
-    description: 'Located just off I-20 Exit 23 in Epes, Alabama. Easy to find, hard to leave.',
-  },
-]
+export default async function Home() {
+  const [settings, featuredActivities, pageContent] = await Promise.all([
+    getSiteSettings(),
+    getFeaturedActivities(),
+    getPageContent('home'),
+  ])
 
-export default function Home() {
+  // Map database activities to display format, or use defaults
+  const activities = featuredActivities.length > 0
+    ? featuredActivities.map((a) => ({
+        title: a.name,
+        description: a.short_description || '',
+        href: `/${a.slug}`,
+        price: a.daily_rate ? `$${a.daily_rate}/day` : 'Free w/ Stay',
+        badge: a.type === 'hunting' ? 'Popular' : undefined,
+      }))
+    : defaultActivities
+
+  const heroTitle = pageContent?.hero_title || settings?.site_name || "King's Family Lakes"
+  const heroSubtitle = pageContent?.hero_subtitle || "Experience world-class hunting and fishing in the heart of Alabama. Three private lakes, premium hunting grounds, and unforgettable outdoor adventures await."
+  const phone = settings?.phone || '+1 (334) 341-3753'
+  const huntingRate = settings?.hunting_daily_rate || 300
+  const lodgingRate = settings?.lodging_nightly_rate || 100
+
   return (
     <>
       <Hero
-        title="King's Family Lakes"
-        subtitle="Experience world-class hunting and fishing in the heart of Alabama. Three private lakes, premium hunting grounds, and unforgettable outdoor adventures await."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         ctaText="Book Your Adventure"
         ctaLink="/contact"
         secondaryCtaText="Explore Activities"
@@ -123,8 +148,8 @@ export default function Home() {
             <Link href="/contact" className="btn bg-white text-forest-800 hover:bg-gray-100 text-lg">
               Contact Us
             </Link>
-            <Link href="tel:+13343413753" className="btn border-2 border-white text-white hover:bg-white hover:text-forest-800 text-lg">
-              Call +1 (334) 341-3753
+            <Link href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="btn border-2 border-white text-white hover:bg-white hover:text-forest-800 text-lg">
+              Call {phone}
             </Link>
           </div>
         </div>
@@ -141,12 +166,12 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
               <h3 className="text-lg font-semibold text-gray-500 mb-2">Hunting</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">$300</div>
+              <div className="text-4xl font-bold text-forest-700 mb-2">${huntingRate}</div>
               <p className="text-gray-600">per person / day</p>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
               <h3 className="text-lg font-semibold text-gray-500 mb-2">Lodging</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">$100</div>
+              <div className="text-4xl font-bold text-forest-700 mb-2">${lodgingRate}</div>
               <p className="text-gray-600">per night</p>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-md text-center">

@@ -5,6 +5,7 @@ import PricingCard from '@/components/ui/PricingCard'
 import Gallery from '@/components/ui/Gallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
+import { getSiteSettings, getPageContent, getGalleryImages } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Deer Hunting | King's Family Lakes",
@@ -53,7 +54,8 @@ const regulations = [
   },
 ]
 
-const galleryImages = [
+// Fallback images if database is empty
+const defaultGalleryImages = [
   { src: '/images/deer-1.jpg', alt: 'Hunting blind', caption: 'Hunting blind overlooking pasture' },
   { src: '/images/deer-2.jpg', alt: 'White tail deer', caption: 'White tail deer on property' },
   { src: '/images/deer-3.jpg', alt: 'Morning hunt', caption: 'Early morning hunt' },
@@ -62,12 +64,29 @@ const galleryImages = [
   { src: '/images/deer-6.jpg', alt: 'Camp house', caption: 'Camp house lodging' },
 ]
 
-export default function DeerHuntingPage() {
+export default async function DeerHuntingPage() {
+  const [settings, pageContent, dbImages] = await Promise.all([
+    getSiteSettings(),
+    getPageContent('deer-hunting'),
+    getGalleryImages('deer-hunting'),
+  ])
+
+  const heroTitle = pageContent?.hero_title || 'Deer Hunting'
+  const heroSubtitle = pageContent?.hero_subtitle || 'A world-class White Tail Deer hunting experience with well-maintained property, strategic blinds, and comfortable accommodations.'
+  const huntingRate = settings?.hunting_daily_rate || 300
+  const lodgingRate = settings?.lodging_nightly_rate || 100
+  const phone = settings?.phone || '+1 (334) 341-3753'
+
+  // Use database images if available, otherwise fallback
+  const galleryImages = dbImages.length > 0
+    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title }))
+    : defaultGalleryImages
+
   return (
     <>
       <Hero
-        title="Deer Hunting"
-        subtitle="A world-class White Tail Deer hunting experience with well-maintained property, strategic blinds, and comfortable accommodations."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         size="medium"
       />
 
@@ -110,7 +129,7 @@ export default function DeerHuntingPage() {
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <PricingCard
               title="Day Hunt"
-              price="$300"
+              price={`$${huntingRate}`}
               period="/person/day"
               description="Full day hunting access"
               features={[
@@ -124,7 +143,7 @@ export default function DeerHuntingPage() {
             />
             <PricingCard
               title="Lodging"
-              price="$100"
+              price={`$${lodgingRate}`}
               period="/night"
               description="Comfortable camp house stay"
               features={[
@@ -226,8 +245,8 @@ export default function DeerHuntingPage() {
             <Link href="/contact" className="btn bg-white text-earth-700 hover:bg-gray-100">
               Contact Us
             </Link>
-            <Link href="tel:+13343413753" className="btn border-2 border-white text-white hover:bg-white hover:text-earth-700">
-              Call +1 (334) 341-3753
+            <Link href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="btn border-2 border-white text-white hover:bg-white hover:text-earth-700">
+              Call {phone}
             </Link>
           </div>
         </div>

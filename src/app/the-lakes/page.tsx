@@ -4,6 +4,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import Gallery from '@/components/ui/Gallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
+import { getPageContent, getGalleryImages } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "The Lakes | King's Family Lakes",
@@ -52,7 +53,8 @@ const lakes = [
   },
 ]
 
-const galleryImages = [
+// Fallback images if database is empty
+const defaultGalleryImages = [
   { src: '/images/lake-scott-1.jpg', alt: 'Lake Scott at sunrise', caption: 'Lake Scott at sunrise' },
   { src: '/images/lake-scott-2.jpg', alt: 'Fishing dock on Lake Scott', caption: 'Fishing dock on Lake Scott' },
   { src: '/images/lake-shannon-1.jpg', alt: 'Lake Shannon from the hills', caption: 'Lake Shannon from the hills' },
@@ -61,12 +63,25 @@ const galleryImages = [
   { src: '/images/bass-catch.jpg', alt: 'Trophy bass catch', caption: 'Trophy bass catch' },
 ]
 
-export default function TheLakesPage() {
+export default async function TheLakesPage() {
+  const [pageContent, dbImages] = await Promise.all([
+    getPageContent('the-lakes'),
+    getGalleryImages('lakes'),
+  ])
+
+  const heroTitle = pageContent?.hero_title || 'The Lakes'
+  const heroSubtitle = pageContent?.hero_subtitle || 'Three pristine private lakes stocked with Large Mouth Bass and Brim. Year-round fishing in the heart of Alabama.'
+
+  // Use database images if available, otherwise fallback
+  const galleryImages = dbImages.length > 0
+    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title }))
+    : defaultGalleryImages
+
   return (
     <>
       <Hero
-        title="The Lakes"
-        subtitle="Three pristine private lakes stocked with Large Mouth Bass and Brim. Year-round fishing in the heart of Alabama."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         size="medium"
       />
 

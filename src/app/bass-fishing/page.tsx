@@ -4,6 +4,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import Gallery from '@/components/ui/Gallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
+import { getSiteSettings, getPageContent, getGalleryImages } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Bass Fishing | King's Family Lakes",
@@ -54,7 +55,8 @@ const tips = [
   },
 ]
 
-const galleryImages = [
+// Fallback images if database is empty
+const defaultGalleryImages = [
   { src: '/images/fishing-1.jpg', alt: 'Bass fishing', caption: 'Morning fishing on Lake Scott' },
   { src: '/images/fishing-2.jpg', alt: 'Trophy bass', caption: 'Trophy Large Mouth Bass' },
   { src: '/images/fishing-3.jpg', alt: 'Dock fishing', caption: 'Dock fishing at sunset' },
@@ -63,12 +65,28 @@ const galleryImages = [
   { src: '/images/fishing-6.jpg', alt: 'Boathouse', caption: 'Lake Shannon boathouse' },
 ]
 
-export default function BassFishingPage() {
+export default async function BassFishingPage() {
+  const [settings, pageContent, dbImages] = await Promise.all([
+    getSiteSettings(),
+    getPageContent('bass-fishing'),
+    getGalleryImages('fishing'),
+  ])
+
+  const heroTitle = pageContent?.hero_title || 'Bass Fishing'
+  const heroSubtitle = pageContent?.hero_subtitle || 'Three private lakes stocked with trophy Large Mouth Bass and Brim. Year-round fishing included with your stay.'
+  const huntingRate = settings?.hunting_daily_rate || 300
+  const lodgingRate = settings?.lodging_nightly_rate || 100
+
+  // Use database images if available, otherwise fallback
+  const galleryImages = dbImages.length > 0
+    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title }))
+    : defaultGalleryImages
+
   return (
     <>
       <Hero
-        title="Bass Fishing"
-        subtitle="Three private lakes stocked with trophy Large Mouth Bass and Brim. Year-round fishing included with your stay."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         size="medium"
       />
 
@@ -161,7 +179,7 @@ export default function BassFishingPage() {
         <div className="container-custom text-center">
           <h2 className="text-2xl font-bold mb-4">Fishing Included Free</h2>
           <p className="text-forest-100 max-w-2xl mx-auto">
-            Lake access and fishing is included with all hunting packages ($300/day) and lodging stays ($100/night). No additional fishing fees - just bring your gear and enjoy.
+            Lake access and fishing is included with all hunting packages (${huntingRate}/day) and lodging stays (${lodgingRate}/night). No additional fishing fees - just bring your gear and enjoy.
           </p>
         </div>
       </section>

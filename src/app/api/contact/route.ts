@@ -1,4 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+
+// Use service role for API routes to bypass RLS
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,37 +20,29 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Here you would typically:
-    // 1. Send an email notification (using Resend, SendGrid, etc.)
-    // 2. Store the inquiry in your database
-    // 3. Send a confirmation email to the user
-
-    // For now, we'll just log it and return success
-    console.log('Contact form submission:', {
+    // Save to Supabase
+    const { error } = await supabase.from('contact_submissions').insert({
       name,
       email,
-      phone,
-      interest,
+      phone: phone || null,
+      interest: interest || null,
       message,
-      timestamp: new Date().toISOString(),
     })
 
-    // TODO: Implement email sending
-    // Example with Resend:
-    // await resend.emails.send({
-    //   from: 'noreply@kingsfamilylakes.com',
-    //   to: 'papakingj@gmail.com',
-    //   subject: `New Contact Form Submission from ${name}`,
-    //   html: `
-    //     <h2>New Contact Form Submission</h2>
-    //     <p><strong>Name:</strong> ${name}</p>
-    //     <p><strong>Email:</strong> ${email}</p>
-    //     <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-    //     <p><strong>Interest:</strong> ${interest || 'Not specified'}</p>
-    //     <p><strong>Message:</strong></p>
-    //     <p>${message}</p>
-    //   `,
-    // })
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json(
+        { error: 'Failed to save contact form' },
+        { status: 500 }
+      )
+    }
+
+    console.log('Contact form saved:', {
+      name,
+      email,
+      interest,
+      timestamp: new Date().toISOString(),
+    })
 
     return NextResponse.json(
       { success: true, message: 'Contact form submitted successfully' },

@@ -5,6 +5,7 @@ import PricingCard from '@/components/ui/PricingCard'
 import Gallery from '@/components/ui/Gallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
+import { getSiteSettings, getPageContent, getGalleryImages } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Turkey Hunting | King's Family Lakes",
@@ -53,7 +54,8 @@ const regulations = [
   },
 ]
 
-const galleryImages = [
+// Fallback images if database is empty
+const defaultGalleryImages = [
   { src: '/images/turkey-1.jpg', alt: 'Turkey hunting blind', caption: 'Hunting blind setup' },
   { src: '/images/turkey-2.jpg', alt: 'Wild turkey', caption: 'Wild turkey on property' },
   { src: '/images/turkey-3.jpg', alt: 'Spring hunt', caption: 'Spring season hunt' },
@@ -62,12 +64,29 @@ const galleryImages = [
   { src: '/images/turkey-6.jpg', alt: 'Pasture', caption: 'Manicured pastures' },
 ]
 
-export default function TurkeyHuntingPage() {
+export default async function TurkeyHuntingPage() {
+  const [settings, pageContent, dbImages] = await Promise.all([
+    getSiteSettings(),
+    getPageContent('turkey-hunting'),
+    getGalleryImages('turkey-hunting'),
+  ])
+
+  const heroTitle = pageContent?.hero_title || 'Turkey Hunting'
+  const heroSubtitle = pageContent?.hero_subtitle || 'A turkey hunting experience that is second to none. Year-round grounds management and strategically positioned blinds for optimal success.'
+  const huntingRate = settings?.hunting_daily_rate || 300
+  const lodgingRate = settings?.lodging_nightly_rate || 100
+  const phone = settings?.phone || '+1 (334) 341-3753'
+
+  // Use database images if available, otherwise fallback
+  const galleryImages = dbImages.length > 0
+    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title }))
+    : defaultGalleryImages
+
   return (
     <>
       <Hero
-        title="Turkey Hunting"
-        subtitle="A turkey hunting experience that is second to none. Year-round grounds management and strategically positioned blinds for optimal success."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         size="medium"
       />
 
@@ -138,7 +157,7 @@ export default function TurkeyHuntingPage() {
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <PricingCard
               title="Day Hunt"
-              price="$300"
+              price={`$${huntingRate}`}
               period="/person/day"
               description="Full day turkey hunting"
               features={[
@@ -152,7 +171,7 @@ export default function TurkeyHuntingPage() {
             />
             <PricingCard
               title="Lodging"
-              price="$100"
+              price={`$${lodgingRate}`}
               period="/night"
               description="Stay at our camp houses"
               features={[
@@ -225,8 +244,8 @@ export default function TurkeyHuntingPage() {
             <Link href="/contact" className="btn bg-white text-forest-700 hover:bg-gray-100">
               Contact Us
             </Link>
-            <Link href="tel:+13343413753" className="btn border-2 border-white text-white hover:bg-white hover:text-forest-700">
-              Call +1 (334) 341-3753
+            <Link href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="btn border-2 border-white text-white hover:bg-white hover:text-forest-700">
+              Call {phone}
             </Link>
           </div>
         </div>

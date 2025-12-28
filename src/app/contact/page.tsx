@@ -3,59 +3,12 @@ import Hero from '@/components/ui/Hero'
 import ContactForm from '@/components/forms/ContactForm'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
+import { getSiteSettings, getPageContent } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Contact Us | King's Family Lakes",
   description: 'Contact King\'s Family Lakes for booking inquiries, questions, or to plan your hunting and fishing trip. Call +1 (334) 341-3753 or email papakingj@gmail.com.',
 }
-
-const contactInfo = [
-  {
-    type: 'Phone',
-    value: '+1 (334) 341-3753',
-    href: 'tel:+13343413753',
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-      </svg>
-    ),
-    description: 'Call us anytime',
-  },
-  {
-    type: 'Email',
-    value: 'papakingj@gmail.com',
-    href: 'mailto:papakingj@gmail.com',
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-      </svg>
-    ),
-    description: 'We respond within 24 hours',
-  },
-  {
-    type: 'Location',
-    value: 'Epes, Alabama',
-    href: '/directions',
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-      </svg>
-    ),
-    description: 'I-20, Exit 23',
-  },
-  {
-    type: 'Facebook',
-    value: 'kingsfamilylakes',
-    href: 'https://facebook.com/kingsfamilylakes',
-    icon: (
-      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-        <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-      </svg>
-    ),
-    description: 'Follow us on Facebook',
-  },
-]
 
 const faqs = [
   {
@@ -80,12 +33,73 @@ const faqs = [
   },
 ]
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const [settings, pageContent] = await Promise.all([
+    getSiteSettings(),
+    getPageContent('contact'),
+  ])
+
+  const heroTitle = pageContent?.hero_title || 'Contact Us'
+  const heroSubtitle = pageContent?.hero_subtitle || "Ready to book your adventure? Have questions? We're here to help."
+  const phone = settings?.phone || '+1 (334) 341-3753'
+  const email = settings?.email || 'papakingj@gmail.com'
+  const city = settings?.address_city || 'Epes'
+  const state = settings?.address_state || 'Alabama'
+  const facebookUrl = settings?.facebook_url || 'https://facebook.com/kingsfamilylakes'
+
+  const contactInfo = [
+    {
+      type: 'Phone',
+      value: phone,
+      href: `tel:${phone.replace(/[^\d+]/g, '')}`,
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+        </svg>
+      ),
+      description: 'Call us anytime',
+    },
+    {
+      type: 'Email',
+      value: email,
+      href: `mailto:${email}`,
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+        </svg>
+      ),
+      description: 'We respond within 24 hours',
+    },
+    {
+      type: 'Location',
+      value: `${city}, ${state}`,
+      href: '/directions',
+      icon: (
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+        </svg>
+      ),
+      description: 'I-20, Exit 23',
+    },
+    {
+      type: 'Facebook',
+      value: 'kingsfamilylakes',
+      href: facebookUrl,
+      icon: (
+        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+        </svg>
+      ),
+      description: 'Follow us on Facebook',
+    },
+  ]
+
   return (
     <>
       <Hero
-        title="Contact Us"
-        subtitle="Ready to book your adventure? Have questions? We're here to help."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         size="small"
       />
 
@@ -135,7 +149,7 @@ export default function ContactPage() {
                   The fastest way to book is to give us a call. We can check availability and answer any questions.
                 </p>
                 <a
-                  href="tel:+13343413753"
+                  href={`tel:${phone.replace(/[^\d+]/g, '')}`}
                   className="inline-flex items-center gap-2 bg-white text-forest-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -179,7 +193,7 @@ export default function ContactPage() {
             <div className="aspect-video bg-gray-200 rounded-xl flex items-center justify-center">
               <div className="text-center">
                 <div className="text-4xl mb-4">📍</div>
-                <p className="text-gray-600 mb-2">Epes, Alabama - I-20, Exit 23</p>
+                <p className="text-gray-600 mb-2">{city}, {state} - I-20, Exit 23</p>
                 <Link href="/directions" className="text-forest-700 font-semibold hover:text-forest-800">
                   Get Directions →
                 </Link>
