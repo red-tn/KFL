@@ -1,7 +1,7 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { supabaseStorage } from '@payloadcms/storage-supabase'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -36,18 +36,11 @@ export default buildConfig({
     },
   }),
   plugins: [
-    supabaseStorage({
+    vercelBlobStorage({
       collections: {
-        media: {
-          bucket: 'media',
-          prefix: 'kfl',
-        },
+        media: true,
       },
-      bucket: 'media',
-      config: {
-        serviceKey: process.env.SUPABASE_SERVICE_KEY || '',
-        url: process.env.SUPABASE_URL || '',
-      },
+      token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
   ],
 })
