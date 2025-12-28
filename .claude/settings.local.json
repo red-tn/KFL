@@ -9,7 +9,12 @@
       "Bash(cmd.exe /c \"node --version && npm --version\")",
       "Bash(powershell.exe -Command \"node --version; npm --version\")",
       "Bash(powershell.exe -Command \"git --version\")",
-      "Bash(powershell.exe -Command \"cd ''F:/KFL''; git init; git add .; git status\")"
+      "Bash(powershell.exe -Command \"cd ''F:/KFL''; git init; git add .; git status\")",
+      "Bash(powershell.exe -Command \"cd ''F:/KFL''; git commit -m ''Initial commit: King''''s Family Lakes website\n\n- Next.js 14 with App Router\n- Tailwind CSS styling\n- Payload CMS integration with Supabase\n- All pages: Home, Lakes, Deer Hunting, Turkey Hunting, Bass Fishing, Directions, Contact\n- Google AdSense integration\n- Responsive design\n- Contact form with API route\n\nGenerated with Claude Code''\")",
+      "Bash(powershell.exe -Command \"cd ''F:/KFL''; git config user.email ''papakingj@gmail.com''; git config user.name ''Kings Family Lakes''; git commit -m ''Initial commit: Kings Family Lakes website\n\n- Next.js 14 with App Router\n- Tailwind CSS styling  \n- Payload CMS integration with Supabase\n- All pages: Home, Lakes, Deer Hunting, Turkey Hunting, Bass Fishing, Directions, Contact\n- Google AdSense integration\n- Responsive design\n- Contact form with API route\n\nGenerated with Claude Code''\")",
+      "Bash(powershell.exe -Command \"cd ''F:/KFL''; git branch -M main; git remote add origin https://github.com/red-tn/KFL.git; git remote -v\")",
+      "Bash(powershell.exe -Command \"cd ''F:/KFL''; git push -u origin main\")",
+      "Bash(powershell.exe:*)"
     ]
   }
 }
