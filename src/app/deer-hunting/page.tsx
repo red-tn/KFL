@@ -56,12 +56,12 @@ const regulations = [
 
 // Fallback images if database is empty
 const defaultGalleryImages = [
-  { src: '/images/deer-1.jpg', alt: 'Hunting blind', caption: 'Hunting blind overlooking pasture' },
-  { src: '/images/deer-2.jpg', alt: 'White tail deer', caption: 'White tail deer on property' },
-  { src: '/images/deer-3.jpg', alt: 'Morning hunt', caption: 'Early morning hunt' },
-  { src: '/images/deer-4.jpg', alt: 'Trophy buck', caption: 'Trophy buck harvest' },
-  { src: '/images/deer-5.jpg', alt: 'Hunting grounds', caption: 'Hunting grounds' },
-  { src: '/images/deer-6.jpg', alt: 'Camp house', caption: 'Camp house lodging' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', alt: 'Hunting grounds', caption: 'Hunting grounds' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Property view', caption: 'Property view' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Lake and grounds', caption: 'Lake and grounds' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Hunting area', caption: 'Hunting area' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4620.jpeg', alt: 'Property', caption: 'Property' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4623.jpeg', alt: 'Scenic view', caption: 'Scenic view' },
 ]
 
 export default async function DeerHuntingPage() {

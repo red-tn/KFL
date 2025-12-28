@@ -57,12 +57,12 @@ const tips = [
 
 // Fallback images if database is empty
 const defaultGalleryImages = [
-  { src: '/images/fishing-1.jpg', alt: 'Bass fishing', caption: 'Morning fishing on Lake Scott' },
-  { src: '/images/fishing-2.jpg', alt: 'Trophy bass', caption: 'Trophy Large Mouth Bass' },
-  { src: '/images/fishing-3.jpg', alt: 'Dock fishing', caption: 'Dock fishing at sunset' },
-  { src: '/images/fishing-4.jpg', alt: 'Lake view', caption: 'Peaceful lake view' },
-  { src: '/images/fishing-5.jpg', alt: 'Brim catch', caption: 'Brim on the line' },
-  { src: '/images/fishing-6.jpg', alt: 'Boathouse', caption: 'Lake Shannon boathouse' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Bass fishing', caption: 'Bass fishing on the lake' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Lake Scott', caption: 'Lake Scott' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Lake Shannon', caption: 'Lake Shannon' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4620.jpeg', alt: 'Lake view', caption: 'Peaceful lake view' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4623.jpeg', alt: 'Fishing spot', caption: 'Prime fishing spot' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Lake Patrick', caption: 'Lake Patrick' },
 ]
 
 export default async function BassFishingPage() {

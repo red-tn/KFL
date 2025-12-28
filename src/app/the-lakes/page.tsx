@@ -59,12 +59,12 @@ const lakes = [
 
 // Fallback images if database is empty
 const defaultGalleryImages = [
-  { src: '/images/lake-scott-1.jpg', alt: 'Lake Scott at sunrise', caption: 'Lake Scott at sunrise' },
-  { src: '/images/lake-scott-2.jpg', alt: 'Fishing dock on Lake Scott', caption: 'Fishing dock on Lake Scott' },
-  { src: '/images/lake-shannon-1.jpg', alt: 'Lake Shannon from the hills', caption: 'Lake Shannon from the hills' },
-  { src: '/images/lake-shannon-2.jpg', alt: 'Boathouse at Lake Shannon', caption: 'Boathouse at Lake Shannon' },
-  { src: '/images/lake-patrick-1.jpg', alt: 'Lake Patrick dock', caption: 'Lake Patrick dock' },
-  { src: '/images/bass-catch.jpg', alt: 'Trophy bass catch', caption: 'Trophy bass catch' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Lake Scott', caption: 'Lake Scott' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Lake Shannon', caption: 'Lake Shannon' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg', alt: 'Lake Patrick', caption: 'Lake Patrick' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg', alt: 'Fishing dock', caption: 'Fishing dock' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4620.jpeg', alt: 'Lake view', caption: 'Lake view' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4623.jpeg', alt: 'Peaceful waters', caption: 'Peaceful waters' },
 ]
 
 export default async function TheLakesPage() {

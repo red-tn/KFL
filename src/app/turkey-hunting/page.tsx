@@ -56,12 +56,12 @@ const regulations = [
 
 // Fallback images if database is empty
 const defaultGalleryImages = [
-  { src: '/images/turkey-1.jpg', alt: 'Turkey hunting blind', caption: 'Hunting blind setup' },
-  { src: '/images/turkey-2.jpg', alt: 'Wild turkey', caption: 'Wild turkey on property' },
-  { src: '/images/turkey-3.jpg', alt: 'Spring hunt', caption: 'Spring season hunt' },
-  { src: '/images/turkey-4.jpg', alt: 'Successful harvest', caption: 'Successful harvest' },
-  { src: '/images/turkey-5.jpg', alt: 'Property view', caption: 'Hunting grounds' },
-  { src: '/images/turkey-6.jpg', alt: 'Pasture', caption: 'Manicured pastures' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg', alt: 'Turkey hunting grounds', caption: 'Turkey hunting grounds' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2289.jpg', alt: 'Hunting property', caption: 'Hunting property' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4617.jpeg', alt: 'Property view', caption: 'Property view' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg', alt: 'Grounds', caption: 'Hunting grounds' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4620.jpeg', alt: 'Property', caption: 'Property' },
+  { src: 'https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4623.jpeg', alt: 'Scenic view', caption: 'Scenic view' },
 ]
 
 export default async function TurkeyHuntingPage() {
