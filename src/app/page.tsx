@@ -97,7 +97,8 @@ export default async function Home() {
   const phone = settings?.phone || '+1 (334) 341-3753'
   const huntingRate = settings?.hunting_daily_rate || 300
   const lodgingRate = settings?.lodging_nightly_rate || 100
-  const heroImage = heroImg || '/images/lake-overview.mp4'
+  // Home hero uses video, but can use image from database as fallback
+  const heroImage = heroImg || '/images/IMG_4617.webp'
 
   return (
     <>
@@ -105,6 +106,7 @@ export default async function Home() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo="/images/lake-overview.mp4"
+        backgroundImage={heroImage}
         ctaText="Book Your Adventure"
         ctaLink="/contact"
         secondaryCtaText="Explore Activities"

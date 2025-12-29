@@ -6,9 +6,10 @@ import type { GalleryImage } from '@/lib/types'
 
 type CategoryKey =
   | 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing'
-  | 'main-gallery' | 'activity-cards'
+  | 'main-gallery'
   | 'hero-home' | 'hero-lakes' | 'hero-deer' | 'hero-turkey' | 'hero-fishing' | 'hero-gallery' | 'hero-directions' | 'hero-contact'
   | 'overview-deer' | 'overview-turkey' | 'overview-fishing'
+  | 'card-lakes' | 'card-deer' | 'card-turkey' | 'card-fishing'
 
 // Gallery section types
 type SectionType = 'hero' | 'overview' | 'gallery' | 'cards'
@@ -37,8 +38,11 @@ const PAGE_GALLERIES: {
   { id: 'overview-turkey', label: 'Turkey Page Image', description: 'Main content image on Turkey Hunting page', page: '/turkey-hunting', type: 'overview', singleImage: true },
   { id: 'overview-fishing', label: 'Fishing Page Image', description: 'Main content image on Bass Fishing page', page: '/bass-fishing', type: 'overview', singleImage: true },
 
-  // Activity Cards on Home page
-  { id: 'activity-cards', label: 'Activity Cards', description: 'Home page "Our Activities" section (4 cards)', page: '/', type: 'cards' },
+  // Activity Cards on Home page - one for each activity
+  { id: 'card-lakes', label: 'Card: The Lakes', description: 'Home page activity card for The Lakes', page: '/', type: 'cards', singleImage: true },
+  { id: 'card-deer', label: 'Card: Deer Hunting', description: 'Home page activity card for Deer Hunting', page: '/', type: 'cards', singleImage: true },
+  { id: 'card-turkey', label: 'Card: Turkey Hunting', description: 'Home page activity card for Turkey Hunting', page: '/', type: 'cards', singleImage: true },
+  { id: 'card-fishing', label: 'Card: Bass Fishing', description: 'Home page activity card for Bass Fishing', page: '/', type: 'cards', singleImage: true },
 
   // Page Galleries
   { id: 'lakes', label: 'Lakes Gallery', description: 'Gallery section on The Lakes page', page: '/the-lakes', type: 'gallery' },
@@ -65,13 +69,11 @@ const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
   'overview-turkey': [{ url: '/images/IMG_2292.webp', title: 'Turkey Hunting Overview' }],
   'overview-fishing': [{ url: '/images/IMG_4621.webp', title: 'Bass Fishing Overview' }],
 
-  // Activity Cards
-  'activity-cards': [
-    { url: '/images/IMG_4617.webp', title: 'The Lakes' },
-    { url: '/images/IMG_2289.webp', title: 'Deer Hunting' },
-    { url: '/images/IMG_2294.webp', title: 'Turkey Hunting' },
-    { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
-  ],
+  // Activity Cards - one per activity
+  'card-lakes': [{ url: '/images/IMG_4617.webp', title: 'The Lakes Card' }],
+  'card-deer': [{ url: '/images/IMG_2289.webp', title: 'Deer Hunting Card' }],
+  'card-turkey': [{ url: '/images/IMG_2294.webp', title: 'Turkey Hunting Card' }],
+  'card-fishing': [{ url: '/images/IMG_4635.webp', title: 'Bass Fishing Card' }],
 
   // Page Galleries
   'lakes': [

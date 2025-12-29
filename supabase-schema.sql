@@ -59,9 +59,10 @@ CREATE TABLE IF NOT EXISTS gallery_images (
   image_url TEXT NOT NULL,
   category TEXT CHECK (category IN (
     'lakes', 'deer-hunting', 'turkey-hunting', 'fishing', 'property', 'lodging', 'wildlife',
-    'main-gallery', 'activity-cards',
+    'main-gallery',
     'hero-home', 'hero-lakes', 'hero-deer', 'hero-turkey', 'hero-fishing', 'hero-gallery', 'hero-directions', 'hero-contact',
-    'overview-deer', 'overview-turkey', 'overview-fishing'
+    'overview-deer', 'overview-turkey', 'overview-fishing',
+    'card-lakes', 'card-deer', 'card-turkey', 'card-fishing'
   )),
   caption TEXT,
   display_order INTEGER DEFAULT 0,

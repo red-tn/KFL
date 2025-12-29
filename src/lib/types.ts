@@ -43,7 +43,6 @@ export type GalleryCategory =
   | 'lodging'
   | 'wildlife'
   | 'main-gallery'
-  | 'activity-cards'
   | 'hero-home'
   | 'hero-lakes'
   | 'hero-deer'
@@ -55,6 +54,10 @@ export type GalleryCategory =
   | 'overview-deer'
   | 'overview-turkey'
   | 'overview-fishing'
+  | 'card-lakes'
+  | 'card-deer'
+  | 'card-turkey'
+  | 'card-fishing'
 
 export interface GalleryImage {
   id: string
