@@ -1,187 +1,305 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import Image from 'next/image'
+import type { GalleryImage, GalleryCategory } from '@/lib/types'
 
-// All site images organized by location
-const siteImages = {
-  heroes: [
-    { id: 'hero-home', label: 'Home Page', location: 'Hero Background', path: '/images/lake-overview.mp4', type: 'video', page: '/' },
-    { id: 'hero-lakes', label: 'The Lakes', location: 'Hero Background', path: '/images/IMG_4617.webp', type: 'image', page: '/the-lakes' },
-    { id: 'hero-deer', label: 'Deer Hunting', location: 'Hero Background', path: '/images/IMG_2289.webp', type: 'image', page: '/deer-hunting' },
-    { id: 'hero-turkey', label: 'Turkey Hunting', location: 'Hero Background', path: '/images/IMG_2294.webp', type: 'image', page: '/turkey-hunting' },
-    { id: 'hero-fishing', label: 'Bass Fishing', location: 'Hero Background', path: '/images/IMG_4635.webp', type: 'image', page: '/bass-fishing' },
-    { id: 'hero-directions', label: 'Directions', location: 'Hero Background', path: '/images/IMG_4628.webp', type: 'image', page: '/directions' },
-    { id: 'hero-contact', label: 'Contact', location: 'Hero Background', path: '/images/IMG_4633.webp', type: 'image', page: '/contact' },
-    { id: 'hero-gallery', label: 'Gallery', location: 'Hero Background', path: '/images/IMG_4617.webp', type: 'image', page: '/gallery' },
-  ],
-  activityCards: [
-    { id: 'card-lakes', label: 'The Lakes', location: 'Home Page Activity Card', path: '/images/IMG_4617.webp', page: '/' },
-    { id: 'card-deer', label: 'Deer Hunting', location: 'Home Page Activity Card', path: '/images/IMG_2289.webp', page: '/' },
-    { id: 'card-turkey', label: 'Turkey Hunting', location: 'Home Page Activity Card', path: '/images/IMG_2294.webp', page: '/' },
-    { id: 'card-fishing', label: 'Bass Fishing', location: 'Home Page Activity Card', path: '/images/IMG_4635.webp', page: '/' },
-  ],
-  lakeImages: [
-    { id: 'lake-scott', label: 'Lake Scott', location: 'Lakes Page - Lake Section', path: '/images/IMG_4617.webp', page: '/the-lakes' },
-    { id: 'lake-shannon', label: 'Lake Shannon', location: 'Lakes Page - Lake Section', path: '/images/IMG_4628.webp', page: '/the-lakes' },
-    { id: 'lake-patrick', label: 'Lake Patrick', location: 'Lakes Page - Lake Section', path: '/images/IMG_4633.webp', page: '/the-lakes' },
-  ],
-  pageOverviewImages: [
-    { id: 'overview-deer', label: 'Deer Hunting', location: 'Deer Hunting Page - Overview Section', path: '/images/IMG_2290.webp', page: '/deer-hunting' },
-    { id: 'overview-turkey', label: 'Turkey Hunting', location: 'Turkey Hunting Page - Overview Section', path: '/images/IMG_2294.webp', page: '/turkey-hunting' },
-    { id: 'overview-bass', label: 'Bass Fishing', location: 'Bass Fishing Page - Overview Section', path: '/images/IMG_4635.webp', page: '/bass-fishing' },
-  ],
-  galleries: {
-    lakes: [
-      { id: 'gal-lakes-1', path: '/images/IMG_4617.webp', label: 'Lake Scott' },
-      { id: 'gal-lakes-2', path: '/images/IMG_4621.webp', label: 'Lake view' },
-      { id: 'gal-lakes-3', path: '/images/IMG_4622.webp', label: 'Lake scenery' },
-      { id: 'gal-lakes-4', path: '/images/IMG_4623.webp', label: 'Lake Shannon' },
-      { id: 'gal-lakes-5', path: '/images/IMG_4624.webp', label: 'Scenic view' },
-      { id: 'gal-lakes-6', path: '/images/IMG_4626.webp', label: 'Waters' },
-      { id: 'gal-lakes-7', path: '/images/IMG_4627.webp', label: 'Dock' },
-      { id: 'gal-lakes-8', path: '/images/IMG_4628.webp', label: 'Lake Shannon' },
-      { id: 'gal-lakes-9', path: '/images/IMG_4633.webp', label: 'Lake Patrick' },
-      { id: 'gal-lakes-10', path: '/images/IMG_4635.webp', label: 'Fishing spot' },
-      { id: 'gal-lakes-11', path: '/images/IMG_4637.webp', label: 'Sunset' },
-      { id: 'gal-lakes-12', path: '/images/IMG_4638.webp', label: 'Evening' },
-    ],
-    hunting: [
-      { id: 'gal-hunt-1', path: '/images/IMG_2289.webp', label: 'Hunting grounds' },
-      { id: 'gal-hunt-2', path: '/images/IMG_2290.webp', label: 'Property' },
-      { id: 'gal-hunt-3', path: '/images/IMG_2292.webp', label: 'Hunting area' },
-      { id: 'gal-hunt-4', path: '/images/IMG_2294.webp', label: 'Property view' },
-      { id: 'gal-hunt-5', path: '/images/IMG_2296.webp', label: 'Grounds' },
-      { id: 'gal-hunt-6', path: '/images/IMG_3284.webp', label: 'Scene' },
-      { id: 'gal-hunt-7', path: '/images/IMG_3285.webp', label: 'Wildlife' },
-      { id: 'gal-hunt-8', path: '/images/IMG_3291.webp', label: 'Property' },
-    ],
-    property: [
-      { id: 'gal-prop-1', path: '/images/1.webp', label: 'Property' },
-      { id: 'gal-prop-2', path: '/images/3.webp', label: 'View' },
-      { id: 'gal-prop-3', path: '/images/IMG_0001-1.webp', label: 'Grounds' },
-      { id: 'gal-prop-4', path: '/images/IMG_0002.webp', label: 'Scenery' },
-      { id: 'gal-prop-5', path: '/images/IMG_0003.webp', label: 'View' },
-      { id: 'gal-prop-6', path: '/images/IMG_4596.webp', label: 'Overview' },
-      { id: 'gal-prop-7', path: '/images/IMG_4597.webp', label: 'Grounds' },
-      { id: 'gal-prop-8', path: '/images/IMG_4600.webp', label: 'Property' },
-      { id: 'gal-prop-9', path: '/images/IMG_4602.webp', label: 'Scenery' },
-      { id: 'gal-prop-10', path: '/images/IMG_4603.webp', label: 'Property' },
-      { id: 'gal-prop-11', path: '/images/IMG_4610.webp', label: 'View' },
-      { id: 'gal-prop-12', path: '/images/IMG_4611.webp', label: 'Grounds' },
-      { id: 'gal-prop-13', path: '/images/photo1.webp', label: 'Photo' },
-    ],
-    lodging: [
-      { id: 'gal-lodge-1', path: '/images/IMG_1285-1.webp', label: 'Interior' },
-      { id: 'gal-lodge-2', path: '/images/IMG_1286.webp', label: 'Lodging' },
-      { id: 'gal-lodge-3', path: '/images/IMG_1288.webp', label: 'Interior' },
-      { id: 'gal-lodge-4', path: '/images/IMG_1289.webp', label: 'Amenities' },
-      { id: 'gal-lodge-5', path: '/images/IMG_1302.webp', label: 'Camp house' },
-      { id: 'gal-lodge-6', path: '/images/IMG_1306.webp', label: 'Facilities' },
-      { id: 'gal-lodge-7', path: '/images/IMG_1310.webp', label: 'Interior' },
-    ],
-    wildlife: [
-      { id: 'gal-wild-1', path: '/images/IMG_6938.webp', label: 'Wildlife' },
-      { id: 'gal-wild-2', path: '/images/IMG_6941.webp', label: 'Deer' },
-      { id: 'gal-wild-3', path: '/images/UNADJUSTEDNONRAW_thumb_19e3.webp', label: 'Wildlife' },
-      { id: 'gal-wild-4', path: '/images/UNADJUSTEDNONRAW_thumb_19e4.webp', label: 'Nature' },
-      { id: 'gal-wild-5', path: '/images/UNADJUSTEDNONRAW_thumb_19e7.webp', label: 'Wildlife' },
-      { id: 'gal-wild-6', path: '/images/UNADJUSTEDNONRAW_thumb_19e8.webp', label: 'Animals' },
-      { id: 'gal-wild-7', path: '/images/UNADJUSTEDNONRAW_thumb_19e9.webp', label: 'Wildlife' },
-      { id: 'gal-wild-8', path: '/images/UNADJUSTEDNONRAW_thumb_19ea.webp', label: 'Nature' },
-    ],
-  },
-}
-
-type ImageItem = {
-  id: string
-  path: string
+// Page gallery configurations
+const PAGE_GALLERIES: {
+  id: GalleryCategory
   label: string
-  location?: string
-  page?: string
-  type?: string
+  description: string
+  page: string
+}[] = [
+  { id: 'lakes', label: 'The Lakes', description: 'Gallery on The Lakes page', page: '/the-lakes' },
+  { id: 'deer-hunting', label: 'Deer Hunting', description: 'Gallery on Deer Hunting page', page: '/deer-hunting' },
+  { id: 'turkey-hunting', label: 'Turkey Hunting', description: 'Gallery on Turkey Hunting page', page: '/turkey-hunting' },
+  { id: 'fishing', label: 'Bass Fishing', description: 'Gallery on Bass Fishing page', page: '/bass-fishing' },
+  { id: 'main-gallery', label: 'Main Gallery', description: 'The main /gallery page', page: '/gallery' },
+  { id: 'activity-cards', label: 'Activity Cards', description: 'Home page "Our Activities" section', page: '/' },
+  { id: 'property', label: 'Property', description: 'Property images in main gallery', page: '/gallery' },
+  { id: 'lodging', label: 'Lodging', description: 'Lodging images in main gallery', page: '/gallery' },
+  { id: 'wildlife', label: 'Wildlife', description: 'Wildlife images in main gallery', page: '/gallery' },
+]
+
+// Default images for seeding
+const DEFAULT_IMAGES: Record<string, { url: string; title: string }[]> = {
+  'lakes': [
+    { url: '/images/IMG_4617.webp', title: 'Lake Scott' },
+    { url: '/images/IMG_4628.webp', title: 'Lake Shannon' },
+    { url: '/images/IMG_4633.webp', title: 'Lake Patrick' },
+    { url: '/images/IMG_4635.webp', title: 'Fishing Dock' },
+    { url: '/images/IMG_4621.webp', title: 'Lake View' },
+    { url: '/images/IMG_4622.webp', title: 'Peaceful Waters' },
+    { url: '/images/IMG_4623.webp', title: 'Lake Waters' },
+    { url: '/images/IMG_4624.webp', title: 'Scenic Lake' },
+    { url: '/images/IMG_4626.webp', title: 'Tranquil Waters' },
+    { url: '/images/IMG_4637.webp', title: 'Lake Shore' },
+  ],
+  'deer-hunting': [
+    { url: '/images/IMG_2289.webp', title: 'Hunting Grounds' },
+    { url: '/images/IMG_2290.webp', title: 'Property View' },
+    { url: '/images/IMG_2292.webp', title: 'Hunting Area' },
+    { url: '/images/IMG_2294.webp', title: 'Hunting Blind' },
+    { url: '/images/IMG_2296.webp', title: 'Manicured Pasture' },
+    { url: '/images/IMG_4617.webp', title: 'Lake & Grounds' },
+    { url: '/images/IMG_4628.webp', title: 'Scenic Area' },
+    { url: '/images/IMG_4633.webp', title: 'Property' },
+    { url: '/images/IMG_4635.webp', title: 'Scenic View' },
+    { url: '/images/IMG_3284.webp', title: 'Hunting Grounds' },
+    { url: '/images/IMG_3285.webp', title: 'Property' },
+  ],
+  'turkey-hunting': [
+    { url: '/images/IMG_2294.webp', title: 'Turkey Hunting Grounds' },
+    { url: '/images/IMG_2289.webp', title: 'Hunting Property' },
+    { url: '/images/IMG_2290.webp', title: 'Property View' },
+    { url: '/images/IMG_2292.webp', title: 'Hunting Grounds' },
+    { url: '/images/IMG_2296.webp', title: 'Manicured Pasture' },
+    { url: '/images/IMG_4617.webp', title: 'Lake View' },
+    { url: '/images/IMG_4628.webp', title: 'Property' },
+    { url: '/images/IMG_4633.webp', title: 'Scenic Area' },
+    { url: '/images/IMG_3291.webp', title: 'Hunting Area' },
+  ],
+  'fishing': [
+    { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
+    { url: '/images/IMG_4617.webp', title: 'Lake Scott' },
+    { url: '/images/IMG_4628.webp', title: 'Lake Shannon' },
+    { url: '/images/IMG_4633.webp', title: 'Lake Patrick' },
+    { url: '/images/IMG_4621.webp', title: 'Lake View' },
+    { url: '/images/IMG_4622.webp', title: 'Fishing Dock' },
+    { url: '/images/IMG_4623.webp', title: 'Lake Waters' },
+    { url: '/images/IMG_4624.webp', title: 'Scenic Lake' },
+    { url: '/images/IMG_4626.webp', title: 'Peaceful Waters' },
+    { url: '/images/IMG_4627.webp', title: 'Prime Fishing Spot' },
+  ],
+  'activity-cards': [
+    { url: '/images/IMG_4617.webp', title: 'The Lakes' },
+    { url: '/images/IMG_2289.webp', title: 'Deer Hunting' },
+    { url: '/images/IMG_2294.webp', title: 'Turkey Hunting' },
+    { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
+  ],
+  'main-gallery': [
+    { url: '/images/IMG_4617.webp', title: 'Lake Scott' },
+    { url: '/images/IMG_4628.webp', title: 'Lake Shannon' },
+    { url: '/images/IMG_4633.webp', title: 'Lake Patrick' },
+    { url: '/images/IMG_2289.webp', title: 'Hunting Grounds' },
+    { url: '/images/IMG_2294.webp', title: 'Turkey Hunting' },
+    { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
+  ],
+  'property': [
+    { url: '/images/1.webp', title: 'Property' },
+    { url: '/images/3.webp', title: 'View' },
+    { url: '/images/IMG_0001-1.webp', title: 'Grounds' },
+    { url: '/images/IMG_0002.webp', title: 'Scenery' },
+    { url: '/images/IMG_0003.webp', title: 'View' },
+    { url: '/images/IMG_4596.webp', title: 'Overview' },
+    { url: '/images/IMG_4597.webp', title: 'Grounds' },
+    { url: '/images/IMG_4600.webp', title: 'Property' },
+  ],
+  'lodging': [
+    { url: '/images/IMG_1285-1.webp', title: 'Interior' },
+    { url: '/images/IMG_1286.webp', title: 'Lodging' },
+    { url: '/images/IMG_1288.webp', title: 'Interior' },
+    { url: '/images/IMG_1289.webp', title: 'Amenities' },
+    { url: '/images/IMG_1302.webp', title: 'Camp House' },
+    { url: '/images/IMG_1306.webp', title: 'Facilities' },
+    { url: '/images/IMG_1310.webp', title: 'Interior' },
+  ],
+  'wildlife': [
+    { url: '/images/IMG_6938.webp', title: 'Wildlife' },
+    { url: '/images/IMG_6941.webp', title: 'Deer' },
+    { url: '/images/UNADJUSTEDNONRAW_thumb_19e3.webp', title: 'Wildlife' },
+    { url: '/images/UNADJUSTEDNONRAW_thumb_19e4.webp', title: 'Nature' },
+  ],
 }
 
-function ImageCard({ image, onReplace, size = 'normal' }: { image: ImageItem; onReplace: (id: string, file: File) => void; size?: 'normal' | 'large' }) {
+function ImageCard({
+  image,
+  onDelete,
+  onUpdate,
+  isDragging,
+  onDragStart,
+  onDragOver,
+  onDrop,
+}: {
+  image: GalleryImage
+  onDelete: (id: string) => void
+  onUpdate: (id: string, data: Partial<GalleryImage>) => void
+  isDragging: boolean
+  onDragStart: () => void
+  onDragOver: (e: React.DragEvent) => void
+  onDrop: () => void
+}) {
+  const [isEditing, setIsEditing] = useState(false)
+  const [title, setTitle] = useState(image.title || '')
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSave = () => {
+    onUpdate(image.id, { title })
+    setIsEditing(false)
+  }
+
+  const handleReplace = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) {
-      setPreviewUrl(URL.createObjectURL(file))
-      onReplace(image.id, file)
+    if (!file) return
+
+    // Create a temporary URL for preview
+    const previewUrl = URL.createObjectURL(file)
+    onUpdate(image.id, { image_url: previewUrl })
+
+    // Upload to Supabase (in a real implementation)
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('category', image.category || 'main-gallery')
+
+    try {
+      const response = await fetch('/api/admin/gallery/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await response.json()
+      if (data.url) {
+        onUpdate(image.id, { image_url: data.url })
+      }
+    } catch (error) {
+      console.error('Upload failed:', error)
     }
   }
 
-  const isVideo = image.type === 'video'
-  const heightClass = size === 'large' ? 'h-48' : 'h-32'
-
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:border-forest-500 transition-colors">
-      <div className={`relative ${heightClass} bg-gray-100`}>
-        {isVideo ? (
-          <video
-            src={previewUrl || image.path}
-            className="w-full h-full object-cover"
-            muted
-            loop
-            autoPlay
-            playsInline
-          />
-        ) : (
-          <img
-            src={previewUrl || image.path}
-            alt={image.label}
-            className="w-full h-full object-cover"
-          />
-        )}
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          className="absolute inset-0 bg-black/0 hover:bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-all group"
-        >
-          <div className="bg-white rounded-lg px-3 py-2 shadow-lg flex items-center gap-2">
-            <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+    <div
+      draggable
+      onDragStart={onDragStart}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      className={`bg-white rounded-lg shadow-sm border-2 overflow-hidden transition-all ${
+        isDragging ? 'border-forest-500 opacity-50' : 'border-gray-200 hover:border-forest-400'
+      }`}
+    >
+      <div className="relative h-40 bg-gray-100 group">
+        <img
+          src={image.image_url}
+          alt={image.title || 'Gallery image'}
+          className="w-full h-full object-cover"
+        />
+
+        {/* Overlay with actions */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="bg-white rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center gap-1"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
             </svg>
-            <span className="text-sm font-medium text-gray-700">Replace</span>
-          </div>
-        </button>
+            Replace
+          </button>
+          <button
+            onClick={() => onDelete(image.id)}
+            className="bg-red-500 rounded-lg px-3 py-2 text-sm font-medium text-white hover:bg-red-600 flex items-center gap-1"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Drag handle */}
+        <div className="absolute top-2 left-2 bg-white/80 rounded px-1 py-0.5 text-xs text-gray-500 cursor-move">
+          #{image.display_order}
+        </div>
+
         <input
           ref={fileInputRef}
           type="file"
-          accept={isVideo ? "video/*" : "image/*"}
-          onChange={handleFileChange}
+          accept="image/*"
+          onChange={handleReplace}
           className="hidden"
         />
       </div>
+
       <div className="p-3">
-        <div className="font-medium text-gray-900 text-sm">{image.label}</div>
-        {image.location && (
-          <div className="text-xs text-gray-500 mt-1">{image.location}</div>
-        )}
-        {image.page && (
-          <a href={image.page} target="_blank" className="text-xs text-forest-600 hover:text-forest-700 mt-1 inline-flex items-center gap-1">
-            View page
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-          </a>
+        {isEditing ? (
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="flex-1 px-2 py-1 text-sm border rounded"
+              placeholder="Image title"
+            />
+            <button
+              onClick={handleSave}
+              className="px-2 py-1 bg-forest-600 text-white text-sm rounded hover:bg-forest-700"
+            >
+              Save
+            </button>
+          </div>
+        ) : (
+          <div
+            onClick={() => setIsEditing(true)}
+            className="text-sm font-medium text-gray-900 cursor-pointer hover:text-forest-700"
+          >
+            {image.title || 'Untitled'}
+            <span className="text-gray-400 text-xs ml-1">(click to edit)</span>
+          </div>
         )}
       </div>
     </div>
   )
 }
 
-function GallerySection({ title, description, images, onReplace, onAdd }: {
-  title: string
+function GallerySection({
+  category,
+  label,
+  description,
+  page,
+  images,
+  onAdd,
+  onDelete,
+  onUpdate,
+  onReorder,
+  onSeedDefaults,
+}: {
+  category: GalleryCategory
+  label: string
   description: string
-  images: ImageItem[]
-  onReplace: (id: string, file: File) => void
-  onAdd: () => void
+  page: string
+  images: GalleryImage[]
+  onAdd: (category: GalleryCategory) => void
+  onDelete: (id: string) => void
+  onUpdate: (id: string, data: Partial<GalleryImage>) => void
+  onReorder: (images: GalleryImage[]) => void
+  onSeedDefaults: (category: GalleryCategory) => void
 }) {
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
+  const [isExpanded, setIsExpanded] = useState(true)
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index)
+  }
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault()
+  }
+
+  const handleDrop = (targetIndex: number) => {
+    if (draggedIndex === null || draggedIndex === targetIndex) return
+
+    const newImages = [...images]
+    const [draggedImage] = newImages.splice(draggedIndex, 1)
+    newImages.splice(targetIndex, 0, draggedImage)
+
+    // Update display_order
+    const reorderedImages = newImages.map((img, idx) => ({
+      ...img,
+      display_order: idx + 1,
+    }))
+
+    onReorder(reorderedImages)
+    setDraggedIndex(null)
+  }
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -194,297 +312,428 @@ function GallerySection({ title, description, images, onReplace, onAdd }: {
   }
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-lg font-bold text-gray-900">{title}</h3>
-          <p className="text-sm text-gray-500">{description}</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-400">{images.length} images</span>
-          <button
-            onClick={onAdd}
-            className="bg-forest-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-forest-700 flex items-center gap-1"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      {/* Header */}
+      <div
+        className="flex justify-between items-center p-4 bg-gray-50 border-b cursor-pointer"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center gap-3">
+          <button className="text-gray-500">
+            <svg
+              className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+              fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
-            Add
           </button>
+          <div>
+            <h3 className="text-lg font-bold text-gray-900">{label}</h3>
+            <p className="text-sm text-gray-500">{description}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+          <span className="text-sm text-gray-400">{images.length} images</span>
+          <a
+            href={page}
+            target="_blank"
+            className="text-sm text-forest-600 hover:text-forest-700 flex items-center gap-1"
+          >
+            View page
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
         </div>
       </div>
 
-      <div className="relative">
-        {images.length > 4 && (
-          <>
-            <button
-              onClick={() => scroll('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50"
-            >
-              <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-              </svg>
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50"
-            >
-              <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-            </button>
-          </>
-        )}
-
-        <div
-          ref={scrollRef}
-          className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
-          style={{ scrollbarWidth: 'thin' }}
-        >
-          {images.map((image) => (
-            <div key={image.id} className="flex-shrink-0 w-48">
-              <ImageCard image={image} onReplace={onReplace} />
+      {/* Content */}
+      {isExpanded && (
+        <div className="p-4">
+          {images.length === 0 ? (
+            <div className="text-center py-8 bg-gray-50 rounded-lg">
+              <p className="text-gray-500 mb-4">No images in this gallery</p>
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={() => onAdd(category)}
+                  className="bg-forest-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-forest-700 flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  Add Image
+                </button>
+                {DEFAULT_IMAGES[category] && (
+                  <button
+                    onClick={() => onSeedDefaults(category)}
+                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300 flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                    </svg>
+                    Load Default Images
+                  </button>
+                )}
+              </div>
             </div>
-          ))}
+          ) : (
+            <div className="relative">
+              {/* Navigation arrows */}
+              {images.length > 4 && (
+                <>
+                  <button
+                    onClick={() => scroll('left')}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => scroll('right')}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                  </button>
+                </>
+              )}
+
+              {/* Scrollable images */}
+              <div
+                ref={scrollRef}
+                className="flex gap-4 overflow-x-auto pb-2 px-4 -mx-4"
+                style={{ scrollbarWidth: 'thin' }}
+              >
+                {images.map((image, index) => (
+                  <div key={image.id} className="flex-shrink-0 w-56">
+                    <ImageCard
+                      image={image}
+                      onDelete={onDelete}
+                      onUpdate={onUpdate}
+                      isDragging={draggedIndex === index}
+                      onDragStart={() => handleDragStart(index)}
+                      onDragOver={(e) => handleDragOver(e, index)}
+                      onDrop={() => handleDrop(index)}
+                    />
+                  </div>
+                ))}
+
+                {/* Add button at end */}
+                <div className="flex-shrink-0 w-56">
+                  <button
+                    onClick={() => onAdd(category)}
+                    className="w-full h-full min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg hover:border-forest-500 hover:bg-forest-50 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-forest-600"
+                  >
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    <span className="text-sm font-medium">Add Image</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   )
 }
 
 export default function GalleryAdminPage() {
+  const [images, setImages] = useState<GalleryImage[]>([])
+  const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
-  const [activeTab, setActiveTab] = useState<'overview' | 'heroes' | 'galleries'>('overview')
+  const [activeCategory, setActiveCategory] = useState<GalleryCategory | 'all'>('all')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [uploadCategory, setUploadCategory] = useState<GalleryCategory>('main-gallery')
   const supabase = createClient()
 
-  const handleReplace = async (id: string, file: File) => {
-    setMessage(`Uploading replacement for ${id}...`)
+  // Fetch all images
+  const fetchImages = useCallback(async () => {
+    try {
+      const response = await fetch('/api/admin/gallery')
+      const data = await response.json()
+      if (data.images) {
+        setImages(data.images)
+      }
+    } catch (error) {
+      console.error('Failed to fetch images:', error)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
 
-    // Upload to Supabase storage
-    const fileExt = file.name.split('.').pop()
-    const fileName = `${id}-${Date.now()}.${fileExt}`
+  useEffect(() => {
+    fetchImages()
+  }, [fetchImages])
 
-    const { error } = await supabase.storage
-      .from('media')
-      .upload(fileName, file)
+  // Group images by category
+  const imagesByCategory = images.reduce((acc, img) => {
+    const cat = img.category || 'main-gallery'
+    if (!acc[cat]) acc[cat] = []
+    acc[cat].push(img)
+    return acc
+  }, {} as Record<string, GalleryImage[]>)
 
-    if (error) {
-      setMessage(`Error uploading: ${error.message}`)
-    } else {
-      setMessage(`Image replaced! Note: To update the site, you'll need to update the image path in the code or replace the file in public/images/`)
+  // Sort each category by display_order
+  Object.keys(imagesByCategory).forEach(cat => {
+    imagesByCategory[cat].sort((a, b) => a.display_order - b.display_order)
+  })
+
+  const showMessage = (msg: string, isError = false) => {
+    setMessage(msg)
+    setTimeout(() => setMessage(''), 4000)
+  }
+
+  const handleAdd = (category: GalleryCategory) => {
+    setUploadCategory(category)
+    fileInputRef.current?.click()
+  }
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    showMessage('Uploading image...')
+
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('category', uploadCategory)
+    formData.append('title', file.name.split('.')[0])
+
+    try {
+      const response = await fetch('/api/admin/gallery/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await response.json()
+
+      if (data.error) {
+        showMessage(`Error: ${data.error}`, true)
+      } else if (data.image) {
+        setImages(prev => [...prev, data.image])
+        showMessage('Image added successfully!')
+      }
+    } catch (error) {
+      showMessage('Failed to upload image', true)
     }
 
-    setTimeout(() => setMessage(''), 5000)
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
-  const handleAddToGallery = () => {
-    setMessage('To add new images: Upload files to public/images/ folder and update the gallery configuration.')
-    setTimeout(() => setMessage(''), 5000)
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this image?')) return
+
+    try {
+      const response = await fetch(`/api/admin/gallery?id=${id}`, {
+        method: 'DELETE',
+      })
+      const data = await response.json()
+
+      if (data.error) {
+        showMessage(`Error: ${data.error}`, true)
+      } else {
+        setImages(prev => prev.filter(img => img.id !== id))
+        showMessage('Image deleted successfully!')
+      }
+    } catch (error) {
+      showMessage('Failed to delete image', true)
+    }
   }
+
+  const handleUpdate = async (id: string, updateData: Partial<GalleryImage>) => {
+    // Optimistic update
+    setImages(prev => prev.map(img =>
+      img.id === id ? { ...img, ...updateData } : img
+    ))
+
+    try {
+      const response = await fetch('/api/admin/gallery', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...updateData }),
+      })
+      const data = await response.json()
+
+      if (data.error) {
+        showMessage(`Error: ${data.error}`, true)
+        fetchImages() // Revert on error
+      }
+    } catch (error) {
+      showMessage('Failed to update image', true)
+      fetchImages()
+    }
+  }
+
+  const handleReorder = async (reorderedImages: GalleryImage[]) => {
+    // Optimistic update
+    setImages(prev => {
+      const otherImages = prev.filter(img => !reorderedImages.find(r => r.id === img.id))
+      return [...otherImages, ...reorderedImages]
+    })
+
+    try {
+      const response = await fetch('/api/admin/gallery/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          images: reorderedImages.map(img => ({
+            id: img.id,
+            display_order: img.display_order,
+          })),
+        }),
+      })
+      const data = await response.json()
+
+      if (data.error) {
+        showMessage(`Error: ${data.error}`, true)
+        fetchImages()
+      } else {
+        showMessage('Order updated!')
+      }
+    } catch (error) {
+      showMessage('Failed to reorder images', true)
+      fetchImages()
+    }
+  }
+
+  const handleSeedDefaults = async (category: GalleryCategory) => {
+    const defaults = DEFAULT_IMAGES[category]
+    if (!defaults) return
+
+    showMessage('Loading default images...')
+
+    try {
+      for (let i = 0; i < defaults.length; i++) {
+        const img = defaults[i]
+        const response = await fetch('/api/admin/gallery', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: img.title,
+            image_url: img.url,
+            category,
+            display_order: i + 1,
+          }),
+        })
+        const data = await response.json()
+        if (data.image) {
+          setImages(prev => [...prev, data.image])
+        }
+      }
+      showMessage(`Loaded ${defaults.length} default images!`)
+    } catch (error) {
+      showMessage('Failed to load defaults', true)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-forest-600"></div>
+      </div>
+    )
+  }
+
+  // Filter galleries to show
+  const galleriestoShow = activeCategory === 'all'
+    ? PAGE_GALLERIES
+    : PAGE_GALLERIES.filter(g => g.id === activeCategory)
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-start mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Image Manager</h1>
-          <p className="text-gray-500 mt-1">Manage all images across the website</p>
+          <h1 className="text-3xl font-bold text-gray-900">Gallery Manager</h1>
+          <p className="text-gray-500 mt-1">Manage all page galleries - changes update in real-time</p>
+        </div>
+        <div className="text-sm text-gray-500">
+          Total: {images.length} images
         </div>
       </div>
 
       {message && (
-        <div className={`mb-6 p-4 rounded-lg ${message.includes('Error') ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
+        <div className={`mb-6 p-4 rounded-lg ${message.includes('Error') || message.includes('Failed') ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
           {message}
         </div>
       )}
 
-      {/* Tabs */}
-      <div className="flex gap-2 mb-8 border-b">
+      {/* Category Filter */}
+      <div className="flex flex-wrap gap-2 mb-6 bg-white p-4 rounded-xl shadow-sm">
         <button
-          onClick={() => setActiveTab('overview')}
-          className={`px-4 py-3 font-medium border-b-2 -mb-px transition-colors ${
-            activeTab === 'overview'
-              ? 'border-forest-600 text-forest-700'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
+          onClick={() => setActiveCategory('all')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            activeCategory === 'all'
+              ? 'bg-forest-600 text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
-          Overview
+          All Galleries
         </button>
-        <button
-          onClick={() => setActiveTab('heroes')}
-          className={`px-4 py-3 font-medium border-b-2 -mb-px transition-colors ${
-            activeTab === 'heroes'
-              ? 'border-forest-600 text-forest-700'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Hero Images
-        </button>
-        <button
-          onClick={() => setActiveTab('galleries')}
-          className={`px-4 py-3 font-medium border-b-2 -mb-px transition-colors ${
-            activeTab === 'galleries'
-              ? 'border-forest-600 text-forest-700'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Page Galleries
-        </button>
+        {PAGE_GALLERIES.map(gallery => (
+          <button
+            key={gallery.id}
+            onClick={() => setActiveCategory(gallery.id)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+              activeCategory === gallery.id
+                ? 'bg-forest-600 text-white'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            {gallery.label}
+            <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+              activeCategory === gallery.id ? 'bg-forest-700' : 'bg-gray-200'
+            }`}>
+              {imagesByCategory[gallery.id]?.length || 0}
+            </span>
+          </button>
+        ))}
       </div>
 
-      {/* Overview Tab */}
-      {activeTab === 'overview' && (
-        <div className="space-y-8">
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-              <div className="text-3xl font-bold text-forest-700">{siteImages.heroes.length}</div>
-              <div className="text-sm text-gray-500">Hero Images</div>
-            </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-              <div className="text-3xl font-bold text-primary-700">{siteImages.activityCards.length}</div>
-              <div className="text-sm text-gray-500">Activity Cards</div>
-            </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-              <div className="text-3xl font-bold text-earth-700">{siteImages.lakeImages.length}</div>
-              <div className="text-sm text-gray-500">Lake Section</div>
-            </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-              <div className="text-3xl font-bold text-orange-700">{siteImages.pageOverviewImages.length}</div>
-              <div className="text-sm text-gray-500">Page Overviews</div>
-            </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-              <div className="text-3xl font-bold text-gray-700">
-                {Object.values(siteImages.galleries).flat().length}
-              </div>
-              <div className="text-sm text-gray-500">Gallery Images</div>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">Quick Guide</h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <div className="text-2xl mb-2">🖼️</div>
-                <h3 className="font-medium text-gray-900">Replace an Image</h3>
-                <p className="text-sm text-gray-500 mt-1">Hover over any image and click "Replace" to upload a new one</p>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <div className="text-2xl mb-2">➕</div>
-                <h3 className="font-medium text-gray-900">Add to Gallery</h3>
-                <p className="text-sm text-gray-500 mt-1">Click "Add" on any gallery section to add more images</p>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <div className="text-2xl mb-2">📁</div>
-                <h3 className="font-medium text-gray-900">Image Location</h3>
-                <p className="text-sm text-gray-500 mt-1">All images are stored in /public/images/ folder</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Activity Cards Section */}
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Home Page Activity Cards</h2>
-            <p className="text-sm text-gray-500 mb-4">These images appear in the "Our Activities" section on the home page</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {siteImages.activityCards.map((image) => (
-                <ImageCard key={image.id} image={image} onReplace={handleReplace} />
-              ))}
-            </div>
-          </div>
-
-          {/* Lake Section Images */}
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Lakes Page - Lake Sections</h2>
-            <p className="text-sm text-gray-500 mb-4">These images appear next to each lake description on the Lakes page</p>
-            <div className="grid grid-cols-3 gap-4">
-              {siteImages.lakeImages.map((image) => (
-                <ImageCard key={image.id} image={image} onReplace={handleReplace} />
-              ))}
-            </div>
-          </div>
-
-          {/* Page Overview Images */}
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Activity Page Overview Images</h2>
-            <p className="text-sm text-gray-500 mb-4">These images appear in the overview section of each activity page (Deer Hunting, Turkey Hunting, Bass Fishing)</p>
-            <div className="grid grid-cols-3 gap-4">
-              {siteImages.pageOverviewImages.map((image) => (
-                <ImageCard key={image.id} image={image} onReplace={handleReplace} />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Heroes Tab */}
-      {activeTab === 'heroes' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Page Hero Images</h2>
-            <p className="text-sm text-gray-500 mb-6">These are the large banner images at the top of each page</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {siteImages.heroes.map((image) => (
-                <ImageCard key={image.id} image={image} onReplace={handleReplace} size="large" />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Galleries Tab */}
-      {activeTab === 'galleries' && (
-        <div className="space-y-6">
+      {/* Gallery Sections */}
+      <div className="space-y-6">
+        {galleriestoShow.map(gallery => (
           <GallerySection
-            title="Lakes Gallery"
-            description="Gallery Page - Lakes category & Lakes page gallery section"
-            images={siteImages.galleries.lakes}
-            onReplace={handleReplace}
-            onAdd={handleAddToGallery}
+            key={gallery.id}
+            category={gallery.id}
+            label={gallery.label}
+            description={gallery.description}
+            page={gallery.page}
+            images={imagesByCategory[gallery.id] || []}
+            onAdd={handleAdd}
+            onDelete={handleDelete}
+            onUpdate={handleUpdate}
+            onReorder={handleReorder}
+            onSeedDefaults={handleSeedDefaults}
           />
+        ))}
+      </div>
 
-          <GallerySection
-            title="Hunting Gallery"
-            description="Gallery Page - Hunting category & Deer/Turkey hunting page galleries"
-            images={siteImages.galleries.hunting}
-            onReplace={handleReplace}
-            onAdd={handleAddToGallery}
-          />
-
-          <GallerySection
-            title="Property Gallery"
-            description="Gallery Page - Property category"
-            images={siteImages.galleries.property}
-            onReplace={handleReplace}
-            onAdd={handleAddToGallery}
-          />
-
-          <GallerySection
-            title="Lodging Gallery"
-            description="Gallery Page - Lodging category (Camp houses & interiors)"
-            images={siteImages.galleries.lodging}
-            onReplace={handleReplace}
-            onAdd={handleAddToGallery}
-          />
-
-          <GallerySection
-            title="Wildlife Gallery"
-            description="Gallery Page - Wildlife category"
-            images={siteImages.galleries.wildlife}
-            onReplace={handleReplace}
-            onAdd={handleAddToGallery}
-          />
-        </div>
-      )}
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileUpload}
+        className="hidden"
+      />
 
       {/* Help Section */}
       <div className="mt-8 p-6 bg-gray-50 rounded-xl">
-        <h3 className="font-bold text-gray-900 mb-2">Need to make changes?</h3>
-        <p className="text-sm text-gray-600">
-          Images are stored in <code className="bg-gray-200 px-1.5 py-0.5 rounded text-xs">/public/images/</code> folder.
-          To permanently replace an image, upload the new file with the same filename to that folder.
-          For adding new images to galleries, add files to the folder and update the gallery configuration in the code.
-        </p>
+        <h3 className="font-bold text-gray-900 mb-2">How to use</h3>
+        <ul className="text-sm text-gray-600 space-y-1">
+          <li><strong>Add:</strong> Click the + button or "Add Image" to upload a new image</li>
+          <li><strong>Replace:</strong> Hover over an image and click "Replace" to change it</li>
+          <li><strong>Delete:</strong> Hover and click the red delete button</li>
+          <li><strong>Reorder:</strong> Drag and drop images to change their order</li>
+          <li><strong>Edit title:</strong> Click on the title to edit it</li>
+          <li><strong>Load defaults:</strong> Click "Load Default Images" to populate empty galleries</li>
+        </ul>
       </div>
     </div>
   )

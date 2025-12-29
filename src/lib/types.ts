@@ -34,11 +34,24 @@ export interface Activity {
   updated_at: string
 }
 
+export type GalleryCategory =
+  | 'lakes'
+  | 'deer-hunting'
+  | 'turkey-hunting'
+  | 'fishing'
+  | 'property'
+  | 'lodging'
+  | 'wildlife'
+  | 'main-gallery'
+  | 'activity-cards'
+  | 'hero-images'
+  | 'page-overview'
+
 export interface GalleryImage {
   id: string
   title: string | null
   image_url: string
-  category: 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing' | 'property' | 'lodging' | null
+  category: GalleryCategory | null
   caption: string | null
   display_order: number
   is_featured: boolean
