@@ -10,15 +10,21 @@ import { getSiteSettings, getPageContent, getGalleryImages, getHeroMedia, getOve
 
 export const metadata: Metadata = {
   title: "Turkey Hunting | King's Family Lakes",
-  description: 'Premium spring turkey hunting in Alabama. $300/day full day hunts with lodging available. Expert grounds management and strategic blind placement.',
+  description: 'Premium spring turkey hunting in Alabama. $1,000 for 2-day hunt with lodging included. Expert grounds management and strategic blind placement.',
 }
 
 const seasons = [
   {
-    name: 'Spring Season',
-    dates: 'March 15 - April 30',
-    notes: 'Decoys permitted during spring season. Full day hunts only.',
+    name: 'Spring Season (Zone 1)',
+    dates: 'March 25 - May 8, 2025',
+    notes: 'Decoys allowed April 4 - May 8. Youth hunt March 21-22.',
     icon: '🌸',
+  },
+  {
+    name: 'Spring Season (Zone 2)',
+    dates: 'April 1 - May 8, 2025',
+    notes: 'Decoys allowed April 11 - May 8. Youth hunt March 28-29.',
+    icon: '🌷',
   },
 ]
 
@@ -29,23 +35,27 @@ const regulations = [
   },
   {
     title: 'Daily & Season Limits',
-    content: 'One gobbler per day, five combined gobblers per season maximum.',
+    content: 'One gobbler per day; four gobbler bag limit during combined fall and spring season.',
   },
   {
     title: 'License Required',
-    content: 'Valid Alabama hunting permit required for all hunters.',
+    content: 'Valid Alabama hunting license and turkey stamp required for all hunters.',
+  },
+  {
+    title: 'Decoy Restrictions',
+    content: 'Decoys prohibited during first 10 days of season. Mechanical decoys are illegal.',
   },
   {
     title: 'No Baiting',
     content: 'Hunting with bait is illegal in Alabama.',
   },
   {
-    title: 'Written Permission',
-    content: 'Written permission from landowner required (provided upon booking).',
+    title: 'Harvest Reporting',
+    content: 'Must record harvest immediately and report within 48 hours via Game Check app.',
   },
   {
-    title: 'Harvest Records',
-    content: 'Harvest records must be in possession while hunting.',
+    title: 'Written Permission',
+    content: 'Written permission from landowner required (provided upon booking).',
   },
 ]
 
@@ -164,34 +174,30 @@ export default async function TurkeyHuntingPage() {
             subtitle="Simple pricing with no hidden fees."
           />
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="max-w-xl mx-auto">
             <PricingCard
-              title="Full Day Hunt"
-              price={`$${huntingRate}`}
-              period="/person/day"
-              description="Full day turkey hunting - no half day options"
+              title="2-Day Turkey Hunt Package"
+              price="$1,000"
+              period="/person"
+              description="Complete turkey hunting experience"
               features={[
+                'Two full days of hunting',
+                'Lodging included (2 nights)',
                 'Access to all hunting areas',
                 'Strategic blind placements',
                 'Property orientation',
                 'No trophy fees',
-                'Spring season only',
+                'Lake access included',
               ]}
               highlighted
             />
-            <PricingCard
-              title="Lodging"
-              price={`$${lodgingRate}`}
-              period="/person/night"
-              description="Stay at our camp houses"
-              features={[
-                'Two camp houses available',
-                'Full kitchen facilities',
-                'Climate control',
-                'Lake access included',
-                'Peaceful setting',
-              ]}
-            />
+          </div>
+
+          <div className="mt-8 max-w-xl mx-auto bg-amber-50 border border-amber-200 rounded-xl p-6">
+            <h3 className="font-bold text-amber-800 mb-2">Meals Not Included</h3>
+            <p className="text-amber-700">
+              Bring your own food. Camp houses have full kitchens, and outdoor cookers and grills are furnished for your use.
+            </p>
           </div>
         </div>
       </section>
@@ -218,12 +224,12 @@ export default async function TurkeyHuntingPage() {
 
           <div className="text-center mt-8">
             <a
-              href="http://www.outdooralabama.com/resident-hunting-license-information-and-application-packets"
+              href="https://www.outdooralabama.com/seasons-and-bag-limits/turkey-season"
               target="_blank"
               rel="noopener noreferrer"
               className="text-forest-700 font-semibold hover:text-forest-800 inline-flex items-center"
             >
-              View Full Alabama Hunting Regulations
+              View Official Alabama Turkey Season Regulations
               <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
               </svg>

@@ -213,8 +213,11 @@ export default async function BassFishingPage() {
               <div className="text-sm text-forest-300 mt-2">Camp house lodging</div>
             </div>
           </div>
-          <p className="text-forest-100 max-w-2xl mx-auto">
+          <p className="text-forest-100 max-w-2xl mx-auto mb-4">
             Access to all three private lakes. Trophy bass from 10-15 lbs. Bring your gear and experience some of Alabama&apos;s best bass fishing.
+          </p>
+          <p className="text-forest-200 text-sm">
+            Meals not included. Full kitchens available, outdoor cookers & grills furnished.
           </p>
         </div>
       </section>

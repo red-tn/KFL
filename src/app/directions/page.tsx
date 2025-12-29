@@ -12,42 +12,52 @@ export const metadata: Metadata = {
 const directions = [
   {
     step: 1,
-    instruction: 'Take Interstate 20 to Exit 23',
-    detail: 'This is the Epes exit',
+    instruction: 'The Easy Way - Use GPS',
+    detail: 'Search for "Hennigan Cemetery, Epes, Alabama" - this brings you directly to our locked gate',
   },
   {
     step: 2,
+    instruction: 'Or take Interstate 20 to Exit 23',
+    detail: 'This is the Epes exit',
+  },
+  {
+    step: 3,
     instruction: 'Exit onto Main Street, heading east',
     detail: 'Turn right at the exit ramp',
   },
   {
-    step: 3,
+    step: 4,
     instruction: 'Turn right at the next intersection',
     detail: 'Onto Cedar Hill Drive',
   },
   {
-    step: 4,
+    step: 5,
     instruction: 'Turn right onto Dr. Martin Luther King Jr Highway',
     detail: 'At the next intersection',
   },
   {
-    step: 5,
+    step: 6,
     instruction: 'Continue approximately 1.4 miles',
     detail: 'Stay on MLK Jr Highway',
   },
   {
-    step: 6,
+    step: 7,
     instruction: 'Turn left onto Clark Miller Lane',
     detail: 'Look for the turn',
   },
   {
-    step: 7,
-    instruction: 'Follow the dirt road to the gate',
-    detail: 'Located near a cemetery, past the railroad tracks',
+    step: 8,
+    instruction: 'Follow the dirt road to the locked gate',
+    detail: 'Located near Hennigan Cemetery, past the railroad tracks',
   },
 ]
 
 const landmarks = [
+  {
+    name: 'GPS Shortcut',
+    description: 'Search "Hennigan Cemetery, Epes, AL" in your GPS',
+    icon: '📍',
+  },
   {
     name: 'Interstate 20',
     description: 'Major highway connecting Birmingham to Jackson, MS',
@@ -59,14 +69,9 @@ const landmarks = [
     icon: '🚗',
   },
   {
-    name: 'Cemetery',
-    description: 'Located near our gate entrance',
+    name: 'Hennigan Cemetery',
+    description: 'Right at our locked gate entrance',
     icon: '⛪',
-  },
-  {
-    name: 'Railroad Tracks',
-    description: 'Cross these just before the gate',
-    icon: '🚂',
   },
 ]
 

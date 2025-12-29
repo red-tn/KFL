@@ -10,7 +10,7 @@ import { getSiteSettings, getPageContent, getGalleryImages, getHeroMedia, getOve
 
 export const metadata: Metadata = {
   title: "Deer Hunting | King's Family Lakes",
-  description: 'World-class White Tail Deer hunting in Alabama. $300/day with comfortable lodging available. Well-maintained blinds and manicured pastures.',
+  description: 'World-class White Tail Deer hunting in Alabama. $400/day with lodging included. Well-maintained blinds and manicured pastures.',
 }
 
 const features = [
@@ -144,34 +144,30 @@ export default async function DeerHuntingPage() {
             subtitle="Simple, transparent pricing with no hidden fees or trophy charges."
           />
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="max-w-xl mx-auto">
             <PricingCard
-              title="Full Day Hunt"
-              price={`$${huntingRate}`}
+              title="Full Day Deer Hunt"
+              price="$400"
               period="/person/day"
-              description="Full day hunting - no half day options"
+              description="Complete deer hunting experience"
               features={[
+                'Full day hunting (no half days)',
+                'Lodging included',
                 'Access to all hunting blinds',
                 'Property guide orientation',
                 'Game processing area access',
                 'No trophy fees',
-                'Multiple stand locations',
+                'Lake access included',
               ]}
               highlighted
             />
-            <PricingCard
-              title="Lodging"
-              price={`$${lodgingRate}`}
-              period="/person/night"
-              description="Comfortable camp house stay"
-              features={[
-                'Choice of two camp houses',
-                'Full kitchen facilities',
-                'Climate control',
-                'Lake access included',
-                'Peaceful, private setting',
-              ]}
-            />
+          </div>
+
+          <div className="mt-8 max-w-xl mx-auto bg-amber-50 border border-amber-200 rounded-xl p-6">
+            <h3 className="font-bold text-amber-800 mb-2">Meals Not Included</h3>
+            <p className="text-amber-700">
+              Bring your own food. Camp houses have full kitchens, and outdoor cookers and grills are furnished for your use.
+            </p>
           </div>
         </div>
       </section>

@@ -181,33 +181,37 @@ export default async function Home() {
         <div className="container-custom">
           <SectionHeader
             title="Simple, Transparent Pricing"
-            subtitle="Full day rates only - no half day options. No hidden fees, no trophy charges."
+            subtitle="Full day rates only - no half day options. No hidden fees, no trophy charges. Lodging included with hunting packages."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">Hunting</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">${huntingRate}</div>
+              <h3 className="text-lg font-semibold text-gray-500 mb-2">Deer Hunting</h3>
+              <div className="text-4xl font-bold text-forest-700 mb-2">$400</div>
               <p className="text-gray-600">per person / full day</p>
+              <p className="text-sm text-forest-600 mt-2">Lodging included</p>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">Fishing</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">${settings?.fishing_daily_rate || 200}</div>
+              <h3 className="text-lg font-semibold text-gray-500 mb-2">Turkey Hunting</h3>
+              <div className="text-4xl font-bold text-forest-700 mb-2">$1,000</div>
+              <p className="text-gray-600">per person / 2 days</p>
+              <p className="text-sm text-forest-600 mt-2">Lodging included</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <h3 className="text-lg font-semibold text-gray-500 mb-2">Bass Fishing</h3>
+              <div className="text-4xl font-bold text-forest-700 mb-2">$200</div>
               <p className="text-gray-600">per person / full day</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-md text-center">
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">Lodging</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">${lodgingRate}</div>
-              <p className="text-gray-600">per person / night</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-md text-center">
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">Trophy Fees</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">$0</div>
-              <p className="text-gray-600">no hidden charges</p>
+              <p className="text-sm text-gray-500 mt-2">Lodging available</p>
             </div>
           </div>
 
-          <div className="text-center mt-8">
+          <div className="mt-8 max-w-2xl mx-auto bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+            <p className="text-amber-700">
+              <span className="font-semibold">Meals not included.</span> Camp houses have full kitchens, and outdoor cookers & grills are furnished.
+            </p>
+          </div>
+
+          <div className="text-center mt-6">
             <Link href="/deer-hunting" className="text-forest-700 font-semibold hover:text-forest-800">
               View all pricing details →
             </Link>
