@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import type { GalleryImage, GalleryCategory } from '@/lib/types'
+import type { GalleryImage } from '@/lib/types'
 
-// Page gallery configurations
+type CategoryKey = 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing' | 'main-gallery' | 'activity-cards'
+
+// Page gallery configurations - simplified
 const PAGE_GALLERIES: {
-  id: GalleryCategory
+  id: CategoryKey
   label: string
   description: string
   page: string
@@ -15,15 +17,12 @@ const PAGE_GALLERIES: {
   { id: 'deer-hunting', label: 'Deer Hunting', description: 'Gallery on Deer Hunting page', page: '/deer-hunting' },
   { id: 'turkey-hunting', label: 'Turkey Hunting', description: 'Gallery on Turkey Hunting page', page: '/turkey-hunting' },
   { id: 'fishing', label: 'Bass Fishing', description: 'Gallery on Bass Fishing page', page: '/bass-fishing' },
-  { id: 'main-gallery', label: 'Main Gallery', description: 'The main /gallery page', page: '/gallery' },
+  { id: 'main-gallery', label: 'Main Gallery', description: 'The main /gallery page - all categories', page: '/gallery' },
   { id: 'activity-cards', label: 'Activity Cards', description: 'Home page "Our Activities" section', page: '/' },
-  { id: 'property', label: 'Property', description: 'Property images in main gallery', page: '/gallery' },
-  { id: 'lodging', label: 'Lodging', description: 'Lodging images in main gallery', page: '/gallery' },
-  { id: 'wildlife', label: 'Wildlife', description: 'Wildlife images in main gallery', page: '/gallery' },
 ]
 
-// Default images for seeding
-const DEFAULT_IMAGES: Record<string, { url: string; title: string }[]> = {
+// Default images for seeding - use categories that exist in DB
+const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
   'lakes': [
     { url: '/images/IMG_4617.webp', title: 'Lake Scott' },
     { url: '/images/IMG_4628.webp', title: 'Lake Shannon' },
@@ -42,10 +41,6 @@ const DEFAULT_IMAGES: Record<string, { url: string; title: string }[]> = {
     { url: '/images/IMG_2292.webp', title: 'Hunting Area' },
     { url: '/images/IMG_2294.webp', title: 'Hunting Blind' },
     { url: '/images/IMG_2296.webp', title: 'Manicured Pasture' },
-    { url: '/images/IMG_4617.webp', title: 'Lake & Grounds' },
-    { url: '/images/IMG_4628.webp', title: 'Scenic Area' },
-    { url: '/images/IMG_4633.webp', title: 'Property' },
-    { url: '/images/IMG_4635.webp', title: 'Scenic View' },
     { url: '/images/IMG_3284.webp', title: 'Hunting Grounds' },
     { url: '/images/IMG_3285.webp', title: 'Property' },
   ],
@@ -55,9 +50,6 @@ const DEFAULT_IMAGES: Record<string, { url: string; title: string }[]> = {
     { url: '/images/IMG_2290.webp', title: 'Property View' },
     { url: '/images/IMG_2292.webp', title: 'Hunting Grounds' },
     { url: '/images/IMG_2296.webp', title: 'Manicured Pasture' },
-    { url: '/images/IMG_4617.webp', title: 'Lake View' },
-    { url: '/images/IMG_4628.webp', title: 'Property' },
-    { url: '/images/IMG_4633.webp', title: 'Scenic Area' },
     { url: '/images/IMG_3291.webp', title: 'Hunting Area' },
   ],
   'fishing': [
@@ -79,37 +71,29 @@ const DEFAULT_IMAGES: Record<string, { url: string; title: string }[]> = {
     { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
   ],
   'main-gallery': [
+    // Lakes
     { url: '/images/IMG_4617.webp', title: 'Lake Scott' },
     { url: '/images/IMG_4628.webp', title: 'Lake Shannon' },
     { url: '/images/IMG_4633.webp', title: 'Lake Patrick' },
+    { url: '/images/IMG_4635.webp', title: 'Fishing Dock' },
+    // Hunting
     { url: '/images/IMG_2289.webp', title: 'Hunting Grounds' },
+    { url: '/images/IMG_2290.webp', title: 'Property' },
     { url: '/images/IMG_2294.webp', title: 'Turkey Hunting' },
-    { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
-  ],
-  'property': [
+    // Property
     { url: '/images/1.webp', title: 'Property' },
     { url: '/images/3.webp', title: 'View' },
     { url: '/images/IMG_0001-1.webp', title: 'Grounds' },
-    { url: '/images/IMG_0002.webp', title: 'Scenery' },
-    { url: '/images/IMG_0003.webp', title: 'View' },
     { url: '/images/IMG_4596.webp', title: 'Overview' },
     { url: '/images/IMG_4597.webp', title: 'Grounds' },
-    { url: '/images/IMG_4600.webp', title: 'Property' },
-  ],
-  'lodging': [
+    // Lodging
     { url: '/images/IMG_1285-1.webp', title: 'Interior' },
     { url: '/images/IMG_1286.webp', title: 'Lodging' },
-    { url: '/images/IMG_1288.webp', title: 'Interior' },
-    { url: '/images/IMG_1289.webp', title: 'Amenities' },
+    { url: '/images/IMG_1288.webp', title: 'Camp House' },
     { url: '/images/IMG_1302.webp', title: 'Camp House' },
-    { url: '/images/IMG_1306.webp', title: 'Facilities' },
-    { url: '/images/IMG_1310.webp', title: 'Interior' },
-  ],
-  'wildlife': [
+    // Wildlife
     { url: '/images/IMG_6938.webp', title: 'Wildlife' },
     { url: '/images/IMG_6941.webp', title: 'Deer' },
-    { url: '/images/UNADJUSTEDNONRAW_thumb_19e3.webp', title: 'Wildlife' },
-    { url: '/images/UNADJUSTEDNONRAW_thumb_19e4.webp', title: 'Nature' },
   ],
 }
 
@@ -143,14 +127,12 @@ function ImageCard({
     const file = e.target.files?.[0]
     if (!file) return
 
-    // Create a temporary URL for preview
     const previewUrl = URL.createObjectURL(file)
     onUpdate(image.id, { image_url: previewUrl })
 
-    // Upload to Supabase (in a real implementation)
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('category', image.category || 'main-gallery')
+    formData.append('category', image.category || 'lakes')
 
     try {
       const response = await fetch('/api/admin/gallery/upload', {
@@ -183,7 +165,6 @@ function ImageCard({
           className="w-full h-full object-cover"
         />
 
-        {/* Overlay with actions */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
           <button
             onClick={() => fileInputRef.current?.click()}
@@ -204,7 +185,6 @@ function ImageCard({
           </button>
         </div>
 
-        {/* Drag handle */}
         <div className="absolute top-2 left-2 bg-white/80 rounded px-1 py-0.5 text-xs text-gray-500 cursor-move">
           #{image.display_order}
         </div>
@@ -260,17 +240,19 @@ function GallerySection({
   onUpdate,
   onReorder,
   onSeedDefaults,
+  isSeeding,
 }: {
-  category: GalleryCategory
+  category: CategoryKey
   label: string
   description: string
   page: string
   images: GalleryImage[]
-  onAdd: (category: GalleryCategory) => void
+  onAdd: (category: CategoryKey) => void
   onDelete: (id: string) => void
   onUpdate: (id: string, data: Partial<GalleryImage>) => void
   onReorder: (images: GalleryImage[]) => void
-  onSeedDefaults: (category: GalleryCategory) => void
+  onSeedDefaults: (category: CategoryKey) => void
+  isSeeding: boolean
 }) {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [isExpanded, setIsExpanded] = useState(true)
@@ -280,7 +262,7 @@ function GallerySection({
     setDraggedIndex(index)
   }
 
-  const handleDragOver = (e: React.DragEvent, index: number) => {
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
   }
 
@@ -291,7 +273,6 @@ function GallerySection({
     const [draggedImage] = newImages.splice(draggedIndex, 1)
     newImages.splice(targetIndex, 0, draggedImage)
 
-    // Update display_order
     const reorderedImages = newImages.map((img, idx) => ({
       ...img,
       display_order: idx + 1,
@@ -313,7 +294,6 @@ function GallerySection({
 
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-      {/* Header */}
       <div
         className="flex justify-between items-center p-4 bg-gray-50 border-b cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -347,7 +327,6 @@ function GallerySection({
         </div>
       </div>
 
-      {/* Content */}
       {isExpanded && (
         <div className="p-4">
           {images.length === 0 ? (
@@ -363,22 +342,29 @@ function GallerySection({
                   </svg>
                   Add Image
                 </button>
-                {DEFAULT_IMAGES[category] && (
-                  <button
-                    onClick={() => onSeedDefaults(category)}
-                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300 flex items-center gap-2"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-                    </svg>
-                    Load Default Images
-                  </button>
-                )}
+                <button
+                  onClick={() => onSeedDefaults(category)}
+                  disabled={isSeeding}
+                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300 flex items-center gap-2 disabled:opacity-50"
+                >
+                  {isSeeding ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                      Loading...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                      </svg>
+                      Load Default Images
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           ) : (
             <div className="relative">
-              {/* Navigation arrows */}
               {images.length > 4 && (
                 <>
                   <button
@@ -400,7 +386,6 @@ function GallerySection({
                 </>
               )}
 
-              {/* Scrollable images */}
               <div
                 ref={scrollRef}
                 className="flex gap-4 overflow-x-auto pb-2 px-4 -mx-4"
@@ -414,13 +399,12 @@ function GallerySection({
                       onUpdate={onUpdate}
                       isDragging={draggedIndex === index}
                       onDragStart={() => handleDragStart(index)}
-                      onDragOver={(e) => handleDragOver(e, index)}
+                      onDragOver={handleDragOver}
                       onDrop={() => handleDrop(index)}
                     />
                   </div>
                 ))}
 
-                {/* Add button at end */}
                 <div className="flex-shrink-0 w-56">
                   <button
                     onClick={() => onAdd(category)}
@@ -445,12 +429,13 @@ export default function GalleryAdminPage() {
   const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
-  const [activeCategory, setActiveCategory] = useState<GalleryCategory | 'all'>('all')
+  const [messageType, setMessageType] = useState<'success' | 'error'>('success')
+  const [activeCategory, setActiveCategory] = useState<CategoryKey | 'all'>('all')
+  const [seedingCategory, setSeedingCategory] = useState<CategoryKey | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [uploadCategory, setUploadCategory] = useState<GalleryCategory>('main-gallery')
+  const [uploadCategory, setUploadCategory] = useState<CategoryKey>('lakes')
   const supabase = createClient()
 
-  // Fetch all images
   const fetchImages = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/gallery')
@@ -471,7 +456,7 @@ export default function GalleryAdminPage() {
 
   // Group images by category
   const imagesByCategory = images.reduce((acc, img) => {
-    const cat = img.category || 'main-gallery'
+    const cat = (img.category || 'lakes') as CategoryKey
     if (!acc[cat]) acc[cat] = []
     acc[cat].push(img)
     return acc
@@ -482,12 +467,13 @@ export default function GalleryAdminPage() {
     imagesByCategory[cat].sort((a, b) => a.display_order - b.display_order)
   })
 
-  const showMessage = (msg: string, isError = false) => {
+  const showMessage = (msg: string, type: 'success' | 'error' = 'success') => {
     setMessage(msg)
+    setMessageType(type)
     setTimeout(() => setMessage(''), 4000)
   }
 
-  const handleAdd = (category: GalleryCategory) => {
+  const handleAdd = (category: CategoryKey) => {
     setUploadCategory(category)
     fileInputRef.current?.click()
   }
@@ -511,23 +497,22 @@ export default function GalleryAdminPage() {
       const data = await response.json()
 
       if (data.error) {
-        showMessage(`Error: ${data.error}`, true)
+        showMessage(`Error: ${data.error}`, 'error')
       } else if (data.image) {
         setImages(prev => [...prev, data.image])
         showMessage('Image added successfully!')
       }
     } catch (error) {
-      showMessage('Failed to upload image', true)
+      showMessage('Failed to upload image', 'error')
     }
 
-    // Reset file input
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this image?')) return
+    if (!confirm('Delete this image?')) return
 
     try {
       const response = await fetch(`/api/admin/gallery?id=${id}`, {
@@ -536,18 +521,17 @@ export default function GalleryAdminPage() {
       const data = await response.json()
 
       if (data.error) {
-        showMessage(`Error: ${data.error}`, true)
+        showMessage(`Error: ${data.error}`, 'error')
       } else {
         setImages(prev => prev.filter(img => img.id !== id))
-        showMessage('Image deleted successfully!')
+        showMessage('Image deleted!')
       }
     } catch (error) {
-      showMessage('Failed to delete image', true)
+      showMessage('Failed to delete image', 'error')
     }
   }
 
   const handleUpdate = async (id: string, updateData: Partial<GalleryImage>) => {
-    // Optimistic update
     setImages(prev => prev.map(img =>
       img.id === id ? { ...img, ...updateData } : img
     ))
@@ -561,17 +545,16 @@ export default function GalleryAdminPage() {
       const data = await response.json()
 
       if (data.error) {
-        showMessage(`Error: ${data.error}`, true)
-        fetchImages() // Revert on error
+        showMessage(`Error: ${data.error}`, 'error')
+        fetchImages()
       }
     } catch (error) {
-      showMessage('Failed to update image', true)
+      showMessage('Failed to update', 'error')
       fetchImages()
     }
   }
 
   const handleReorder = async (reorderedImages: GalleryImage[]) => {
-    // Optimistic update
     setImages(prev => {
       const otherImages = prev.filter(img => !reorderedImages.find(r => r.id === img.id))
       return [...otherImages, ...reorderedImages]
@@ -591,45 +574,68 @@ export default function GalleryAdminPage() {
       const data = await response.json()
 
       if (data.error) {
-        showMessage(`Error: ${data.error}`, true)
+        showMessage(`Error: ${data.error}`, 'error')
         fetchImages()
-      } else {
-        showMessage('Order updated!')
       }
     } catch (error) {
-      showMessage('Failed to reorder images', true)
+      showMessage('Failed to reorder', 'error')
       fetchImages()
     }
   }
 
-  const handleSeedDefaults = async (category: GalleryCategory) => {
+  const handleSeedDefaults = async (category: CategoryKey) => {
     const defaults = DEFAULT_IMAGES[category]
     if (!defaults) return
 
-    showMessage('Loading default images...')
+    setSeedingCategory(category)
+    showMessage(`Loading ${defaults.length} images...`)
 
-    try {
-      for (let i = 0; i < defaults.length; i++) {
-        const img = defaults[i]
-        const response = await fetch('/api/admin/gallery', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+    // Map category to valid DB category
+    const dbCategory = category === 'main-gallery' ? 'lakes' : category === 'activity-cards' ? 'lakes' : category
+
+    let successCount = 0
+    let errorCount = 0
+
+    for (let i = 0; i < defaults.length; i++) {
+      const img = defaults[i]
+      try {
+        const { data, error } = await supabase
+          .from('gallery_images')
+          .insert({
             title: img.title,
             image_url: img.url,
-            category,
+            category: dbCategory,
             display_order: i + 1,
-          }),
-        })
-        const data = await response.json()
-        if (data.image) {
-          setImages(prev => [...prev, data.image])
+            is_featured: false,
+          })
+          .select()
+          .single()
+
+        if (error) {
+          console.error('Insert error:', error)
+          errorCount++
+        } else if (data) {
+          // Update with the actual category for local state
+          const imageWithCategory = { ...data, category: category } as GalleryImage
+          setImages(prev => [...prev, imageWithCategory])
+          successCount++
         }
+      } catch (e) {
+        console.error('Error adding image:', e)
+        errorCount++
       }
-      showMessage(`Loaded ${defaults.length} default images!`)
-    } catch (error) {
-      showMessage('Failed to load defaults', true)
     }
+
+    setSeedingCategory(null)
+
+    if (errorCount > 0) {
+      showMessage(`Added ${successCount} images, ${errorCount} failed`, errorCount > successCount ? 'error' : 'success')
+    } else {
+      showMessage(`Added ${successCount} images!`)
+    }
+
+    // Refresh from database
+    fetchImages()
   }
 
   if (loading) {
@@ -640,7 +646,6 @@ export default function GalleryAdminPage() {
     )
   }
 
-  // Filter galleries to show
   const galleriestoShow = activeCategory === 'all'
     ? PAGE_GALLERIES
     : PAGE_GALLERIES.filter(g => g.id === activeCategory)
@@ -658,7 +663,7 @@ export default function GalleryAdminPage() {
       </div>
 
       {message && (
-        <div className={`mb-6 p-4 rounded-lg ${message.includes('Error') || message.includes('Failed') ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
+        <div className={`mb-6 p-4 rounded-lg ${messageType === 'error' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
           {message}
         </div>
       )}
@@ -710,11 +715,11 @@ export default function GalleryAdminPage() {
             onUpdate={handleUpdate}
             onReorder={handleReorder}
             onSeedDefaults={handleSeedDefaults}
+            isSeeding={seedingCategory === gallery.id}
           />
         ))}
       </div>
 
-      {/* Hidden file input */}
       <input
         ref={fileInputRef}
         type="file"
@@ -723,15 +728,14 @@ export default function GalleryAdminPage() {
         className="hidden"
       />
 
-      {/* Help Section */}
       <div className="mt-8 p-6 bg-gray-50 rounded-xl">
         <h3 className="font-bold text-gray-900 mb-2">How to use</h3>
         <ul className="text-sm text-gray-600 space-y-1">
-          <li><strong>Add:</strong> Click the + button or "Add Image" to upload a new image</li>
-          <li><strong>Replace:</strong> Hover over an image and click "Replace" to change it</li>
+          <li><strong>Add:</strong> Click the + button to upload a new image</li>
+          <li><strong>Replace:</strong> Hover over an image and click "Replace"</li>
           <li><strong>Delete:</strong> Hover and click the red delete button</li>
-          <li><strong>Reorder:</strong> Drag and drop images to change their order</li>
-          <li><strong>Edit title:</strong> Click on the title to edit it</li>
+          <li><strong>Reorder:</strong> Drag and drop images</li>
+          <li><strong>Edit title:</strong> Click on the title to edit</li>
           <li><strong>Load defaults:</strong> Click "Load Default Images" to populate empty galleries</li>
         </ul>
       </div>
