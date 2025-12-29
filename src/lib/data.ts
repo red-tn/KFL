@@ -105,6 +105,12 @@ export async function getGalleryImages(category?: string): Promise<GalleryImage[
     }
 
     const { data, error } = await query
+
+    // Debug logging
+    if (category) {
+      console.log(`getGalleryImages(${category}):`, data?.length || 0, 'images')
+    }
+
     if (error) {
       console.error('Error fetching gallery images:', error)
       return []

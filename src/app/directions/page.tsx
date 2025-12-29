@@ -1,3 +1,5 @@
+export const revalidate = 0 // Don't cache - always fetch fresh data
+
 import { Metadata } from 'next'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
