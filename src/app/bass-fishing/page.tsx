@@ -59,20 +59,6 @@ const tips = [
   },
 ]
 
-// Fallback images if database is empty
-const defaultGalleryImages = [
-  { src: '/images/IMG_4635.webp', alt: 'Bass fishing', caption: 'Bass Fishing' },
-  { src: '/images/IMG_4617.webp', alt: 'Lake Scott', caption: 'Lake Scott' },
-  { src: '/images/IMG_4628.webp', alt: 'Lake Shannon', caption: 'Lake Shannon' },
-  { src: '/images/IMG_4633.webp', alt: 'Lake Patrick', caption: 'Lake Patrick' },
-  { src: '/images/IMG_4621.webp', alt: 'Lake view', caption: 'Lake View' },
-  { src: '/images/IMG_4622.webp', alt: 'Fishing dock', caption: 'Fishing Dock' },
-  { src: '/images/IMG_4623.webp', alt: 'Lake waters', caption: 'Lake Waters' },
-  { src: '/images/IMG_4624.webp', alt: 'Scenic lake', caption: 'Scenic Lake' },
-  { src: '/images/IMG_4626.webp', alt: 'Peaceful waters', caption: 'Peaceful Waters' },
-  { src: '/images/IMG_4627.webp', alt: 'Fishing spot', caption: 'Prime Fishing Spot' },
-]
-
 export default async function BassFishingPage() {
   const [settings, pageContent, dbImages, heroMedia, overviewImg] = await Promise.all([
     getSiteSettings(),
@@ -87,13 +73,11 @@ export default async function BassFishingPage() {
   const fishingRate = settings?.fishing_daily_rate || 200
   const lodgingRate = settings?.lodging_nightly_rate || 100
   const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4635.webp'
-  const overviewImage = overviewImg || '/images/IMG_4635.webp'
+  const heroImage = heroMedia.images[0]?.image_url || null
+  const overviewImage = overviewImg || null
 
-  // Use database images if available, otherwise fallback
-  const galleryImages = dbImages.length > 0
-    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
-    : defaultGalleryImages
+  // Use database images only - manage in admin
+  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
 
   return (
     <>
@@ -101,7 +85,7 @@ export default async function BassFishingPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage}
+        backgroundImage={heroImage || undefined}
         size="medium"
       />
 
@@ -223,23 +207,25 @@ export default async function BassFishingPage() {
       </section>
 
       {/* Gallery */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <SectionHeader
-            title="Gallery"
-            subtitle="See what's biting at King's Family Lakes."
-          />
-          <ScrollableGallery images={galleryImages} />
-          <div className="text-center mt-8">
-            <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
-              View Full Photo Gallery
-              <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </Link>
+      {galleryImages.length > 0 && (
+        <section className="section-padding">
+          <div className="container-custom">
+            <SectionHeader
+              title="Gallery"
+              subtitle="See what's biting at King's Family Lakes."
+            />
+            <ScrollableGallery images={galleryImages} />
+            <div className="text-center mt-8">
+              <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
+                View Full Photo Gallery
+                <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-16 bg-primary-700 text-white">

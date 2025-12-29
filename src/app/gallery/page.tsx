@@ -20,7 +20,7 @@ export default async function GalleryPage() {
   const heroTitle = pageContent?.hero_title || 'Photo Gallery'
   const heroSubtitle = pageContent?.hero_subtitle || "Explore the beauty of King's Family Lakes through our collection of photos."
   const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4617.webp'
+  const heroImage = heroMedia.images[0]?.image_url || null
 
   // Transform gallery images for the grid component
   const images = galleryImages.map((img) => ({
@@ -35,7 +35,7 @@ export default async function GalleryPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage}
+        backgroundImage={heroImage || undefined}
         size="small"
       />
 

@@ -93,7 +93,7 @@ export default async function DirectionsPage() {
   const heroTitle = pageContent?.hero_title || 'How to Get Here'
   const heroSubtitle = pageContent?.hero_subtitle || 'Located in Epes, Alabama - just off Interstate 20, Exit 23. Easy to find, hard to leave.'
   const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4628.webp'
+  const heroImage = heroMedia.images[0]?.image_url || null
   const phone = settings?.phone || '+1 (334) 341-3753'
 
   return (
@@ -102,7 +102,7 @@ export default async function DirectionsPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage}
+        backgroundImage={heroImage || undefined}
         size="small"
       />
 

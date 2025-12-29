@@ -60,20 +60,6 @@ const lakes = [
   },
 ]
 
-// Fallback images if database is empty
-const defaultGalleryImages = [
-  { src: '/images/IMG_4617.webp', alt: 'Lake Scott', caption: 'Lake Scott' },
-  { src: '/images/IMG_4628.webp', alt: 'Lake Shannon', caption: 'Lake Shannon' },
-  { src: '/images/IMG_4633.webp', alt: 'Lake Patrick', caption: 'Lake Patrick' },
-  { src: '/images/IMG_4635.webp', alt: 'Fishing dock', caption: 'Fishing Dock' },
-  { src: '/images/IMG_4621.webp', alt: 'Lake view', caption: 'Lake View' },
-  { src: '/images/IMG_4622.webp', alt: 'Peaceful waters', caption: 'Peaceful Waters' },
-  { src: '/images/IMG_4623.webp', alt: 'Lake waters', caption: 'Lake Waters' },
-  { src: '/images/IMG_4624.webp', alt: 'Scenic lake', caption: 'Scenic Lake' },
-  { src: '/images/IMG_4626.webp', alt: 'Tranquil waters', caption: 'Tranquil Waters' },
-  { src: '/images/IMG_4637.webp', alt: 'Lake shore', caption: 'Lake Shore' },
-]
-
 export default async function TheLakesPage() {
   const [pageContent, dbImages, heroMedia] = await Promise.all([
     getPageContent('the-lakes'),
@@ -83,21 +69,19 @@ export default async function TheLakesPage() {
 
   const heroTitle = pageContent?.hero_title || 'The Lakes'
   const heroSubtitle = pageContent?.hero_subtitle || 'Three pristine private lakes stocked with Large Mouth Bass and Brim. Year-round fishing in the heart of Alabama.'
-  const heroVideo = heroMedia.video || '/images/lake-overview.mp4'
-  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4628.webp'
+  const heroVideo = heroMedia.video || null
+  const heroImage = heroMedia.images[0]?.image_url || null
 
-  // Use database images if available, otherwise fallback
-  const galleryImages = dbImages.length > 0
-    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
-    : defaultGalleryImages
+  // Use database images only - manage in admin
+  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
 
   return (
     <>
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundVideo={heroVideo}
-        backgroundImage={heroImage}
+        backgroundVideo={heroVideo || undefined}
+        backgroundImage={heroImage || undefined}
         size="medium"
       />
 
@@ -210,23 +194,25 @@ export default async function TheLakesPage() {
       </section>
 
       {/* Gallery */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <SectionHeader
-            title="Lake Gallery"
-            subtitle="Take a visual tour of our beautiful private lakes."
-          />
-          <ScrollableGallery images={galleryImages} />
-          <div className="text-center mt-8">
-            <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
-              View Full Photo Gallery
-              <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </Link>
+      {galleryImages.length > 0 && (
+        <section className="section-padding">
+          <div className="container-custom">
+            <SectionHeader
+              title="Lake Gallery"
+              subtitle="Take a visual tour of our beautiful private lakes."
+            />
+            <ScrollableGallery images={galleryImages} />
+            <div className="text-center mt-8">
+              <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
+                View Full Photo Gallery
+                <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-16 bg-primary-700 text-white">

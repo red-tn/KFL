@@ -47,7 +47,7 @@ export default async function ContactPage() {
   const heroTitle = pageContent?.hero_title || 'Contact Us'
   const heroSubtitle = pageContent?.hero_subtitle || "Ready to book your adventure? Have questions? We're here to help."
   const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4633.webp'
+  const heroImage = heroMedia.images[0]?.image_url || null
   const phone = settings?.phone || '+1 (334) 341-3753'
   const email = settings?.email || 'papakingj@gmail.com'
   const city = settings?.address_city || 'Epes'
@@ -108,7 +108,7 @@ export default async function ContactPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage}
+        backgroundImage={heroImage || undefined}
         size="small"
       />
 

@@ -53,19 +53,6 @@ const regulations = [
   },
 ]
 
-// Fallback images if database is empty
-const defaultGalleryImages = [
-  { src: '/images/IMG_2294.webp', alt: 'Turkey hunting grounds', caption: 'Turkey Hunting Grounds' },
-  { src: '/images/IMG_2289.webp', alt: 'Hunting property', caption: 'Hunting Property' },
-  { src: '/images/IMG_2290.webp', alt: 'Property view', caption: 'Property View' },
-  { src: '/images/IMG_2292.webp', alt: 'Grounds', caption: 'Hunting Grounds' },
-  { src: '/images/IMG_2296.webp', alt: 'Pasture', caption: 'Manicured Pasture' },
-  { src: '/images/IMG_4617.webp', alt: 'Lake view', caption: 'Lake View' },
-  { src: '/images/IMG_4628.webp', alt: 'Property', caption: 'Property' },
-  { src: '/images/IMG_4633.webp', alt: 'Scenic area', caption: 'Scenic Area' },
-  { src: '/images/IMG_3291.webp', alt: 'Hunting area', caption: 'Hunting Area' },
-]
-
 export default async function TurkeyHuntingPage() {
   const [settings, pageContent, dbImages, heroMedia, overviewImg] = await Promise.all([
     getSiteSettings(),
@@ -81,13 +68,11 @@ export default async function TurkeyHuntingPage() {
   const lodgingRate = settings?.lodging_nightly_rate || 100
   const phone = settings?.phone || '+1 (334) 341-3753'
   const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_2294.webp'
-  const overviewImage = overviewImg || '/images/IMG_2294.webp'
+  const heroImage = heroMedia.images[0]?.image_url || null
+  const overviewImage = overviewImg || null
 
-  // Use database images if available, otherwise fallback
-  const galleryImages = dbImages.length > 0
-    ? dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
-    : defaultGalleryImages
+  // Use database images only - manage in admin
+  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
 
   return (
     <>
@@ -95,7 +80,7 @@ export default async function TurkeyHuntingPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage}
+        backgroundImage={heroImage || undefined}
         size="medium"
       />
 
@@ -233,23 +218,25 @@ export default async function TurkeyHuntingPage() {
       </section>
 
       {/* Gallery */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <SectionHeader
-            title="Gallery"
-            subtitle="See our hunting grounds and past hunts."
-          />
-          <ScrollableGallery images={galleryImages} />
-          <div className="text-center mt-8">
-            <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
-              View Full Photo Gallery
-              <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </Link>
+      {galleryImages.length > 0 && (
+        <section className="section-padding">
+          <div className="container-custom">
+            <SectionHeader
+              title="Gallery"
+              subtitle="See our hunting grounds and past hunts."
+            />
+            <ScrollableGallery images={galleryImages} />
+            <div className="text-center mt-8">
+              <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
+                View Full Photo Gallery
+                <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-16 bg-forest-700 text-white">

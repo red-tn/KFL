@@ -623,6 +623,7 @@ export default function GalleryAdminPage() {
 
         if (data.error) {
           console.error('Upload error:', data.error)
+          showMessage(`Upload failed: ${data.error}`, 'error')
           errorCount++
         } else if (data.image) {
           setImages(prev => [...prev, data.image])
