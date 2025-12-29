@@ -32,6 +32,7 @@ export default function PagesPage() {
       .update({
         hero_title: editing.hero_title,
         hero_subtitle: editing.hero_subtitle,
+        hero_video_url: editing.hero_video_url,
         seo_title: editing.seo_title,
         seo_description: editing.seo_description,
       })
@@ -129,6 +130,17 @@ export default function PagesPage() {
                   rows={3}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Hero Video URL</label>
+                <input
+                  type="text"
+                  value={editing.hero_video_url || ''}
+                  onChange={(e) => setEditing({ ...editing, hero_video_url: e.target.value })}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  placeholder="/images/lake-overview.mp4 or leave empty for image only"
+                />
+                <p className="text-xs text-gray-500 mt-1">Video file path (e.g., /images/lake-overview.mp4). Leave empty to use hero images from Image Manager.</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">SEO Title</label>

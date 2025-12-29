@@ -5,7 +5,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent, getGalleryImages, getHeroImage, getOverviewImage } from '@/lib/data'
+import { getSiteSettings, getPageContent, getGalleryImages, getHeroMedia, getOverviewImage } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Bass Fishing | King's Family Lakes",
@@ -74,11 +74,11 @@ const defaultGalleryImages = [
 ]
 
 export default async function BassFishingPage() {
-  const [settings, pageContent, dbImages, heroImg, overviewImg] = await Promise.all([
+  const [settings, pageContent, dbImages, heroMedia, overviewImg] = await Promise.all([
     getSiteSettings(),
     getPageContent('bass-fishing'),
     getGalleryImages('fishing'),
-    getHeroImage('bass-fishing'),
+    getHeroMedia('bass-fishing'),
     getOverviewImage('bass-fishing'),
   ])
 
@@ -86,7 +86,8 @@ export default async function BassFishingPage() {
   const heroSubtitle = pageContent?.hero_subtitle || 'Three private lakes stocked with trophy Large Mouth Bass and Brim. Florida, Northern, and F1 hybrid strains available.'
   const fishingRate = settings?.fishing_daily_rate || 200
   const lodgingRate = settings?.lodging_nightly_rate || 100
-  const heroImage = heroImg || '/images/IMG_4635.webp'
+  const heroVideo = heroMedia.video || null
+  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4635.webp'
   const overviewImage = overviewImg || '/images/IMG_4635.webp'
 
   // Use database images if available, otherwise fallback
@@ -99,6 +100,7 @@ export default async function BassFishingPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        backgroundVideo={heroVideo || undefined}
         backgroundImage={heroImage}
         size="medium"
       />
@@ -137,8 +139,8 @@ export default async function BassFishingPage() {
                 <p className="text-gray-600">Abundant brim populations perfect for family fishing. Great for beginners and kids.</p>
               </div>
               <div className="bg-earth-50 rounded-lg p-6">
-                <h3 className="font-bold text-earth-800 mb-2">Free with Stay</h3>
-                <p className="text-gray-600">Fishing access is included with all hunting packages and lodging reservations.</p>
+                <h3 className="font-bold text-earth-800 mb-2">Full Day Rates</h3>
+                <p className="text-gray-600">$200 per person for a full day of fishing. No half day options available.</p>
               </div>
             </div>
           </div>

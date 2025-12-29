@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS page_content (
   hero_title TEXT,
   hero_subtitle TEXT,
   hero_image_url TEXT,
+  hero_video_url TEXT,
   content JSONB DEFAULT '{}',
   seo_title TEXT,
   seo_description TEXT,
@@ -86,14 +87,14 @@ CREATE TABLE IF NOT EXISTS page_content (
 );
 
 -- Insert default page content
-INSERT INTO page_content (page_slug, hero_title, hero_subtitle) VALUES
-('home', 'King''s Family Lakes', 'Experience world-class hunting and fishing in the heart of Alabama.'),
-('the-lakes', 'The Lakes', 'Three pristine private lakes stocked with Large Mouth Bass and Brim.'),
-('deer-hunting', 'Deer Hunting', 'A world-class White Tail Deer hunting experience.'),
-('turkey-hunting', 'Turkey Hunting', 'A turkey hunting experience that is second to none.'),
-('bass-fishing', 'Bass Fishing', 'Trophy bass fishing on three private lakes.'),
-('directions', 'How to Get Here', 'Located in Epes, Alabama - just off Interstate 20, Exit 23.'),
-('contact', 'Contact Us', 'Ready to book your adventure? We''re here to help.')
+INSERT INTO page_content (page_slug, hero_title, hero_subtitle, hero_video_url) VALUES
+('home', 'King''s Family Lakes', 'Experience world-class hunting and fishing in the heart of Alabama.', '/images/lake-overview.mp4'),
+('the-lakes', 'The Lakes', 'Three pristine private lakes stocked with Large Mouth Bass and Brim.', '/images/lake-overview.mp4'),
+('deer-hunting', 'Deer Hunting', 'A world-class White Tail Deer hunting experience.', NULL),
+('turkey-hunting', 'Turkey Hunting', 'A turkey hunting experience that is second to none.', NULL),
+('bass-fishing', 'Bass Fishing', 'Trophy bass fishing on three private lakes.', NULL),
+('directions', 'How to Get Here', 'Located in Epes, Alabama - just off Interstate 20, Exit 23.', NULL),
+('contact', 'Contact Us', 'Ready to book your adventure? We''re here to help.', NULL)
 ON CONFLICT (page_slug) DO NOTHING;
 
 -- Contact Submissions Table

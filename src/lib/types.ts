@@ -78,6 +78,7 @@ export interface PageContent {
   hero_title: string | null
   hero_subtitle: string | null
   hero_image_url: string | null
+  hero_video_url: string | null
   content: Record<string, unknown>
   seo_title: string | null
   seo_description: string | null

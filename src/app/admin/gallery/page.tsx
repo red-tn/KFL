@@ -23,15 +23,15 @@ const PAGE_GALLERIES: {
   type: SectionType
   singleImage?: boolean
 }[] = [
-  // Hero Images - one per page
-  { id: 'hero-home', label: 'Home Hero', description: 'Hero background for Home page', page: '/', type: 'hero', singleImage: true },
-  { id: 'hero-lakes', label: 'Lakes Hero', description: 'Hero background for The Lakes page', page: '/the-lakes', type: 'hero', singleImage: true },
-  { id: 'hero-deer', label: 'Deer Hunting Hero', description: 'Hero background for Deer Hunting page', page: '/deer-hunting', type: 'hero', singleImage: true },
-  { id: 'hero-turkey', label: 'Turkey Hunting Hero', description: 'Hero background for Turkey Hunting page', page: '/turkey-hunting', type: 'hero', singleImage: true },
-  { id: 'hero-fishing', label: 'Bass Fishing Hero', description: 'Hero background for Bass Fishing page', page: '/bass-fishing', type: 'hero', singleImage: true },
-  { id: 'hero-gallery', label: 'Gallery Hero', description: 'Hero background for Gallery page', page: '/gallery', type: 'hero', singleImage: true },
-  { id: 'hero-directions', label: 'Directions Hero', description: 'Hero background for Directions page', page: '/directions', type: 'hero', singleImage: true },
-  { id: 'hero-contact', label: 'Contact Hero', description: 'Hero background for Contact page', page: '/contact', type: 'hero', singleImage: true },
+  // Hero Images - multiple per page allowed (first is primary, rest are alternates)
+  { id: 'hero-home', label: 'Home Hero', description: 'Hero images for Home page (first is primary)', page: '/', type: 'hero' },
+  { id: 'hero-lakes', label: 'Lakes Hero', description: 'Hero images for The Lakes page', page: '/the-lakes', type: 'hero' },
+  { id: 'hero-deer', label: 'Deer Hunting Hero', description: 'Hero images for Deer Hunting page', page: '/deer-hunting', type: 'hero' },
+  { id: 'hero-turkey', label: 'Turkey Hunting Hero', description: 'Hero images for Turkey Hunting page', page: '/turkey-hunting', type: 'hero' },
+  { id: 'hero-fishing', label: 'Bass Fishing Hero', description: 'Hero images for Bass Fishing page', page: '/bass-fishing', type: 'hero' },
+  { id: 'hero-gallery', label: 'Gallery Hero', description: 'Hero images for Gallery page', page: '/gallery', type: 'hero' },
+  { id: 'hero-directions', label: 'Directions Hero', description: 'Hero images for Directions page', page: '/directions', type: 'hero' },
+  { id: 'hero-contact', label: 'Contact Hero', description: 'Hero images for Contact page', page: '/contact', type: 'hero' },
 
   // Page Overview Images - main content image on each activity page
   { id: 'overview-deer', label: 'Deer Page Image', description: 'Main content image on Deer Hunting page', page: '/deer-hunting', type: 'overview', singleImage: true },

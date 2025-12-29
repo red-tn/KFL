@@ -6,7 +6,7 @@ import PricingCard from '@/components/ui/PricingCard'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent, getGalleryImages, getHeroImage, getOverviewImage } from '@/lib/data'
+import { getSiteSettings, getPageContent, getGalleryImages, getHeroMedia, getOverviewImage } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Deer Hunting | King's Family Lakes",
@@ -71,11 +71,11 @@ const defaultGalleryImages = [
 ]
 
 export default async function DeerHuntingPage() {
-  const [settings, pageContent, dbImages, heroImg, overviewImg] = await Promise.all([
+  const [settings, pageContent, dbImages, heroMedia, overviewImg] = await Promise.all([
     getSiteSettings(),
     getPageContent('deer-hunting'),
     getGalleryImages('deer-hunting'),
-    getHeroImage('deer-hunting'),
+    getHeroMedia('deer-hunting'),
     getOverviewImage('deer-hunting'),
   ])
 
@@ -84,7 +84,8 @@ export default async function DeerHuntingPage() {
   const huntingRate = settings?.hunting_daily_rate || 300
   const lodgingRate = settings?.lodging_nightly_rate || 100
   const phone = settings?.phone || '+1 (334) 341-3753'
-  const heroImage = heroImg || '/images/IMG_2289.webp'
+  const heroVideo = heroMedia.video || null
+  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_2289.webp'
   const overviewImage = overviewImg || '/images/IMG_2290.webp'
 
   // Use database images if available, otherwise fallback
@@ -97,6 +98,7 @@ export default async function DeerHuntingPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        backgroundVideo={heroVideo || undefined}
         backgroundImage={heroImage}
         size="medium"
       />

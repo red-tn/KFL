@@ -5,7 +5,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getPageContent, getGalleryImages } from '@/lib/data'
+import { getPageContent, getGalleryImages, getHeroMedia } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "The Lakes | King's Family Lakes",
@@ -75,13 +75,16 @@ const defaultGalleryImages = [
 ]
 
 export default async function TheLakesPage() {
-  const [pageContent, dbImages] = await Promise.all([
+  const [pageContent, dbImages, heroMedia] = await Promise.all([
     getPageContent('the-lakes'),
     getGalleryImages('lakes'),
+    getHeroMedia('the-lakes'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'The Lakes'
   const heroSubtitle = pageContent?.hero_subtitle || 'Three pristine private lakes stocked with Large Mouth Bass and Brim. Year-round fishing in the heart of Alabama.'
+  const heroVideo = heroMedia.video || '/images/lake-overview.mp4'
+  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4628.webp'
 
   // Use database images if available, otherwise fallback
   const galleryImages = dbImages.length > 0
@@ -93,7 +96,8 @@ export default async function TheLakesPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundVideo="/images/lake-overview.mp4"
+        backgroundVideo={heroVideo}
+        backgroundImage={heroImage}
         size="medium"
       />
 

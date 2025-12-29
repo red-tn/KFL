@@ -3,7 +3,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages, getHeroImage } from '@/lib/data'
+import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages, getHeroMedia } from '@/lib/data'
 
 const features = [
   {
@@ -34,7 +34,6 @@ const defaultActivities = [
     title: 'The Lakes',
     description: 'Three pristine private lakes - Lake Scott, Lake Shannon, and Lake Patrick - offering year-round fishing for Large Mouth Bass and Brim.',
     href: '/the-lakes',
-    price: 'Free w/ Stay',
     image: '/images/IMG_4617.webp',
   },
   {
@@ -56,18 +55,18 @@ const defaultActivities = [
     title: 'Bass Fishing',
     description: 'Cast your line in our private lakes stocked with trophy-sized Large Mouth Bass. Multiple docks and boat access available.',
     href: '/bass-fishing',
-    price: 'Free w/ Stay',
+    price: '$200/day',
     image: '/images/IMG_4635.webp',
   },
 ]
 
 export default async function Home() {
-  const [settings, featuredActivities, pageContent, cardImages, heroImg] = await Promise.all([
+  const [settings, featuredActivities, pageContent, cardImages, heroMedia] = await Promise.all([
     getSiteSettings(),
     getFeaturedActivities(),
     getPageContent('home'),
     getActivityCardImages(),
-    getHeroImage('home'),
+    getHeroMedia('home'),
   ])
 
   // Default images for activities (fallback if not in database)
@@ -86,7 +85,7 @@ export default async function Home() {
         title: a.name,
         description: a.short_description || '',
         href: `/${a.slug}`,
-        price: a.daily_rate ? `$${a.daily_rate}/day` : 'Free w/ Stay',
+        price: a.daily_rate ? `$${a.daily_rate}/day` : undefined,
         badge: a.type.includes('hunting') ? 'Popular' : undefined,
         image: activityImages[a.slug] || '/images/IMG_4617.webp',
       }))
@@ -97,15 +96,16 @@ export default async function Home() {
   const phone = settings?.phone || '+1 (334) 341-3753'
   const huntingRate = settings?.hunting_daily_rate || 300
   const lodgingRate = settings?.lodging_nightly_rate || 100
-  // Home hero uses video, but can use image from database as fallback
-  const heroImage = heroImg || '/images/IMG_4617.webp'
+  // Home hero - use video from database if set, otherwise fallback
+  const heroVideo = heroMedia.video || '/images/lake-overview.mp4'
+  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4617.webp'
 
   return (
     <>
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundVideo="/images/lake-overview.mp4"
+        backgroundVideo={heroVideo}
         backgroundImage={heroImage}
         ctaText="Book Your Adventure"
         ctaLink="/contact"

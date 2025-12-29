@@ -138,7 +138,7 @@ export async function getSingleImage(category: string): Promise<GalleryImage | n
   }
 }
 
-// Get hero image for a page
+// Get hero image for a page (returns first/primary image)
 export async function getHeroImage(page: string): Promise<string | null> {
   const categoryMap: Record<string, string> = {
     'home': 'hero-home',
@@ -156,6 +156,38 @@ export async function getHeroImage(page: string): Promise<string | null> {
 
   const image = await getSingleImage(category)
   return image?.image_url || null
+}
+
+// Get all hero images for a page (for slideshows or alternates)
+export async function getHeroImages(page: string): Promise<GalleryImage[]> {
+  const categoryMap: Record<string, string> = {
+    'home': 'hero-home',
+    'the-lakes': 'hero-lakes',
+    'deer-hunting': 'hero-deer',
+    'turkey-hunting': 'hero-turkey',
+    'bass-fishing': 'hero-fishing',
+    'gallery': 'hero-gallery',
+    'directions': 'hero-directions',
+    'contact': 'hero-contact',
+  }
+
+  const category = categoryMap[page]
+  if (!category) return []
+
+  return await getGalleryImages(category)
+}
+
+// Get hero media (video URL from page_content, images from gallery)
+export async function getHeroMedia(page: string): Promise<{ video: string | null; images: GalleryImage[] }> {
+  const [pageContent, images] = await Promise.all([
+    getPageContent(page),
+    getHeroImages(page),
+  ])
+
+  return {
+    video: pageContent?.hero_video_url || null,
+    images,
+  }
 }
 
 // Get overview/page image
