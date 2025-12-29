@@ -3,7 +3,7 @@ import Hero from '@/components/ui/Hero'
 import ContactForm from '@/components/forms/ContactForm'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent } from '@/lib/data'
+import { getSiteSettings, getPageContent, getHeroMedia } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Contact Us | King's Family Lakes",
@@ -12,20 +12,24 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: 'What is the cost for hunting?',
-    answer: '$300 per person per day for both deer and turkey hunting. No trophy fees.',
+    question: 'What is the cost for deer hunting?',
+    answer: '$400 per person per day with lodging included. No trophy fees.',
   },
   {
-    question: 'Is lodging available?',
-    answer: 'Yes! We have two camp houses available for $100 per night with full amenities.',
+    question: 'What is the cost for turkey hunting?',
+    answer: '$1,000 per person for a 2-day hunt with lodging included. Spring season only (March 25 - May 8).',
+  },
+  {
+    question: 'What is the cost for fishing?',
+    answer: '$200 per person per day. Lodging available at $100/night. Access to all three private lakes.',
+  },
+  {
+    question: 'Are meals included?',
+    answer: 'No, bring your own food. Camp houses have full kitchens, and outdoor cookers & grills are furnished.',
   },
   {
     question: 'Do I need a hunting license?',
-    answer: 'Yes, a valid Alabama hunting permit is required. We can help guide you through the process.',
-  },
-  {
-    question: 'Is fishing included?',
-    answer: 'Yes, lake access and fishing is included free with all hunting packages and lodging stays.',
+    answer: 'Yes, a valid Alabama hunting license is required. We can help guide you through the process.',
   },
   {
     question: 'How do I book?',
@@ -34,13 +38,16 @@ const faqs = [
 ]
 
 export default async function ContactPage() {
-  const [settings, pageContent] = await Promise.all([
+  const [settings, pageContent, heroMedia] = await Promise.all([
     getSiteSettings(),
     getPageContent('contact'),
+    getHeroMedia('contact'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'Contact Us'
   const heroSubtitle = pageContent?.hero_subtitle || "Ready to book your adventure? Have questions? We're here to help."
+  const heroVideo = heroMedia.video || null
+  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4633.webp'
   const phone = settings?.phone || '+1 (334) 341-3753'
   const email = settings?.email || 'papakingj@gmail.com'
   const city = settings?.address_city || 'Epes'
@@ -100,7 +107,8 @@ export default async function ContactPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4633.jpeg"
+        backgroundVideo={heroVideo || undefined}
+        backgroundImage={heroImage}
         size="small"
       />
 

@@ -3,6 +3,7 @@ import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
+import { getHeroMedia, getPageContent, getSiteSettings } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "How to Get Here | King's Family Lakes",
@@ -82,13 +83,26 @@ const distances = [
   { from: 'Montgomery, AL', distance: '~130 miles', time: '~2 hours' },
 ]
 
-export default function DirectionsPage() {
+export default async function DirectionsPage() {
+  const [heroMedia, pageContent, settings] = await Promise.all([
+    getHeroMedia('directions'),
+    getPageContent('directions'),
+    getSiteSettings(),
+  ])
+
+  const heroTitle = pageContent?.hero_title || 'How to Get Here'
+  const heroSubtitle = pageContent?.hero_subtitle || 'Located in Epes, Alabama - just off Interstate 20, Exit 23. Easy to find, hard to leave.'
+  const heroVideo = heroMedia.video || null
+  const heroImage = heroMedia.images[0]?.image_url || '/images/IMG_4628.webp'
+  const phone = settings?.phone || '+1 (334) 341-3753'
+
   return (
     <>
       <Hero
-        title="How to Get Here"
-        subtitle="Located in Epes, Alabama - just off Interstate 20, Exit 23. Easy to find, hard to leave."
-        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4628.jpeg"
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        backgroundVideo={heroVideo || undefined}
+        backgroundImage={heroImage}
         size="small"
       />
 

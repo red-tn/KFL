@@ -15,16 +15,10 @@ export const metadata: Metadata = {
 
 const seasons = [
   {
-    name: 'Spring Season (Zone 1)',
+    name: 'Spring Turkey Season',
     dates: 'March 25 - May 8, 2025',
-    notes: 'Decoys allowed April 4 - May 8. Youth hunt March 21-22.',
+    notes: 'Zone 1 (Sumter County). Decoys allowed April 4 - May 8. Youth hunt March 21-22.',
     icon: '🌸',
-  },
-  {
-    name: 'Spring Season (Zone 2)',
-    dates: 'April 1 - May 8, 2025',
-    notes: 'Decoys allowed April 11 - May 8. Youth hunt March 28-29.',
-    icon: '🌷',
   },
 ]
 
