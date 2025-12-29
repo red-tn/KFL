@@ -16,26 +16,28 @@ const lakes = [
   {
     name: 'Lake Scott',
     size: '~35 acres',
-    description: 'The largest of our three lakes, Lake Scott greets you immediately upon entering the property. With extensive tree cover providing shade and multiple docks positioned just a few hundred yards from the first Camp House, it offers convenient year-round fishing.',
+    species: 'Florida Strain Bass',
+    description: 'The largest of our three lakes, Lake Scott greets you immediately upon entering the property. Stocked with Florida strain bass, this lake has produced bass in the 10-14 lb range. Multiple docks positioned just a few hundred yards from the first Camp House offer convenient year-round fishing.',
     image: '/images/IMG_4617.webp',
     features: [
       'Largest lake on property',
+      'Florida strain bass (10-14 lbs)',
       'Multiple fishing docks',
       'Close to main Camp House',
-      'Large Mouth Bass & Brim',
       'Extensive tree cover',
-      'Year-round access',
+      'Brim & Bluegill',
     ],
   },
   {
     name: 'Lake Shannon',
     size: '~15 acres',
-    description: 'Located approximately 1/4 mile from Lake Scott, Lake Shannon is nestled in surrounding hills and dense forest offering quiet and peaceful fishing. The shallower waters create a dense fish population, and this lake is known for producing some of our largest Bass specimens.',
+    species: 'F1 Hybrid Bass (Florida x Northern)',
+    description: 'Home to our trophy F1 hybrid bass - a cross between Florida and Northern strains. Lake Shannon has produced bass up to 15 lbs, with consistent catches in the 10-14 lb range. The shallower waters concentrate fish, making this our premier trophy fishing destination.',
     image: '/images/IMG_4628.webp',
     features: [
-      'Trophy bass fishing',
+      'Trophy bass up to 15 lbs',
+      'F1 hybrid bass',
       'Peaceful, secluded setting',
-      'Shallower waters',
       'Dense fish population',
       'Docks and boathouse',
       'Near second Camp House',
@@ -44,15 +46,16 @@ const lakes = [
   {
     name: 'Lake Patrick',
     size: '~10 acres',
-    description: 'Our newest addition, Lake Patrick sits between Scott and Shannon. This recently constructed lake features a growing Large Mouth Bass population and offers excellent fishing opportunities with multiple docks and a dedicated boathouse.',
+    species: 'Northern Strain Bass',
+    description: 'Our newest addition, Lake Patrick is stocked exclusively with Northern strain bass. These aggressive fighters offer excellent sport fishing with less pressure than the other lakes. Multiple docks and a dedicated boathouse provide easy access.',
     image: '/images/IMG_4633.webp',
     features: [
-      'Newest lake',
-      'Growing bass population',
+      'Northern strain bass',
+      'Less fishing pressure',
+      'Aggressive fighters',
       'Multiple docks',
       'Dedicated boathouse',
-      'Scenic location',
-      'Less fishing pressure',
+      'Growing population',
     ],
   },
 ]
@@ -127,8 +130,13 @@ export default async function TheLakesPage() {
 
                 {/* Content */}
                 <div className={`${index % 2 === 1 ? 'md:order-1' : ''}`}>
-                  <div className="inline-block bg-forest-100 text-forest-700 px-3 py-1 rounded-full text-sm font-semibold mb-4">
-                    {lake.size}
+                  <div className="flex gap-2 mb-4">
+                    <span className="inline-block bg-forest-100 text-forest-700 px-3 py-1 rounded-full text-sm font-semibold">
+                      {lake.size}
+                    </span>
+                    <span className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-semibold">
+                      {lake.species}
+                    </span>
                   </div>
                   <h3 className="text-3xl font-bold text-gray-900 mb-4">{lake.name}</h3>
                   <p className="text-gray-600 mb-6">{lake.description}</p>
@@ -156,25 +164,43 @@ export default async function TheLakesPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <SectionHeader
-            title="Fish Species"
-            subtitle="All three lakes are stocked with healthy populations of game fish."
+            title="Bass Strains & Species"
+            subtitle="Each lake features different bass genetics for varied fishing experiences."
           />
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            <div className="bg-white rounded-xl p-8 shadow-md text-center">
-              <div className="text-5xl mb-4">🐟</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Large Mouth Bass</h3>
-              <p className="text-gray-600">
-                Trophy-sized bass throughout all three lakes. Lake Shannon is particularly known for producing our largest specimens.
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-8">
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <div className="text-4xl mb-3">🏆</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">F1 Hybrid Bass</h3>
+              <p className="text-sm text-primary-700 font-medium mb-2">Lake Shannon</p>
+              <p className="text-gray-600 text-sm">
+                Cross between Florida and Northern strains. Best of both worlds - fast growth and aggressive fighting. Trophy catches up to 15 lbs.
               </p>
             </div>
-            <div className="bg-white rounded-xl p-8 shadow-md text-center">
-              <div className="text-5xl mb-4">🐠</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Brim (Bluegill)</h3>
-              <p className="text-gray-600">
-                Abundant brim populations make for excellent family fishing and provide great sport for anglers of all ages.
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <div className="text-4xl mb-3">🐟</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Florida Strain</h3>
+              <p className="text-sm text-primary-700 font-medium mb-2">Lake Scott</p>
+              <p className="text-gray-600 text-sm">
+                Known for growing to trophy sizes. Lake Scott has produced bass in the 10-14 lb range with excellent structure for big bass.
               </p>
             </div>
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <div className="text-4xl mb-3">💪</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Northern Strain</h3>
+              <p className="text-sm text-primary-700 font-medium mb-2">Lake Patrick</p>
+              <p className="text-gray-600 text-sm">
+                Aggressive fighters known for their tenacity. Less fishing pressure means more active, eager-to-bite bass.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-md max-w-2xl mx-auto text-center">
+            <div className="text-4xl mb-3">🐠</div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Brim & Bluegill</h3>
+            <p className="text-gray-600 text-sm">
+              Abundant populations in all three lakes. Great for family fishing and anglers of all skill levels.
+            </p>
           </div>
         </div>
       </section>

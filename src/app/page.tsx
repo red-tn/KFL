@@ -181,19 +181,24 @@ export default async function Home() {
         <div className="container-custom">
           <SectionHeader
             title="Simple, Transparent Pricing"
-            subtitle="No hidden fees, no trophy charges. Just straightforward pricing for an unforgettable experience."
+            subtitle="Full day rates only - no half day options. No hidden fees, no trophy charges."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
               <h3 className="text-lg font-semibold text-gray-500 mb-2">Hunting</h3>
               <div className="text-4xl font-bold text-forest-700 mb-2">${huntingRate}</div>
-              <p className="text-gray-600">per person / day</p>
+              <p className="text-gray-600">per person / full day</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-md text-center">
+              <h3 className="text-lg font-semibold text-gray-500 mb-2">Fishing</h3>
+              <div className="text-4xl font-bold text-forest-700 mb-2">${settings?.fishing_daily_rate || 200}</div>
+              <p className="text-gray-600">per person / full day</p>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
               <h3 className="text-lg font-semibold text-gray-500 mb-2">Lodging</h3>
               <div className="text-4xl font-bold text-forest-700 mb-2">${lodgingRate}</div>
-              <p className="text-gray-600">per night</p>
+              <p className="text-gray-600">per person / night</p>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
               <h3 className="text-lg font-semibold text-gray-500 mb-2">Trophy Fees</h3>

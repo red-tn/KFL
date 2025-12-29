@@ -154,7 +154,8 @@ export default function SettingsPage() {
         {/* Pricing */}
         <div className="bg-white rounded-xl p-6 shadow-sm">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Pricing</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <p className="text-sm text-gray-500 mb-4">Full day rates only - no half day options available</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Hunting Daily Rate ($)</label>
               <input
@@ -163,6 +164,17 @@ export default function SettingsPage() {
                 onChange={(e) => setSettings({ ...settings, hunting_daily_rate: parseInt(e.target.value) })}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
               />
+              <p className="text-xs text-gray-400 mt-1">Per person, full day</p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Fishing Daily Rate ($)</label>
+              <input
+                type="number"
+                value={settings.fishing_daily_rate || 200}
+                onChange={(e) => setSettings({ ...settings, fishing_daily_rate: parseInt(e.target.value) })}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+              />
+              <p className="text-xs text-gray-400 mt-1">Per person, full day</p>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Lodging Nightly Rate ($)</label>
@@ -172,6 +184,7 @@ export default function SettingsPage() {
                 onChange={(e) => setSettings({ ...settings, lodging_nightly_rate: parseInt(e.target.value) })}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
               />
+              <p className="text-xs text-gray-400 mt-1">Per person, per night</p>
             </div>
           </div>
         </div>

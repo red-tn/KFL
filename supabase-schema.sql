@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   address_directions TEXT DEFAULT 'I-20, Exit 23',
   facebook_url TEXT DEFAULT 'https://facebook.com/kingsfamilylakes',
   hunting_daily_rate INTEGER DEFAULT 300,
+  fishing_daily_rate INTEGER DEFAULT 200,
   lodging_nightly_rate INTEGER DEFAULT 100,
   adsense_client_id TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),

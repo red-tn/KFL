@@ -144,10 +144,10 @@ export default async function DeerHuntingPage() {
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <PricingCard
-              title="Day Hunt"
+              title="Full Day Hunt"
               price={`$${huntingRate}`}
               period="/person/day"
-              description="Full day hunting access"
+              description="Full day hunting - no half day options"
               features={[
                 'Access to all hunting blinds',
                 'Property guide orientation',
@@ -160,7 +160,7 @@ export default async function DeerHuntingPage() {
             <PricingCard
               title="Lodging"
               price={`$${lodgingRate}`}
-              period="/night"
+              period="/person/night"
               description="Comfortable camp house stay"
               features={[
                 'Choice of two camp houses',

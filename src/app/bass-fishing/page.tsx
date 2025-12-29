@@ -16,20 +16,23 @@ const fishingSpots = [
   {
     lake: 'Lake Scott',
     size: '~35 acres',
-    description: 'The largest lake offers expansive waters with bass dispersed throughout. Multiple docks provide easy access, and the extensive tree cover creates excellent structure for bass.',
-    best_for: 'Exploring different spots, dock fishing',
+    species: 'Florida Strain Bass',
+    description: 'The largest lake features predominantly Florida strain bass. Multiple docks provide easy access, and the extensive tree cover creates excellent structure. Has produced bass in the 10-14 lb range.',
+    best_for: 'Florida strain, dock fishing',
   },
   {
     lake: 'Lake Shannon',
     size: '~15 acres',
-    description: 'Known for producing our largest bass specimens. The shallower waters concentrate fish, making this the go-to spot for trophy hunters.',
-    best_for: 'Trophy bass, consistent action',
+    species: 'F1 Hybrid Bass (Florida x Northern)',
+    description: 'Home to our trophy F1 hybrid bass - a cross between Florida and Northern strains. Known for producing our largest specimens including a 15 lb bass. The shallower waters concentrate fish for consistent action.',
+    best_for: 'Trophy bass up to 15 lbs, F1 hybrids',
   },
   {
     lake: 'Lake Patrick',
     size: '~10 acres',
-    description: 'Our newest lake with a growing bass population. Less fishing pressure means aggressive fish eager to bite.',
-    best_for: 'Less pressure, growing population',
+    species: 'Northern Strain Bass',
+    description: 'Stocked exclusively with Northern strain bass. Less fishing pressure means aggressive fish eager to bite. Great for anglers who enjoy the fight of Northern bass.',
+    best_for: 'Northern bass, less pressure',
   },
 ]
 
@@ -80,8 +83,8 @@ export default async function BassFishingPage() {
   ])
 
   const heroTitle = pageContent?.hero_title || 'Bass Fishing'
-  const heroSubtitle = pageContent?.hero_subtitle || 'Three private lakes stocked with trophy Large Mouth Bass and Brim. Year-round fishing included with your stay.'
-  const huntingRate = settings?.hunting_daily_rate || 300
+  const heroSubtitle = pageContent?.hero_subtitle || 'Three private lakes stocked with trophy Large Mouth Bass and Brim. Florida, Northern, and F1 hybrid strains available.'
+  const fishingRate = settings?.fishing_daily_rate || 200
   const lodgingRate = settings?.lodging_nightly_rate || 100
   const heroImage = heroImg || '/images/IMG_4635.webp'
   const overviewImage = overviewImg || '/images/IMG_4635.webp'
@@ -153,8 +156,11 @@ export default async function BassFishingPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {fishingSpots.map((spot) => (
               <div key={spot.lake} className="bg-white rounded-xl p-6 shadow-md">
-                <div className="text-sm text-forest-600 font-semibold mb-2">{spot.size}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{spot.lake}</h3>
+                <div className="flex justify-between items-start mb-2">
+                  <div className="text-sm text-forest-600 font-semibold">{spot.size}</div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{spot.lake}</h3>
+                <div className="text-sm text-primary-700 font-medium mb-3">{spot.species}</div>
                 <p className="text-gray-600 mb-4">{spot.description}</p>
                 <div className="bg-gray-50 rounded-lg p-3">
                   <span className="text-sm text-gray-500">Best for: </span>
@@ -189,12 +195,24 @@ export default async function BassFishingPage() {
         </div>
       </section>
 
-      {/* Pricing Note */}
+      {/* Pricing */}
       <section className="py-12 bg-forest-700 text-white">
         <div className="container-custom text-center">
-          <h2 className="text-2xl font-bold mb-4">Fishing Included Free</h2>
+          <h2 className="text-2xl font-bold mb-4">Fishing Rates</h2>
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-6">
+            <div className="bg-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold">${fishingRate}</div>
+              <div className="text-forest-200">per person / full day</div>
+              <div className="text-sm text-forest-300 mt-2">No half day options</div>
+            </div>
+            <div className="bg-white/10 rounded-xl p-6">
+              <div className="text-3xl font-bold">${lodgingRate}</div>
+              <div className="text-forest-200">per person / night</div>
+              <div className="text-sm text-forest-300 mt-2">Camp house lodging</div>
+            </div>
+          </div>
           <p className="text-forest-100 max-w-2xl mx-auto">
-            Lake access and fishing is included with all hunting packages (${huntingRate}/day) and lodging stays (${lodgingRate}/night). No additional fishing fees - just bring your gear and enjoy.
+            Access to all three private lakes. Trophy bass from 10-15 lbs. Bring your gear and experience some of Alabama&apos;s best bass fishing.
           </p>
         </div>
       </section>

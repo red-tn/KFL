@@ -9,6 +9,7 @@ export interface SiteSettings {
   address_directions: string
   facebook_url: string
   hunting_daily_rate: number
+  fishing_daily_rate: number
   lodging_nightly_rate: number
   adsense_client_id: string | null
   created_at: string

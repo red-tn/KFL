@@ -10,20 +10,14 @@ import { getSiteSettings, getPageContent, getGalleryImages, getHeroImage, getOve
 
 export const metadata: Metadata = {
   title: "Turkey Hunting | King's Family Lakes",
-  description: 'Premium turkey hunting in Alabama with fall and spring seasons. $300/day with lodging available. Expert grounds management and strategic blind placement.',
+  description: 'Premium spring turkey hunting in Alabama. $300/day full day hunts with lodging available. Expert grounds management and strategic blind placement.',
 }
 
 const seasons = [
   {
-    name: 'Fall Season',
-    dates: 'November 23 - November 30',
-    notes: 'Decoys prohibited during fall season',
-    icon: '🍂',
-  },
-  {
     name: 'Spring Season',
     dates: 'March 15 - April 30',
-    notes: 'Decoys permitted during spring season',
+    notes: 'Decoys permitted during spring season. Full day hunts only.',
     icon: '🌸',
   },
 ]
@@ -170,23 +164,23 @@ export default async function TurkeyHuntingPage() {
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <PricingCard
-              title="Day Hunt"
+              title="Full Day Hunt"
               price={`$${huntingRate}`}
               period="/person/day"
-              description="Full day turkey hunting"
+              description="Full day turkey hunting - no half day options"
               features={[
                 'Access to all hunting areas',
                 'Strategic blind placements',
                 'Property orientation',
                 'No trophy fees',
-                'Both seasons available',
+                'Spring season only',
               ]}
               highlighted
             />
             <PricingCard
               title="Lodging"
               price={`$${lodgingRate}`}
-              period="/night"
+              period="/person/night"
               description="Stay at our camp houses"
               features={[
                 'Two camp houses available',
@@ -260,7 +254,7 @@ export default async function TurkeyHuntingPage() {
         <div className="container-custom text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Book Your Turkey Hunt?</h2>
           <p className="text-xl text-forest-100 mb-8">
-            Contact us to reserve your dates for fall or spring season.
+            Contact us to reserve your dates for spring season.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" className="btn bg-white text-forest-700 hover:bg-gray-100">
