@@ -139,12 +139,12 @@ export default async function TurkeyHuntingPage() {
         <div className="container-custom">
           <SectionHeader
             title="Hunting Seasons"
-            subtitle="Two distinct seasons offer different hunting experiences."
+            subtitle="Spring season in Zone 1 (Sumter County)"
           />
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="flex justify-center">
             {seasons.map((season) => (
-              <div key={season.name} className="bg-white rounded-xl p-8 shadow-md text-center">
+              <div key={season.name} className="bg-white rounded-xl p-8 shadow-md text-center max-w-md w-full">
                 <div className="text-5xl mb-4">{season.icon}</div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{season.name}</h3>
                 <p className="text-lg text-forest-700 font-semibold mb-4">{season.dates}</p>
