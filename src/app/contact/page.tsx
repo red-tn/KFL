@@ -5,7 +5,7 @@ import Hero from '@/components/ui/Hero'
 import ContactForm from '@/components/forms/ContactForm'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent, getHeroMedia } from '@/lib/data'
+import { getSiteSettings, getPageContent } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Contact Us | King's Family Lakes",
@@ -40,16 +40,16 @@ const faqs = [
 ]
 
 export default async function ContactPage() {
-  const [settings, pageContent, heroMedia] = await Promise.all([
+  const [settings, pageContent] = await Promise.all([
     getSiteSettings(),
     getPageContent('contact'),
-    getHeroMedia('contact'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'Contact Us'
   const heroSubtitle = pageContent?.hero_subtitle || "Ready to book your adventure? Have questions? We're here to help."
-  const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || null
+  // Static hero - video URL can be set in page_content.hero_video_url
+  const heroVideo = pageContent?.hero_video_url || null
+  const heroImage = '/images/IMG_4596.webp'
   const phone = settings?.phone || '+1 (334) 341-3753'
   const email = settings?.email || 'papakingj@gmail.com'
   const city = settings?.address_city || 'Epes'
@@ -110,7 +110,7 @@ export default async function ContactPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage || undefined}
+        backgroundImage={heroImage}
         size="small"
       />
 

@@ -5,7 +5,7 @@ import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getHeroMedia, getPageContent, getSiteSettings } from '@/lib/data'
+import { getPageContent, getSiteSettings } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "How to Get Here | King's Family Lakes",
@@ -86,16 +86,16 @@ const distances = [
 ]
 
 export default async function DirectionsPage() {
-  const [heroMedia, pageContent, settings] = await Promise.all([
-    getHeroMedia('directions'),
+  const [pageContent, settings] = await Promise.all([
     getPageContent('directions'),
     getSiteSettings(),
   ])
 
   const heroTitle = pageContent?.hero_title || 'How to Get Here'
   const heroSubtitle = pageContent?.hero_subtitle || 'Located in Epes, Alabama - just off Interstate 20, Exit 23. Easy to find, hard to leave.'
-  const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || null
+  // Static hero - video URL can be set in page_content.hero_video_url
+  const heroVideo = pageContent?.hero_video_url || null
+  const heroImage = '/images/1.webp'
   const phone = settings?.phone || '+1 (334) 341-3753'
 
   return (
@@ -104,7 +104,7 @@ export default async function DirectionsPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage || undefined}
+        backgroundImage={heroImage}
         size="small"
       />
 

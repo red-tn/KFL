@@ -7,12 +7,11 @@ import type { GalleryImage } from '@/lib/types'
 type CategoryKey =
   | 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing'
   | 'main-gallery'
-  | 'hero-home' | 'hero-lakes' | 'hero-deer' | 'hero-turkey' | 'hero-fishing' | 'hero-gallery' | 'hero-directions' | 'hero-contact'
   | 'overview-deer' | 'overview-turkey' | 'overview-fishing'
   | 'card-lakes' | 'card-deer' | 'card-turkey' | 'card-fishing'
 
 // Gallery section types
-type SectionType = 'hero' | 'overview' | 'gallery' | 'cards'
+type SectionType = 'overview' | 'gallery' | 'cards'
 
 // Page gallery configurations
 const PAGE_GALLERIES: {
@@ -23,16 +22,6 @@ const PAGE_GALLERIES: {
   type: SectionType
   singleImage?: boolean
 }[] = [
-  // Hero Images - multiple per page allowed (first is primary, rest are alternates)
-  { id: 'hero-home', label: 'Home Hero', description: 'Hero images for Home page (first is primary)', page: '/', type: 'hero' },
-  { id: 'hero-lakes', label: 'Lakes Hero', description: 'Hero images for The Lakes page', page: '/the-lakes', type: 'hero' },
-  { id: 'hero-deer', label: 'Deer Hunting Hero', description: 'Hero images for Deer Hunting page', page: '/deer-hunting', type: 'hero' },
-  { id: 'hero-turkey', label: 'Turkey Hunting Hero', description: 'Hero images for Turkey Hunting page', page: '/turkey-hunting', type: 'hero' },
-  { id: 'hero-fishing', label: 'Bass Fishing Hero', description: 'Hero images for Bass Fishing page', page: '/bass-fishing', type: 'hero' },
-  { id: 'hero-gallery', label: 'Gallery Hero', description: 'Hero images for Gallery page', page: '/gallery', type: 'hero' },
-  { id: 'hero-directions', label: 'Directions Hero', description: 'Hero images for Directions page', page: '/directions', type: 'hero' },
-  { id: 'hero-contact', label: 'Contact Hero', description: 'Hero images for Contact page', page: '/contact', type: 'hero' },
-
   // Page Overview Images - main content image on each activity page
   { id: 'overview-deer', label: 'Deer Page Image', description: 'Main content image on Deer Hunting page', page: '/deer-hunting', type: 'overview', singleImage: true },
   { id: 'overview-turkey', label: 'Turkey Page Image', description: 'Main content image on Turkey Hunting page', page: '/turkey-hunting', type: 'overview', singleImage: true },
@@ -54,16 +43,6 @@ const PAGE_GALLERIES: {
 
 // Default images for seeding
 const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
-  // Hero Images
-  'hero-home': [{ url: '/images/IMG_4617.webp', title: 'Home Hero' }],
-  'hero-lakes': [{ url: '/images/IMG_4628.webp', title: 'Lakes Hero' }],
-  'hero-deer': [{ url: '/images/IMG_2289.webp', title: 'Deer Hunting Hero' }],
-  'hero-turkey': [{ url: '/images/IMG_2294.webp', title: 'Turkey Hunting Hero' }],
-  'hero-fishing': [{ url: '/images/IMG_4635.webp', title: 'Bass Fishing Hero' }],
-  'hero-gallery': [{ url: '/images/IMG_4633.webp', title: 'Gallery Hero' }],
-  'hero-directions': [{ url: '/images/1.webp', title: 'Directions Hero' }],
-  'hero-contact': [{ url: '/images/IMG_4596.webp', title: 'Contact Hero' }],
-
   // Page Overview Images
   'overview-deer': [{ url: '/images/IMG_2290.webp', title: 'Deer Hunting Overview' }],
   'overview-turkey': [{ url: '/images/IMG_2292.webp', title: 'Turkey Hunting Overview' }],
@@ -819,7 +798,6 @@ export default function GalleryAdminPage() {
 
   const sectionTypes: { type: SectionType | 'all'; label: string; icon: string }[] = [
     { type: 'all', label: 'All', icon: '📋' },
-    { type: 'hero', label: 'Hero Images', icon: '🖼️' },
     { type: 'overview', label: 'Page Images', icon: '📄' },
     { type: 'cards', label: 'Activity Cards', icon: '🃏' },
     { type: 'gallery', label: 'Galleries', icon: '🖼️' },

@@ -4,7 +4,7 @@ import { Metadata } from 'next'
 import Hero from '@/components/ui/Hero'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getHeroMedia, getPageContent, getGalleryImages } from '@/lib/data'
+import { getPageContent, getGalleryImages } from '@/lib/data'
 import GalleryGrid from './GalleryGrid'
 
 export const metadata: Metadata = {
@@ -13,22 +13,23 @@ export const metadata: Metadata = {
 }
 
 export default async function GalleryPage() {
-  const [heroMedia, pageContent, galleryImages] = await Promise.all([
-    getHeroMedia('gallery'),
+  const [pageContent, galleryImages] = await Promise.all([
     getPageContent('gallery'),
     getGalleryImages('main-gallery'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'Photo Gallery'
   const heroSubtitle = pageContent?.hero_subtitle || "Explore the beauty of King's Family Lakes through our collection of photos."
-  const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || null
+  // Static hero - video URL can be set in page_content.hero_video_url
+  const heroVideo = pageContent?.hero_video_url || null
+  const heroImage = '/images/IMG_4633.webp'
 
   // Transform gallery images for the grid component
   const images = galleryImages.map((img) => ({
     src: img.image_url,
     alt: img.title || 'Gallery image',
     caption: img.title || '',
+    rotation: img.rotation || 0,
   }))
 
   return (
@@ -37,7 +38,7 @@ export default async function GalleryPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage || undefined}
+        backgroundImage={heroImage}
         size="small"
       />
 

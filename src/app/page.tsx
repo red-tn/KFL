@@ -5,7 +5,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages, getHeroMedia } from '@/lib/data'
+import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages } from '@/lib/data'
 
 const features = [
   {
@@ -63,12 +63,11 @@ const defaultActivities = [
 ]
 
 export default async function Home() {
-  const [settings, featuredActivities, pageContent, cardImages, heroMedia] = await Promise.all([
+  const [settings, featuredActivities, pageContent, cardImages] = await Promise.all([
     getSiteSettings(),
     getFeaturedActivities(),
     getPageContent('home'),
     getActivityCardImages(),
-    getHeroMedia('home'),
   ])
 
   // Use database card images only - manage in admin
@@ -88,11 +87,9 @@ export default async function Home() {
   const heroTitle = pageContent?.hero_title || settings?.site_name || "King's Family Lakes"
   const heroSubtitle = pageContent?.hero_subtitle || "Experience world-class hunting and fishing in the heart of Alabama. Three private lakes, premium hunting grounds, and unforgettable outdoor adventures await."
   const phone = settings?.phone || '+1 (334) 341-3753'
-  const huntingRate = settings?.hunting_daily_rate || 300
-  const lodgingRate = settings?.lodging_nightly_rate || 100
-  // Home hero - use database values only
-  const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || null
+  // Static hero - video URL can be set in page_content.hero_video_url
+  const heroVideo = pageContent?.hero_video_url || null
+  const heroImage = '/images/IMG_4617.webp'
 
   return (
     <>
@@ -100,7 +97,7 @@ export default async function Home() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage || undefined}
+        backgroundImage={heroImage}
         ctaText="Book Your Adventure"
         ctaLink="/contact"
         secondaryCtaText="Explore Activities"

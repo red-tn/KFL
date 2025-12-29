@@ -8,7 +8,7 @@ import PricingCard from '@/components/ui/PricingCard'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent, getGalleryImages, getHeroMedia, getOverviewImage } from '@/lib/data'
+import { getSiteSettings, getPageContent, getGalleryImages, getOverviewImage } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Turkey Hunting | King's Family Lakes",
@@ -56,25 +56,23 @@ const regulations = [
 ]
 
 export default async function TurkeyHuntingPage() {
-  const [settings, pageContent, dbImages, heroMedia, overviewImg] = await Promise.all([
+  const [settings, pageContent, dbImages, overviewImg] = await Promise.all([
     getSiteSettings(),
     getPageContent('turkey-hunting'),
     getGalleryImages('turkey-hunting'),
-    getHeroMedia('turkey-hunting'),
     getOverviewImage('turkey-hunting'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'Turkey Hunting'
   const heroSubtitle = pageContent?.hero_subtitle || 'A turkey hunting experience that is second to none. Year-round grounds management and strategically positioned blinds for optimal success.'
-  const huntingRate = settings?.hunting_daily_rate || 300
-  const lodgingRate = settings?.lodging_nightly_rate || 100
   const phone = settings?.phone || '+1 (334) 341-3753'
-  const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || null
+  // Static hero - video URL can be set in page_content.hero_video_url
+  const heroVideo = pageContent?.hero_video_url || null
+  const heroImage = '/images/IMG_2294.webp'
   const overviewImage = overviewImg || null
 
   // Use database images only - manage in admin
-  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
+  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined, rotation: img.rotation || 0 }))
 
   return (
     <>
@@ -82,7 +80,7 @@ export default async function TurkeyHuntingPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage || undefined}
+        backgroundImage={heroImage}
         size="medium"
       />
 

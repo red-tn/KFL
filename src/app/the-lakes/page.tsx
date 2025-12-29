@@ -7,7 +7,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getPageContent, getGalleryImages, getHeroMedia } from '@/lib/data'
+import { getPageContent, getGalleryImages } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "The Lakes | King's Family Lakes",
@@ -63,19 +63,19 @@ const lakes = [
 ]
 
 export default async function TheLakesPage() {
-  const [pageContent, dbImages, heroMedia] = await Promise.all([
+  const [pageContent, dbImages] = await Promise.all([
     getPageContent('the-lakes'),
     getGalleryImages('lakes'),
-    getHeroMedia('the-lakes'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'The Lakes'
   const heroSubtitle = pageContent?.hero_subtitle || 'Three pristine private lakes stocked with Large Mouth Bass and Brim. Year-round fishing in the heart of Alabama.'
-  const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || null
+  // Static hero - video URL can be set in page_content.hero_video_url
+  const heroVideo = pageContent?.hero_video_url || null
+  const heroImage = '/images/IMG_4628.webp'
 
   // Use database images only - manage in admin
-  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
+  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined, rotation: img.rotation || 0 }))
 
   return (
     <>
@@ -83,7 +83,7 @@ export default async function TheLakesPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage || undefined}
+        backgroundImage={heroImage}
         size="medium"
       />
 

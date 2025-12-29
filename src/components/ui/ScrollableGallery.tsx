@@ -7,6 +7,7 @@ interface GalleryImage {
   src: string
   alt: string
   caption?: string
+  rotation?: number
 }
 
 interface ScrollableGalleryProps {
@@ -62,6 +63,7 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
                   alt={image.alt}
                   fill
                   className="object-cover group-hover/item:scale-105 transition-transform duration-300"
+                  style={image.rotation ? { transform: `rotate(${image.rotation}deg)` } : undefined}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover/item:bg-black/20 transition-colors duration-300" />
               </div>
@@ -104,6 +106,7 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
               alt={selectedImage.alt}
               fill
               className="object-contain"
+              style={selectedImage.rotation ? { transform: `rotate(${selectedImage.rotation}deg)` } : undefined}
               onClick={(e) => e.stopPropagation()}
             />
           </div>

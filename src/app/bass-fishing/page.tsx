@@ -7,7 +7,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent, getGalleryImages, getHeroMedia, getOverviewImage } from '@/lib/data'
+import { getSiteSettings, getPageContent, getGalleryImages, getOverviewImage } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Bass Fishing | King's Family Lakes",
@@ -62,11 +62,10 @@ const tips = [
 ]
 
 export default async function BassFishingPage() {
-  const [settings, pageContent, dbImages, heroMedia, overviewImg] = await Promise.all([
+  const [settings, pageContent, dbImages, overviewImg] = await Promise.all([
     getSiteSettings(),
     getPageContent('bass-fishing'),
     getGalleryImages('fishing'),
-    getHeroMedia('bass-fishing'),
     getOverviewImage('bass-fishing'),
   ])
 
@@ -74,12 +73,13 @@ export default async function BassFishingPage() {
   const heroSubtitle = pageContent?.hero_subtitle || 'Three private lakes stocked with trophy Large Mouth Bass and Brim. Florida, Northern, and F1 hybrid strains available.'
   const fishingRate = settings?.fishing_daily_rate || 200
   const lodgingRate = settings?.lodging_nightly_rate || 100
-  const heroVideo = heroMedia.video || null
-  const heroImage = heroMedia.images[0]?.image_url || null
+  // Static hero - video URL can be set in page_content.hero_video_url
+  const heroVideo = pageContent?.hero_video_url || null
+  const heroImage = '/images/IMG_4635.webp'
   const overviewImage = overviewImg || null
 
   // Use database images only - manage in admin
-  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined }))
+  const galleryImages = dbImages.map((img) => ({ src: img.image_url, alt: img.title || 'Gallery image', caption: img.title || undefined, rotation: img.rotation || 0 }))
 
   return (
     <>
@@ -87,7 +87,7 @@ export default async function BassFishingPage() {
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundVideo={heroVideo || undefined}
-        backgroundImage={heroImage || undefined}
+        backgroundImage={heroImage}
         size="medium"
       />
 
