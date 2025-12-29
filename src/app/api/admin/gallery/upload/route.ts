@@ -1,5 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { writeFile, mkdir } from 'fs/promises'
+import path from 'path'
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,25 +17,47 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate unique filename
-    const fileExt = file.name.split('.').pop()
-    const fileName = `${category}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
+    const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+    const uniqueName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
+    const storagePath = `${category}/${uniqueName}`
 
-    // Upload to Supabase Storage
+    let imageUrl: string
+
+    // Try Supabase Storage first
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('gallery')
-      .upload(fileName, file, {
+      .upload(storagePath, file, {
         cacheControl: '3600',
         upsert: false,
       })
 
     if (uploadError) {
-      return NextResponse.json({ error: uploadError.message }, { status: 500 })
-    }
+      // If storage fails, fall back to local file storage
+      console.log('Supabase Storage failed, using local storage:', uploadError.message)
 
-    // Get public URL
-    const { data: urlData } = supabase.storage
-      .from('gallery')
-      .getPublicUrl(fileName)
+      try {
+        // Save to public/uploads directory
+        const uploadsDir = path.join(process.cwd(), 'public', 'uploads', category)
+        await mkdir(uploadsDir, { recursive: true })
+
+        const localPath = path.join(uploadsDir, uniqueName)
+        const buffer = Buffer.from(await file.arrayBuffer())
+        await writeFile(localPath, buffer)
+
+        imageUrl = `/uploads/${category}/${uniqueName}`
+      } catch (localError) {
+        console.error('Local storage also failed:', localError)
+        return NextResponse.json({
+          error: `Storage failed. Create a Supabase Storage bucket named "gallery" with public access, or ensure write permissions to public/uploads. Details: ${uploadError.message}`
+        }, { status: 500 })
+      }
+    } else {
+      // Get public URL from Supabase
+      const { data: urlData } = supabase.storage
+        .from('gallery')
+        .getPublicUrl(storagePath)
+      imageUrl = urlData.publicUrl
+    }
 
     // Get max display_order for this category
     const { data: maxOrderData } = await supabase
@@ -50,25 +74,26 @@ export async function POST(request: NextRequest) {
       .from('gallery_images')
       .insert({
         title: title || file.name.split('.')[0],
-        image_url: urlData.publicUrl,
+        image_url: imageUrl,
         category,
         display_order: newOrder,
         is_featured: false,
+        rotation: 0,
       })
       .select()
       .single()
 
     if (insertError) {
-      return NextResponse.json({ error: insertError.message }, { status: 500 })
+      return NextResponse.json({ error: `Database error: ${insertError.message}` }, { status: 500 })
     }
 
     return NextResponse.json({
       success: true,
       image: imageData,
-      url: urlData.publicUrl
+      url: imageUrl
     })
   } catch (e) {
     console.error('Upload error:', e)
-    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 })
+    return NextResponse.json({ error: `Upload failed: ${e instanceof Error ? e.message : 'Unknown error'}` }, { status: 500 })
   }
 }

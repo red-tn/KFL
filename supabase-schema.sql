@@ -1,6 +1,36 @@
 -- King's Family Lakes Database Schema
 -- Run this in your Supabase SQL Editor
 
+-- ============================================
+-- IMPORTANT: Storage Bucket Setup (Manual Step)
+-- ============================================
+-- After running this SQL, go to Supabase Dashboard:
+-- 1. Navigate to Storage in the left sidebar
+-- 2. Click "New bucket"
+-- 3. Name it "gallery"
+-- 4. Check "Public bucket" to allow public access
+-- 5. Click "Create bucket"
+--
+-- Then add these storage policies (in Storage > Policies):
+-- Policy 1: Allow public read
+--   - Name: "Public read access"
+--   - Allowed operation: SELECT
+--   - Target roles: (leave empty for anon)
+--   - Policy definition: true
+--
+-- Policy 2: Allow authenticated uploads
+--   - Name: "Authenticated uploads"
+--   - Allowed operation: INSERT
+--   - Target roles: authenticated
+--   - Policy definition: true
+--
+-- Policy 3: Allow authenticated deletes
+--   - Name: "Authenticated deletes"
+--   - Allowed operation: DELETE
+--   - Target roles: authenticated
+--   - Policy definition: true
+-- ============================================
+
 -- Site Settings Table
 CREATE TABLE IF NOT EXISTS site_settings (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -93,6 +123,7 @@ INSERT INTO page_content (page_slug, hero_title, hero_subtitle, hero_video_url) 
 ('deer-hunting', 'Deer Hunting', 'A world-class White Tail Deer hunting experience.', NULL),
 ('turkey-hunting', 'Turkey Hunting', 'A turkey hunting experience that is second to none.', NULL),
 ('bass-fishing', 'Bass Fishing', 'Trophy bass fishing on three private lakes.', NULL),
+('gallery', 'Photo Gallery', 'Explore the beauty of King''s Family Lakes through our collection of photos.', NULL),
 ('directions', 'How to Get Here', 'Located in Epes, Alabama - just off Interstate 20, Exit 23.', NULL),
 ('contact', 'Contact Us', 'Ready to book your adventure? We''re here to help.', NULL)
 ON CONFLICT (page_slug) DO NOTHING;

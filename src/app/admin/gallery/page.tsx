@@ -438,18 +438,48 @@ function GallerySection({
               </div>
             </div>
           ) : singleImage ? (
-            /* Single image mode - show larger preview */
-            <div className="max-w-md">
-              <ImageCard
-                image={images[0]}
-                onDelete={onDelete}
-                onUpdate={onUpdate}
-                onRotate={onRotate}
-                isDragging={false}
-                onDragStart={() => {}}
-                onDragOver={() => {}}
-                onDrop={() => {}}
-              />
+            /* Single image mode - show which one is active, allow managing others */
+            <div>
+              {images.length > 1 && (
+                <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
+                  <strong>Note:</strong> This section only uses 1 image. The first image (marked "Active") is what appears on the site.
+                  You can delete extras or drag to reorder.
+                </div>
+              )}
+              <div className="flex gap-4 flex-wrap">
+                {images.map((image, index) => (
+                  <div key={image.id} className="relative">
+                    {index === 0 && (
+                      <div className="absolute -top-2 left-2 z-10 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
+                        Active
+                      </div>
+                    )}
+                    <div className={`w-56 ${index > 0 ? 'opacity-60' : ''}`}>
+                      <ImageCard
+                        image={image}
+                        onDelete={onDelete}
+                        onUpdate={onUpdate}
+                        onRotate={onRotate}
+                        isDragging={draggedIndex === index}
+                        onDragStart={() => handleDragStart(index)}
+                        onDragOver={handleDragOver}
+                        onDrop={() => handleDrop(index)}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <div className="w-56">
+                  <button
+                    onClick={() => onAdd(category)}
+                    className="w-full h-full min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg hover:border-forest-500 hover:bg-forest-50 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-forest-600"
+                  >
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    <span className="text-sm font-medium">Replace Image</span>
+                  </button>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="relative">
