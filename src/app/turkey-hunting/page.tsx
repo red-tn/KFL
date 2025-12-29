@@ -6,7 +6,7 @@ import PricingCard from '@/components/ui/PricingCard'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent, getGalleryImages } from '@/lib/data'
+import { getSiteSettings, getPageContent, getGalleryImages, getHeroImage, getOverviewImage } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Turkey Hunting | King's Family Lakes",
@@ -69,10 +69,12 @@ const defaultGalleryImages = [
 ]
 
 export default async function TurkeyHuntingPage() {
-  const [settings, pageContent, dbImages] = await Promise.all([
+  const [settings, pageContent, dbImages, heroImg, overviewImg] = await Promise.all([
     getSiteSettings(),
     getPageContent('turkey-hunting'),
     getGalleryImages('turkey-hunting'),
+    getHeroImage('turkey-hunting'),
+    getOverviewImage('turkey-hunting'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'Turkey Hunting'
@@ -80,6 +82,8 @@ export default async function TurkeyHuntingPage() {
   const huntingRate = settings?.hunting_daily_rate || 300
   const lodgingRate = settings?.lodging_nightly_rate || 100
   const phone = settings?.phone || '+1 (334) 341-3753'
+  const heroImage = heroImg || '/images/IMG_2294.webp'
+  const overviewImage = overviewImg || '/images/IMG_2294.webp'
 
   // Use database images if available, otherwise fallback
   const galleryImages = dbImages.length > 0
@@ -91,7 +95,7 @@ export default async function TurkeyHuntingPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2014/05/IMG_2294.jpg"
+        backgroundImage={heroImage}
         size="medium"
       />
 
@@ -105,7 +109,7 @@ export default async function TurkeyHuntingPage() {
             <div className="lg:order-2">
               <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
                 <Image
-                  src="/images/IMG_2294.webp"
+                  src={overviewImage}
                   alt="Turkey hunting at King's Family Lakes"
                   fill
                   className="object-cover"

@@ -115,3 +115,77 @@ export async function getGalleryImages(category?: string): Promise<GalleryImage[
     return []
   }
 }
+
+// Get a single image by category (for hero/overview images)
+export async function getSingleImage(category: string): Promise<GalleryImage | null> {
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from('gallery_images')
+      .select('*')
+      .eq('category', category)
+      .order('display_order', { ascending: true })
+      .limit(1)
+      .single()
+
+    if (error) {
+      // Not an error if no image found
+      return null
+    }
+    return data
+  } catch (e) {
+    return null
+  }
+}
+
+// Get hero image for a page
+export async function getHeroImage(page: string): Promise<string | null> {
+  const categoryMap: Record<string, string> = {
+    'home': 'hero-home',
+    'the-lakes': 'hero-lakes',
+    'deer-hunting': 'hero-deer',
+    'turkey-hunting': 'hero-turkey',
+    'bass-fishing': 'hero-fishing',
+    'gallery': 'hero-gallery',
+    'directions': 'hero-directions',
+    'contact': 'hero-contact',
+  }
+
+  const category = categoryMap[page]
+  if (!category) return null
+
+  const image = await getSingleImage(category)
+  return image?.image_url || null
+}
+
+// Get overview/page image
+export async function getOverviewImage(page: string): Promise<string | null> {
+  const categoryMap: Record<string, string> = {
+    'deer-hunting': 'overview-deer',
+    'turkey-hunting': 'overview-turkey',
+    'bass-fishing': 'overview-fishing',
+  }
+
+  const category = categoryMap[page]
+  if (!category) return null
+
+  const image = await getSingleImage(category)
+  return image?.image_url || null
+}
+
+// Get activity card images for home page
+export async function getActivityCardImages(): Promise<Record<string, string>> {
+  const images = await getGalleryImages('activity-cards')
+  const result: Record<string, string> = {}
+
+  // Map by title (The Lakes, Deer Hunting, Turkey Hunting, Bass Fishing)
+  for (const img of images) {
+    const title = img.title?.toLowerCase() || ''
+    if (title.includes('lake')) result['the-lakes'] = img.image_url
+    else if (title.includes('deer')) result['deer-hunting'] = img.image_url
+    else if (title.includes('turkey')) result['turkey-hunting'] = img.image_url
+    else if (title.includes('bass') || title.includes('fish')) result['bass-fishing'] = img.image_url
+  }
+
+  return result
+}

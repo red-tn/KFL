@@ -3,7 +3,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getFeaturedActivities, getPageContent } from '@/lib/data'
+import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages, getHeroImage } from '@/lib/data'
 
 const features = [
   {
@@ -62,20 +62,24 @@ const defaultActivities = [
 ]
 
 export default async function Home() {
-  const [settings, featuredActivities, pageContent] = await Promise.all([
+  const [settings, featuredActivities, pageContent, cardImages, heroImg] = await Promise.all([
     getSiteSettings(),
     getFeaturedActivities(),
     getPageContent('home'),
+    getActivityCardImages(),
+    getHeroImage('home'),
   ])
 
-  // Map database activities to display format, or use defaults
-  // Image mapping for activities
-  const activityImages: Record<string, string> = {
+  // Default images for activities (fallback if not in database)
+  const defaultCardImages: Record<string, string> = {
     'the-lakes': '/images/IMG_4617.webp',
     'deer-hunting': '/images/IMG_2289.webp',
     'turkey-hunting': '/images/IMG_2294.webp',
     'bass-fishing': '/images/IMG_4635.webp',
   }
+
+  // Merge database images with defaults
+  const activityImages = { ...defaultCardImages, ...cardImages }
 
   const activities = featuredActivities.length > 0
     ? featuredActivities.map((a) => ({
@@ -93,6 +97,7 @@ export default async function Home() {
   const phone = settings?.phone || '+1 (334) 341-3753'
   const huntingRate = settings?.hunting_daily_rate || 300
   const lodgingRate = settings?.lodging_nightly_rate || 100
+  const heroImage = heroImg || '/images/lake-overview.mp4'
 
   return (
     <>

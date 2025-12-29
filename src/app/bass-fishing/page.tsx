@@ -5,7 +5,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
-import { getSiteSettings, getPageContent, getGalleryImages } from '@/lib/data'
+import { getSiteSettings, getPageContent, getGalleryImages, getHeroImage, getOverviewImage } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: "Bass Fishing | King's Family Lakes",
@@ -71,16 +71,20 @@ const defaultGalleryImages = [
 ]
 
 export default async function BassFishingPage() {
-  const [settings, pageContent, dbImages] = await Promise.all([
+  const [settings, pageContent, dbImages, heroImg, overviewImg] = await Promise.all([
     getSiteSettings(),
     getPageContent('bass-fishing'),
     getGalleryImages('fishing'),
+    getHeroImage('bass-fishing'),
+    getOverviewImage('bass-fishing'),
   ])
 
   const heroTitle = pageContent?.hero_title || 'Bass Fishing'
   const heroSubtitle = pageContent?.hero_subtitle || 'Three private lakes stocked with trophy Large Mouth Bass and Brim. Year-round fishing included with your stay.'
   const huntingRate = settings?.hunting_daily_rate || 300
   const lodgingRate = settings?.lodging_nightly_rate || 100
+  const heroImage = heroImg || '/images/IMG_4635.webp'
+  const overviewImage = overviewImg || '/images/IMG_4635.webp'
 
   // Use database images if available, otherwise fallback
   const galleryImages = dbImages.length > 0
@@ -92,7 +96,7 @@ export default async function BassFishingPage() {
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundImage="https://i0.wp.com/kingsfamilylakes.com/wp-content/uploads/2021/10/IMG_4635.jpeg"
+        backgroundImage={heroImage}
         size="medium"
       />
 
@@ -114,7 +118,7 @@ export default async function BassFishingPage() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
               <Image
-                src="/images/IMG_4635.webp"
+                src={overviewImage}
                 alt="Bass fishing at King's Family Lakes"
                 fill
                 className="object-cover"

@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient()
     const body = await request.json()
 
-    const { title, image_url, category, caption, display_order } = body
+    const { title, image_url, category, caption, display_order, rotation } = body
 
     if (!image_url) {
       return NextResponse.json({ error: 'Image URL is required' }, { status: 400 })
@@ -61,6 +61,7 @@ export async function POST(request: NextRequest) {
         caption,
         display_order: newOrder,
         is_featured: false,
+        rotation: rotation || 0,
       })
       .select()
       .single()
@@ -81,7 +82,7 @@ export async function PUT(request: NextRequest) {
     const supabase = await createClient()
     const body = await request.json()
 
-    const { id, title, image_url, category, caption, display_order, is_featured } = body
+    const { id, title, image_url, category, caption, display_order, is_featured, rotation } = body
 
     if (!id) {
       return NextResponse.json({ error: 'Image ID is required' }, { status: 400 })
@@ -94,6 +95,7 @@ export async function PUT(request: NextRequest) {
     if (caption !== undefined) updateData.caption = caption
     if (display_order !== undefined) updateData.display_order = display_order
     if (is_featured !== undefined) updateData.is_featured = is_featured
+    if (rotation !== undefined) updateData.rotation = rotation
 
     const { data, error } = await supabase
       .from('gallery_images')

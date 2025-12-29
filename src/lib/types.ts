@@ -44,8 +44,17 @@ export type GalleryCategory =
   | 'wildlife'
   | 'main-gallery'
   | 'activity-cards'
-  | 'hero-images'
-  | 'page-overview'
+  | 'hero-home'
+  | 'hero-lakes'
+  | 'hero-deer'
+  | 'hero-turkey'
+  | 'hero-fishing'
+  | 'hero-gallery'
+  | 'hero-directions'
+  | 'hero-contact'
+  | 'overview-deer'
+  | 'overview-turkey'
+  | 'overview-fishing'
 
 export interface GalleryImage {
   id: string
@@ -55,6 +64,7 @@ export interface GalleryImage {
   caption: string | null
   display_order: number
   is_featured: boolean
+  rotation: number
   created_at: string
 }
 

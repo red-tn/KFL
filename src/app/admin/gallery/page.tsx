@@ -4,25 +4,76 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { GalleryImage } from '@/lib/types'
 
-type CategoryKey = 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing' | 'main-gallery' | 'activity-cards'
+type CategoryKey =
+  | 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing'
+  | 'main-gallery' | 'activity-cards'
+  | 'hero-home' | 'hero-lakes' | 'hero-deer' | 'hero-turkey' | 'hero-fishing' | 'hero-gallery' | 'hero-directions' | 'hero-contact'
+  | 'overview-deer' | 'overview-turkey' | 'overview-fishing'
 
-// Page gallery configurations - simplified
+// Gallery section types
+type SectionType = 'hero' | 'overview' | 'gallery' | 'cards'
+
+// Page gallery configurations
 const PAGE_GALLERIES: {
   id: CategoryKey
   label: string
   description: string
   page: string
+  type: SectionType
+  singleImage?: boolean
 }[] = [
-  { id: 'lakes', label: 'The Lakes', description: 'Gallery on The Lakes page', page: '/the-lakes' },
-  { id: 'deer-hunting', label: 'Deer Hunting', description: 'Gallery on Deer Hunting page', page: '/deer-hunting' },
-  { id: 'turkey-hunting', label: 'Turkey Hunting', description: 'Gallery on Turkey Hunting page', page: '/turkey-hunting' },
-  { id: 'fishing', label: 'Bass Fishing', description: 'Gallery on Bass Fishing page', page: '/bass-fishing' },
-  { id: 'main-gallery', label: 'Main Gallery', description: 'The main /gallery page - all categories', page: '/gallery' },
-  { id: 'activity-cards', label: 'Activity Cards', description: 'Home page "Our Activities" section', page: '/' },
+  // Hero Images - one per page
+  { id: 'hero-home', label: 'Home Hero', description: 'Hero background for Home page', page: '/', type: 'hero', singleImage: true },
+  { id: 'hero-lakes', label: 'Lakes Hero', description: 'Hero background for The Lakes page', page: '/the-lakes', type: 'hero', singleImage: true },
+  { id: 'hero-deer', label: 'Deer Hunting Hero', description: 'Hero background for Deer Hunting page', page: '/deer-hunting', type: 'hero', singleImage: true },
+  { id: 'hero-turkey', label: 'Turkey Hunting Hero', description: 'Hero background for Turkey Hunting page', page: '/turkey-hunting', type: 'hero', singleImage: true },
+  { id: 'hero-fishing', label: 'Bass Fishing Hero', description: 'Hero background for Bass Fishing page', page: '/bass-fishing', type: 'hero', singleImage: true },
+  { id: 'hero-gallery', label: 'Gallery Hero', description: 'Hero background for Gallery page', page: '/gallery', type: 'hero', singleImage: true },
+  { id: 'hero-directions', label: 'Directions Hero', description: 'Hero background for Directions page', page: '/directions', type: 'hero', singleImage: true },
+  { id: 'hero-contact', label: 'Contact Hero', description: 'Hero background for Contact page', page: '/contact', type: 'hero', singleImage: true },
+
+  // Page Overview Images - main content image on each activity page
+  { id: 'overview-deer', label: 'Deer Page Image', description: 'Main content image on Deer Hunting page', page: '/deer-hunting', type: 'overview', singleImage: true },
+  { id: 'overview-turkey', label: 'Turkey Page Image', description: 'Main content image on Turkey Hunting page', page: '/turkey-hunting', type: 'overview', singleImage: true },
+  { id: 'overview-fishing', label: 'Fishing Page Image', description: 'Main content image on Bass Fishing page', page: '/bass-fishing', type: 'overview', singleImage: true },
+
+  // Activity Cards on Home page
+  { id: 'activity-cards', label: 'Activity Cards', description: 'Home page "Our Activities" section (4 cards)', page: '/', type: 'cards' },
+
+  // Page Galleries
+  { id: 'lakes', label: 'Lakes Gallery', description: 'Gallery section on The Lakes page', page: '/the-lakes', type: 'gallery' },
+  { id: 'deer-hunting', label: 'Deer Gallery', description: 'Gallery section on Deer Hunting page', page: '/deer-hunting', type: 'gallery' },
+  { id: 'turkey-hunting', label: 'Turkey Gallery', description: 'Gallery section on Turkey Hunting page', page: '/turkey-hunting', type: 'gallery' },
+  { id: 'fishing', label: 'Fishing Gallery', description: 'Gallery section on Bass Fishing page', page: '/bass-fishing', type: 'gallery' },
+  { id: 'main-gallery', label: 'Main Gallery', description: 'The main /gallery page', page: '/gallery', type: 'gallery' },
 ]
 
-// Default images for seeding - use categories that exist in DB
+// Default images for seeding
 const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
+  // Hero Images
+  'hero-home': [{ url: '/images/IMG_4617.webp', title: 'Home Hero' }],
+  'hero-lakes': [{ url: '/images/IMG_4628.webp', title: 'Lakes Hero' }],
+  'hero-deer': [{ url: '/images/IMG_2289.webp', title: 'Deer Hunting Hero' }],
+  'hero-turkey': [{ url: '/images/IMG_2294.webp', title: 'Turkey Hunting Hero' }],
+  'hero-fishing': [{ url: '/images/IMG_4635.webp', title: 'Bass Fishing Hero' }],
+  'hero-gallery': [{ url: '/images/IMG_4633.webp', title: 'Gallery Hero' }],
+  'hero-directions': [{ url: '/images/1.webp', title: 'Directions Hero' }],
+  'hero-contact': [{ url: '/images/IMG_4596.webp', title: 'Contact Hero' }],
+
+  // Page Overview Images
+  'overview-deer': [{ url: '/images/IMG_2290.webp', title: 'Deer Hunting Overview' }],
+  'overview-turkey': [{ url: '/images/IMG_2292.webp', title: 'Turkey Hunting Overview' }],
+  'overview-fishing': [{ url: '/images/IMG_4621.webp', title: 'Bass Fishing Overview' }],
+
+  // Activity Cards
+  'activity-cards': [
+    { url: '/images/IMG_4617.webp', title: 'The Lakes' },
+    { url: '/images/IMG_2289.webp', title: 'Deer Hunting' },
+    { url: '/images/IMG_2294.webp', title: 'Turkey Hunting' },
+    { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
+  ],
+
+  // Page Galleries
   'lakes': [
     { url: '/images/IMG_4617.webp', title: 'Lake Scott' },
     { url: '/images/IMG_4628.webp', title: 'Lake Shannon' },
@@ -64,34 +115,23 @@ const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
     { url: '/images/IMG_4626.webp', title: 'Peaceful Waters' },
     { url: '/images/IMG_4627.webp', title: 'Prime Fishing Spot' },
   ],
-  'activity-cards': [
-    { url: '/images/IMG_4617.webp', title: 'The Lakes' },
-    { url: '/images/IMG_2289.webp', title: 'Deer Hunting' },
-    { url: '/images/IMG_2294.webp', title: 'Turkey Hunting' },
-    { url: '/images/IMG_4635.webp', title: 'Bass Fishing' },
-  ],
   'main-gallery': [
-    // Lakes
     { url: '/images/IMG_4617.webp', title: 'Lake Scott' },
     { url: '/images/IMG_4628.webp', title: 'Lake Shannon' },
     { url: '/images/IMG_4633.webp', title: 'Lake Patrick' },
     { url: '/images/IMG_4635.webp', title: 'Fishing Dock' },
-    // Hunting
     { url: '/images/IMG_2289.webp', title: 'Hunting Grounds' },
     { url: '/images/IMG_2290.webp', title: 'Property' },
     { url: '/images/IMG_2294.webp', title: 'Turkey Hunting' },
-    // Property
     { url: '/images/1.webp', title: 'Property' },
     { url: '/images/3.webp', title: 'View' },
     { url: '/images/IMG_0001-1.webp', title: 'Grounds' },
     { url: '/images/IMG_4596.webp', title: 'Overview' },
     { url: '/images/IMG_4597.webp', title: 'Grounds' },
-    // Lodging
     { url: '/images/IMG_1285-1.webp', title: 'Interior' },
     { url: '/images/IMG_1286.webp', title: 'Lodging' },
     { url: '/images/IMG_1288.webp', title: 'Camp House' },
     { url: '/images/IMG_1302.webp', title: 'Camp House' },
-    // Wildlife
     { url: '/images/IMG_6938.webp', title: 'Wildlife' },
     { url: '/images/IMG_6941.webp', title: 'Deer' },
   ],
@@ -101,6 +141,7 @@ function ImageCard({
   image,
   onDelete,
   onUpdate,
+  onRotate,
   isDragging,
   onDragStart,
   onDragOver,
@@ -109,6 +150,7 @@ function ImageCard({
   image: GalleryImage
   onDelete: (id: string) => void
   onUpdate: (id: string, data: Partial<GalleryImage>) => void
+  onRotate: (id: string, direction: 'left' | 'right') => void
   isDragging: boolean
   onDragStart: () => void
   onDragOver: (e: React.DragEvent) => void
@@ -148,6 +190,8 @@ function ImageCard({
     }
   }
 
+  const rotation = image.rotation || 0
+
   return (
     <div
       draggable
@@ -158,26 +202,50 @@ function ImageCard({
         isDragging ? 'border-forest-500 opacity-50' : 'border-gray-200 hover:border-forest-400'
       }`}
     >
-      <div className="relative h-40 bg-gray-100 group">
+      <div className="relative h-40 bg-gray-100 group overflow-hidden">
         <img
           src={image.image_url}
           alt={image.title || 'Gallery image'}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform"
+          style={{ transform: `rotate(${rotation}deg)` }}
         />
 
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100">
+          {/* Rotate Left */}
+          <button
+            onClick={() => onRotate(image.id, 'left')}
+            className="bg-white rounded-lg p-2 text-gray-700 hover:bg-gray-100"
+            title="Rotate left"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+            </svg>
+          </button>
+          {/* Rotate Right */}
+          <button
+            onClick={() => onRotate(image.id, 'right')}
+            className="bg-white rounded-lg p-2 text-gray-700 hover:bg-gray-100"
+            title="Rotate right"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 000 12h3" />
+            </svg>
+          </button>
+          {/* Replace */}
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="bg-white rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center gap-1"
+            className="bg-white rounded-lg p-2 text-gray-700 hover:bg-gray-100"
+            title="Replace image"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
             </svg>
-            Replace
           </button>
+          {/* Delete */}
           <button
             onClick={() => onDelete(image.id)}
-            className="bg-red-500 rounded-lg px-3 py-2 text-sm font-medium text-white hover:bg-red-600 flex items-center gap-1"
+            className="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600"
+            title="Delete image"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -238,9 +306,11 @@ function GallerySection({
   onAdd,
   onDelete,
   onUpdate,
+  onRotate,
   onReorder,
   onSeedDefaults,
   isSeeding,
+  singleImage = false,
 }: {
   category: CategoryKey
   label: string
@@ -250,9 +320,11 @@ function GallerySection({
   onAdd: (category: CategoryKey) => void
   onDelete: (id: string) => void
   onUpdate: (id: string, data: Partial<GalleryImage>) => void
+  onRotate: (id: string, direction: 'left' | 'right') => void
   onReorder: (images: GalleryImage[]) => void
   onSeedDefaults: (category: CategoryKey) => void
   isSeeding: boolean
+  singleImage?: boolean
 }) {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [isExpanded, setIsExpanded] = useState(true)
@@ -331,7 +403,7 @@ function GallerySection({
         <div className="p-4">
           {images.length === 0 ? (
             <div className="text-center py-8 bg-gray-50 rounded-lg">
-              <p className="text-gray-500 mb-4">No images in this gallery</p>
+              <p className="text-gray-500 mb-4">No image set</p>
               <div className="flex justify-center gap-3">
                 <button
                   onClick={() => onAdd(category)}
@@ -340,7 +412,7 @@ function GallerySection({
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                   </svg>
-                  Add Image
+                  {singleImage ? 'Set Image' : 'Add Image'}
                 </button>
                 <button
                   onClick={() => onSeedDefaults(category)}
@@ -357,11 +429,25 @@ function GallerySection({
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                       </svg>
-                      Load Default Images
+                      Load Default
                     </>
                   )}
                 </button>
               </div>
+            </div>
+          ) : singleImage ? (
+            /* Single image mode - show larger preview */
+            <div className="max-w-md">
+              <ImageCard
+                image={images[0]}
+                onDelete={onDelete}
+                onUpdate={onUpdate}
+                onRotate={onRotate}
+                isDragging={false}
+                onDragStart={() => {}}
+                onDragOver={() => {}}
+                onDrop={() => {}}
+              />
             </div>
           ) : (
             <div className="relative">
@@ -397,6 +483,7 @@ function GallerySection({
                       image={image}
                       onDelete={onDelete}
                       onUpdate={onUpdate}
+                      onRotate={onRotate}
                       isDragging={draggedIndex === index}
                       onDragStart={() => handleDragStart(index)}
                       onDragOver={handleDragOver}
@@ -431,6 +518,7 @@ export default function GalleryAdminPage() {
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'success' | 'error'>('success')
   const [activeCategory, setActiveCategory] = useState<CategoryKey | 'all'>('all')
+  const [activeType, setActiveType] = useState<SectionType | 'all'>('all')
   const [seedingCategory, setSeedingCategory] = useState<CategoryKey | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [uploadCategory, setUploadCategory] = useState<CategoryKey>('lakes')
@@ -479,31 +567,45 @@ export default function GalleryAdminPage() {
   }
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const files = e.target.files
+    if (!files || files.length === 0) return
 
-    showMessage('Uploading image...')
+    const totalFiles = files.length
+    showMessage(`Uploading ${totalFiles} image${totalFiles > 1 ? 's' : ''}...`)
 
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('category', uploadCategory)
-    formData.append('title', file.name.split('.')[0])
+    let successCount = 0
+    let errorCount = 0
 
-    try {
-      const response = await fetch('/api/admin/gallery/upload', {
-        method: 'POST',
-        body: formData,
-      })
-      const data = await response.json()
+    for (const file of Array.from(files)) {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('category', uploadCategory)
+      formData.append('title', file.name.split('.')[0])
 
-      if (data.error) {
-        showMessage(`Error: ${data.error}`, 'error')
-      } else if (data.image) {
-        setImages(prev => [...prev, data.image])
-        showMessage('Image added successfully!')
+      try {
+        const response = await fetch('/api/admin/gallery/upload', {
+          method: 'POST',
+          body: formData,
+        })
+        const data = await response.json()
+
+        if (data.error) {
+          console.error('Upload error:', data.error)
+          errorCount++
+        } else if (data.image) {
+          setImages(prev => [...prev, data.image])
+          successCount++
+        }
+      } catch (error) {
+        console.error('Failed to upload:', error)
+        errorCount++
       }
-    } catch (error) {
-      showMessage('Failed to upload image', 'error')
+    }
+
+    if (errorCount > 0) {
+      showMessage(`Uploaded ${successCount}/${totalFiles}. ${errorCount} failed.`, 'error')
+    } else {
+      showMessage(`${successCount} image${successCount > 1 ? 's' : ''} added!`)
     }
 
     if (fileInputRef.current) {
@@ -583,15 +685,44 @@ export default function GalleryAdminPage() {
     }
   }
 
+  const handleRotate = async (id: string, direction: 'left' | 'right') => {
+    const image = images.find(img => img.id === id)
+    if (!image) return
+
+    const currentRotation = image.rotation || 0
+    const newRotation = direction === 'right'
+      ? (currentRotation + 90) % 360
+      : (currentRotation - 90 + 360) % 360
+
+    // Optimistic update
+    setImages(prev => prev.map(img =>
+      img.id === id ? { ...img, rotation: newRotation } : img
+    ))
+
+    try {
+      const response = await fetch('/api/admin/gallery', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, rotation: newRotation }),
+      })
+      const data = await response.json()
+
+      if (data.error) {
+        showMessage(`Error: ${data.error}`, 'error')
+        fetchImages()
+      }
+    } catch (error) {
+      showMessage('Failed to rotate', 'error')
+      fetchImages()
+    }
+  }
+
   const handleSeedDefaults = async (category: CategoryKey) => {
     const defaults = DEFAULT_IMAGES[category]
     if (!defaults) return
 
     setSeedingCategory(category)
     showMessage(`Loading ${defaults.length} images...`)
-
-    // Map category to valid DB category
-    const dbCategory = category === 'main-gallery' ? 'lakes' : category === 'activity-cards' ? 'lakes' : category
 
     let successCount = 0
     let errorCount = 0
@@ -604,9 +735,10 @@ export default function GalleryAdminPage() {
           .insert({
             title: img.title,
             image_url: img.url,
-            category: dbCategory,
+            category: category,
             display_order: i + 1,
             is_featured: false,
+            rotation: 0,
           })
           .select()
           .single()
@@ -615,9 +747,7 @@ export default function GalleryAdminPage() {
           console.error('Insert error:', error)
           errorCount++
         } else if (data) {
-          // Update with the actual category for local state
-          const imageWithCategory = { ...data, category: category } as GalleryImage
-          setImages(prev => [...prev, imageWithCategory])
+          setImages(prev => [...prev, data as GalleryImage])
           successCount++
         }
       } catch (e) {
@@ -629,12 +759,11 @@ export default function GalleryAdminPage() {
     setSeedingCategory(null)
 
     if (errorCount > 0) {
-      showMessage(`Added ${successCount} images, ${errorCount} failed`, errorCount > successCount ? 'error' : 'success')
+      showMessage(`Added ${successCount} images, ${errorCount} failed. Run the SQL command to update your database constraint.`, 'error')
     } else {
       showMessage(`Added ${successCount} images!`)
     }
 
-    // Refresh from database
     fetchImages()
   }
 
@@ -646,16 +775,29 @@ export default function GalleryAdminPage() {
     )
   }
 
-  const galleriestoShow = activeCategory === 'all'
+  // Filter galleries by type first, then by specific category if selected
+  const galleriesByType = activeType === 'all'
     ? PAGE_GALLERIES
-    : PAGE_GALLERIES.filter(g => g.id === activeCategory)
+    : PAGE_GALLERIES.filter(g => g.type === activeType)
+
+  const galleriestoShow = activeCategory === 'all'
+    ? galleriesByType
+    : galleriesByType.filter(g => g.id === activeCategory)
+
+  const sectionTypes: { type: SectionType | 'all'; label: string; icon: string }[] = [
+    { type: 'all', label: 'All', icon: '📋' },
+    { type: 'hero', label: 'Hero Images', icon: '🖼️' },
+    { type: 'overview', label: 'Page Images', icon: '📄' },
+    { type: 'cards', label: 'Activity Cards', icon: '🃏' },
+    { type: 'gallery', label: 'Galleries', icon: '🖼️' },
+  ]
 
   return (
     <div className="max-w-7xl mx-auto">
       <div className="flex justify-between items-start mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gallery Manager</h1>
-          <p className="text-gray-500 mt-1">Manage all page galleries - changes update in real-time</p>
+          <h1 className="text-3xl font-bold text-gray-900">Image Manager</h1>
+          <p className="text-gray-500 mt-1">Manage all site images - hero backgrounds, page images, activity cards, and galleries</p>
         </div>
         <div className="text-sm text-gray-500">
           Total: {images.length} images
@@ -668,37 +810,64 @@ export default function GalleryAdminPage() {
         </div>
       )}
 
-      {/* Category Filter */}
-      <div className="flex flex-wrap gap-2 mb-6 bg-white p-4 rounded-xl shadow-sm">
-        <button
-          onClick={() => setActiveCategory('all')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            activeCategory === 'all'
-              ? 'bg-forest-600 text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-          }`}
-        >
-          All Galleries
-        </button>
-        {PAGE_GALLERIES.map(gallery => (
+      {/* Section Type Tabs */}
+      <div className="flex gap-1 mb-4 bg-white p-2 rounded-xl shadow-sm">
+        {sectionTypes.map(st => (
           <button
-            key={gallery.id}
-            onClick={() => setActiveCategory(gallery.id)}
+            key={st.type}
+            onClick={() => { setActiveType(st.type); setActiveCategory('all'); }}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
-              activeCategory === gallery.id
+              activeType === st.type
                 ? 'bg-forest-600 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
-            {gallery.label}
+            <span>{st.icon}</span>
+            {st.label}
             <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-              activeCategory === gallery.id ? 'bg-forest-700' : 'bg-gray-200'
+              activeType === st.type ? 'bg-forest-700' : 'bg-gray-200'
             }`}>
-              {imagesByCategory[gallery.id]?.length || 0}
+              {st.type === 'all'
+                ? PAGE_GALLERIES.length
+                : PAGE_GALLERIES.filter(g => g.type === st.type).length}
             </span>
           </button>
         ))}
       </div>
+
+      {/* Category Filter - only show if viewing galleries type */}
+      {(activeType === 'gallery' || activeType === 'all') && galleriesByType.length > 1 && (
+        <div className="flex flex-wrap gap-2 mb-6 bg-white p-4 rounded-xl shadow-sm">
+          <button
+            onClick={() => setActiveCategory('all')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              activeCategory === 'all'
+                ? 'bg-earth-600 text-white'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            All
+          </button>
+          {galleriesByType.map(gallery => (
+            <button
+              key={gallery.id}
+              onClick={() => setActiveCategory(gallery.id)}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+                activeCategory === gallery.id
+                  ? 'bg-earth-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {gallery.label}
+              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+                activeCategory === gallery.id ? 'bg-earth-700' : 'bg-gray-200'
+              }`}>
+                {imagesByCategory[gallery.id]?.length || 0}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Gallery Sections */}
       <div className="space-y-6">
@@ -713,9 +882,11 @@ export default function GalleryAdminPage() {
             onAdd={handleAdd}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
+            onRotate={handleRotate}
             onReorder={handleReorder}
             onSeedDefaults={handleSeedDefaults}
             isSeeding={seedingCategory === gallery.id}
+            singleImage={gallery.singleImage}
           />
         ))}
       </div>
@@ -724,6 +895,7 @@ export default function GalleryAdminPage() {
         ref={fileInputRef}
         type="file"
         accept="image/*"
+        multiple
         onChange={handleFileUpload}
         className="hidden"
       />
@@ -731,12 +903,13 @@ export default function GalleryAdminPage() {
       <div className="mt-8 p-6 bg-gray-50 rounded-xl">
         <h3 className="font-bold text-gray-900 mb-2">How to use</h3>
         <ul className="text-sm text-gray-600 space-y-1">
-          <li><strong>Add:</strong> Click the + button to upload a new image</li>
-          <li><strong>Replace:</strong> Hover over an image and click "Replace"</li>
+          <li><strong>Add:</strong> Click the + button to upload images (select multiple at once)</li>
+          <li><strong>Replace:</strong> Hover over an image and click the edit icon</li>
+          <li><strong>Rotate:</strong> Hover and use rotate left/right buttons</li>
           <li><strong>Delete:</strong> Hover and click the red delete button</li>
           <li><strong>Reorder:</strong> Drag and drop images</li>
           <li><strong>Edit title:</strong> Click on the title to edit</li>
-          <li><strong>Load defaults:</strong> Click "Load Default Images" to populate empty galleries</li>
+          <li><strong>Load defaults:</strong> Click "Load Default" to populate empty sections</li>
         </ul>
       </div>
     </div>

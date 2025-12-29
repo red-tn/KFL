@@ -57,10 +57,16 @@ CREATE TABLE IF NOT EXISTS gallery_images (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title TEXT,
   image_url TEXT NOT NULL,
-  category TEXT CHECK (category IN ('lakes', 'deer-hunting', 'turkey-hunting', 'fishing', 'property', 'lodging')),
+  category TEXT CHECK (category IN (
+    'lakes', 'deer-hunting', 'turkey-hunting', 'fishing', 'property', 'lodging', 'wildlife',
+    'main-gallery', 'activity-cards',
+    'hero-home', 'hero-lakes', 'hero-deer', 'hero-turkey', 'hero-fishing', 'hero-gallery', 'hero-directions', 'hero-contact',
+    'overview-deer', 'overview-turkey', 'overview-fishing'
+  )),
   caption TEXT,
   display_order INTEGER DEFAULT 0,
   is_featured BOOLEAN DEFAULT false,
+  rotation INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
