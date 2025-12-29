@@ -107,13 +107,15 @@ export default async function BassFishingPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
-              <Image
-                src={overviewImage}
-                alt="Bass fishing at King's Family Lakes"
-                fill
-                className="object-cover"
-              />
+            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-200">
+              {overviewImage && (
+                <Image
+                  src={overviewImage}
+                  alt="Bass fishing at King's Family Lakes"
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
             <div className="space-y-4">
               <div className="bg-forest-50 rounded-lg p-6">

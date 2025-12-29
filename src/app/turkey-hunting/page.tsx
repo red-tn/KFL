@@ -94,13 +94,15 @@ export default async function TurkeyHuntingPage() {
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="lg:order-2">
-              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
-                <Image
-                  src={overviewImage}
-                  alt="Turkey hunting at King's Family Lakes"
-                  fill
-                  className="object-cover"
-                />
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-200">
+                {overviewImage && (
+                  <Image
+                    src={overviewImage}
+                    alt="Turkey hunting at King's Family Lakes"
+                    fill
+                    className="object-cover"
+                  />
+                )}
               </div>
             </div>
             <div className="lg:order-1">

@@ -109,13 +109,15 @@ export default async function DeerHuntingPage() {
                 Book Your Hunt
               </Link>
             </div>
-            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
-              <Image
-                src={overviewImage}
-                alt="Deer hunting at King's Family Lakes"
-                fill
-                className="object-cover"
-              />
+            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-200">
+              {overviewImage && (
+                <Image
+                  src={overviewImage}
+                  alt="Deer hunting at King's Family Lakes"
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
           </div>
         </div>
