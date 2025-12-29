@@ -4,11 +4,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'kingsfamilylakes.com',
+        hostname: '*.supabase.co',
       },
       {
         protocol: 'https',
-        hostname: 'i0.wp.com',
+        hostname: 'ldqwjomywgphklhamvba.supabase.co',
       },
     ],
   },
