@@ -37,7 +37,6 @@ const defaultActivities = [
     description: 'World-class White Tail Deer hunting with well-maintained blinds, manicured pastures, and experienced guides.',
     href: '/deer-hunting',
     price: '$400/day',
-    badge: 'Popular',
     image: '/images/IMG_2289.webp',
   },
   {
@@ -77,7 +76,6 @@ export default async function Home() {
         description: a.short_description || '',
         href: `/${a.slug}`,
         price: a.daily_rate ? `$${a.daily_rate}/day` : undefined,
-        badge: a.type.includes('hunting') ? 'Popular' : undefined,
         image: activityImages[a.slug] || defaultActivities.find(d => d.href === `/${a.slug}`)?.image,
       }))
     : defaultActivities
