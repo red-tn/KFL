@@ -67,14 +67,18 @@ export default async function Home() {
   // Use database card images only - manage in admin
   const activityImages = cardImages
 
-  const activities = featuredActivities.length > 0
-    ? featuredActivities.map((a) => ({
+  // Only show deer, turkey, and fishing - filter out lakes
+  const allowedSlugs = ['deer-hunting', 'turkey-hunting', 'bass-fishing']
+  const filteredActivities = featuredActivities.filter((a) => allowedSlugs.includes(a.slug))
+
+  const activities = filteredActivities.length > 0
+    ? filteredActivities.map((a) => ({
         title: a.name,
         description: a.short_description || '',
         href: `/${a.slug}`,
         price: a.daily_rate ? `$${a.daily_rate}/day` : undefined,
         badge: a.type.includes('hunting') ? 'Popular' : undefined,
-        image: activityImages[a.slug],
+        image: activityImages[a.slug] || defaultActivities.find(d => d.href === `/${a.slug}`)?.image,
       }))
     : defaultActivities
 
