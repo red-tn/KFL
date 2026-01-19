@@ -30,27 +30,21 @@ const features = [
   },
 ]
 
-// Fallback activities if database is empty
+// Fallback activities if database is empty - only hunting and fishing cards
 const defaultActivities = [
-  {
-    title: 'The Lakes',
-    description: 'Three pristine private lakes - Lake Scott, Lake Shannon, and Lake Patrick - offering year-round fishing for Large Mouth Bass and Brim.',
-    href: '/the-lakes',
-    image: '/images/IMG_4617.webp',
-  },
   {
     title: 'Deer Hunting',
     description: 'World-class White Tail Deer hunting with well-maintained blinds, manicured pastures, and experienced guides.',
     href: '/deer-hunting',
-    price: '$300/day',
+    price: '$400/day',
     badge: 'Popular',
     image: '/images/IMG_2289.webp',
   },
   {
     title: 'Turkey Hunting',
-    description: 'Premium turkey hunting with fall and spring seasons. Strategically positioned blinds overlooking prime hunting grounds.',
+    description: 'Premium turkey hunting with spring season. Strategically positioned blinds overlooking prime hunting grounds.',
     href: '/turkey-hunting',
-    price: '$300/day',
+    price: '$1,000/2 days',
     image: '/images/IMG_2294.webp',
   },
   {
@@ -105,18 +99,15 @@ export default async function Home() {
         size="large"
       />
 
-      {/* Ad Banner - After Hero */}
-      <AdBanner slot="hero-bottom" position="top" />
-
       {/* Activities Section */}
-      <section id="activities" className="section-padding bg-gray-50">
+      <section id="activities" className="py-12 md:py-16 bg-gray-50">
         <div className="container-custom">
           <SectionHeader
             title="Our Activities"
             subtitle="From trophy bass fishing to world-class deer hunting, we offer unforgettable outdoor experiences for sportsmen of all skill levels."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {activities.map((activity) => (
               <ActivityCard key={activity.title} {...activity} />
             ))}
@@ -125,30 +116,27 @@ export default async function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding">
+      <section className="py-12 md:py-16">
         <div className="container-custom">
           <SectionHeader
             title="Why Choose King's Family Lakes"
             subtitle="We've been welcoming hunters and anglers for generations. Here's what makes us special."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {features.map((feature) => (
               <div key={feature.title} className="text-center">
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <div className="text-3xl md:text-4xl mb-3">{feature.icon}</div>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-sm md:text-base text-gray-600">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Ad Banner - Middle */}
-      <AdBanner slot="content-middle" position="middle" />
-
       {/* CTA Section */}
-      <section className="py-20 bg-forest-800 text-white">
+      <section className="py-12 md:py-16 bg-forest-800 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready for Your Next Adventure?
@@ -168,7 +156,7 @@ export default async function Home() {
       </section>
 
       {/* Pricing Preview */}
-      <section className="section-padding bg-gray-50">
+      <section className="py-12 md:py-16 bg-gray-50">
         <div className="container-custom">
           <SectionHeader
             title="Simple, Transparent Pricing"

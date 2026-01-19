@@ -213,15 +213,13 @@ export async function getOverviewImage(page: string): Promise<string | null> {
 
 // Get activity card images for home page - each card has its own category
 export async function getActivityCardImages(): Promise<Record<string, string>> {
-  const [lakesImg, deerImg, turkeyImg, fishingImg] = await Promise.all([
-    getSingleImage('card-lakes'),
+  const [deerImg, turkeyImg, fishingImg] = await Promise.all([
     getSingleImage('card-deer'),
     getSingleImage('card-turkey'),
     getSingleImage('card-fishing'),
   ])
 
   const result: Record<string, string> = {}
-  if (lakesImg) result['the-lakes'] = lakesImg.image_url
   if (deerImg) result['deer-hunting'] = deerImg.image_url
   if (turkeyImg) result['turkey-hunting'] = turkeyImg.image_url
   if (fishingImg) result['bass-fishing'] = fishingImg.image_url

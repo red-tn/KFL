@@ -8,7 +8,7 @@ type CategoryKey =
   | 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing'
   | 'main-gallery'
   | 'overview-deer' | 'overview-turkey' | 'overview-fishing'
-  | 'card-lakes' | 'card-deer' | 'card-turkey' | 'card-fishing'
+  | 'card-deer' | 'card-turkey' | 'card-fishing'
 
 // Gallery section types
 type SectionType = 'overview' | 'gallery' | 'cards'
@@ -28,7 +28,6 @@ const PAGE_GALLERIES: {
   { id: 'overview-fishing', label: 'Fishing Page Image', description: 'Main content image on Bass Fishing page', page: '/bass-fishing', type: 'overview', singleImage: true },
 
   // Activity Cards on Home page - one for each activity
-  { id: 'card-lakes', label: 'Card: The Lakes', description: 'Home page activity card for The Lakes', page: '/', type: 'cards', singleImage: true },
   { id: 'card-deer', label: 'Card: Deer Hunting', description: 'Home page activity card for Deer Hunting', page: '/', type: 'cards', singleImage: true },
   { id: 'card-turkey', label: 'Card: Turkey Hunting', description: 'Home page activity card for Turkey Hunting', page: '/', type: 'cards', singleImage: true },
   { id: 'card-fishing', label: 'Card: Bass Fishing', description: 'Home page activity card for Bass Fishing', page: '/', type: 'cards', singleImage: true },
@@ -49,7 +48,6 @@ const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
   'overview-fishing': [{ url: '/images/IMG_4621.webp', title: 'Bass Fishing Overview' }],
 
   // Activity Cards - one per activity
-  'card-lakes': [{ url: '/images/IMG_4617.webp', title: 'The Lakes Card' }],
   'card-deer': [{ url: '/images/IMG_2289.webp', title: 'Deer Hunting Card' }],
   'card-turkey': [{ url: '/images/IMG_2294.webp', title: 'Turkey Hunting Card' }],
   'card-fishing': [{ url: '/images/IMG_4635.webp', title: 'Bass Fishing Card' }],
