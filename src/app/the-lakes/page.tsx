@@ -35,7 +35,7 @@ const lakes = [
     size: '~15 acres',
     species: 'F1 Hybrid Bass (Florida x Northern)',
     description: 'Home to our trophy F1 hybrid bass - a cross between Florida and Northern strains. Lake Shannon has produced bass up to 15 lbs, with consistent catches in the 10-14 lb range. The shallower waters concentrate fish, making this our premier trophy fishing destination.',
-    image: '/images/IMG_4628.webp',
+    image: '/images/IMG_4633.webp',
     features: [
       'Trophy bass up to 15 lbs',
       'F1 hybrid bass',
@@ -50,7 +50,7 @@ const lakes = [
     size: '~10 acres',
     species: 'Northern Strain Bass',
     description: 'Our newest addition, Lake Patrick is stocked exclusively with Northern strain bass. These aggressive fighters offer excellent sport fishing with less pressure than the other lakes. Multiple docks and a dedicated boathouse provide easy access.',
-    image: '/images/IMG_4633.webp',
+    image: '/images/IMG_4597.webp',
     features: [
       'Northern strain bass',
       'Less fishing pressure',
