@@ -3,7 +3,6 @@ export const revalidate = 0 // Don't cache - always fetch fresh data
 import { Metadata } from 'next'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
-import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getPageContent, getSiteSettings } from '@/lib/data'
 
@@ -162,9 +161,6 @@ export default async function DirectionsPage() {
         </div>
       </section>
 
-      
-      <AdBanner slot="directions-middle" position="middle" />
-
       {/* Landmarks */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
@@ -269,8 +265,6 @@ export default async function DirectionsPage() {
         </div>
       </section>
 
-      
-      <AdBanner slot="directions-bottom" position="bottom" />
     </>
   )
 }
