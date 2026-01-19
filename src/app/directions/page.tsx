@@ -108,9 +108,6 @@ export default async function DirectionsPage() {
         size="small"
       />
 
-      {/* Ad Banner */}
-      <AdBanner slot="directions-top" position="top" />
-
       {/* Quick Info */}
       <section className="py-8 bg-forest-700 text-white">
         <div className="container-custom">
@@ -165,7 +162,7 @@ export default async function DirectionsPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="directions-middle" position="middle" />
 
       {/* Landmarks */}
@@ -272,7 +269,7 @@ export default async function DirectionsPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="directions-bottom" position="bottom" />
     </>
   )

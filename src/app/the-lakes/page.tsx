@@ -87,9 +87,6 @@ export default async function TheLakesPage() {
         size="medium"
       />
 
-      {/* Ad Banner */}
-      <AdBanner slot="lakes-top" position="top" />
-
       {/* Lakes Overview */}
       <section className="section-padding">
         <div className="container-custom">
@@ -147,7 +144,7 @@ export default async function TheLakesPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="lakes-middle" position="middle" />
 
       {/* Fish Species */}
@@ -229,7 +226,7 @@ export default async function TheLakesPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="lakes-bottom" position="bottom" />
     </>
   )

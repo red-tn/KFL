@@ -114,9 +114,6 @@ export default async function ContactPage() {
         size="small"
       />
 
-      {/* Ad Banner */}
-      <AdBanner slot="contact-top" position="top" />
-
       {/* Contact Section */}
       <section className="section-padding">
         <div className="container-custom">
@@ -174,7 +171,7 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="contact-middle" position="middle" />
 
       {/* FAQs */}
@@ -223,7 +220,7 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="contact-bottom" position="bottom" />
     </>
   )

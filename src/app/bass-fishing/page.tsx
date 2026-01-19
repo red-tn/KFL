@@ -91,9 +91,6 @@ export default async function BassFishingPage() {
         size="medium"
       />
 
-      {/* Ad Banner */}
-      <AdBanner slot="fishing-top" position="top" />
-
       {/* Overview */}
       <section className="section-padding">
         <div className="container-custom">
@@ -162,7 +159,7 @@ export default async function BassFishingPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="fishing-middle" position="middle" />
 
       {/* Tips */}
@@ -249,7 +246,7 @@ export default async function BassFishingPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="fishing-bottom" position="bottom" />
     </>
   )

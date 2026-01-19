@@ -42,8 +42,6 @@ export default async function GalleryPage() {
         size="small"
       />
 
-      <AdBanner slot="gallery-top" position="top" />
-
       <GalleryGrid images={images} />
 
       <AdBanner slot="gallery-middle" position="middle" />

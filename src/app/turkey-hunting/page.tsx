@@ -84,9 +84,6 @@ export default async function TurkeyHuntingPage() {
         size="medium"
       />
 
-      {/* Ad Banner */}
-      <AdBanner slot="turkey-top" position="top" />
-
       {/* Overview */}
       <section className="section-padding">
         <div className="container-custom">
@@ -144,7 +141,7 @@ export default async function TurkeyHuntingPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="turkey-middle" position="middle" />
 
       {/* Pricing */}
@@ -258,7 +255,7 @@ export default async function TurkeyHuntingPage() {
         </div>
       </section>
 
-      {/* Ad Banner */}
+      
       <AdBanner slot="turkey-bottom" position="bottom" />
     </>
   )
