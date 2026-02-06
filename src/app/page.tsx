@@ -3,7 +3,6 @@ export const revalidate = 0 // Don't cache - always fetch fresh data
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
-import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages } from '@/lib/data'
 
@@ -200,8 +199,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Ad Banner - Pre-footer */}
-      <AdBanner slot="pre-footer" position="bottom" />
     </>
   )
 }

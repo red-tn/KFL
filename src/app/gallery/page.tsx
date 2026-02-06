@@ -2,7 +2,6 @@ export const revalidate = 0 // Don't cache - always fetch fresh data
 
 import { Metadata } from 'next'
 import Hero from '@/components/ui/Hero'
-import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getPageContent, getGalleryImages } from '@/lib/data'
 import GalleryGrid from './GalleryGrid'
@@ -43,8 +42,6 @@ export default async function GalleryPage() {
       />
 
       <GalleryGrid images={images} />
-
-      <AdBanner slot="gallery-middle" position="middle" />
 
       {/* Activity Links */}
       <section className="section-padding">
@@ -90,7 +87,6 @@ export default async function GalleryPage() {
         </div>
       </section>
 
-      <AdBanner slot="gallery-bottom" position="bottom" />
     </>
   )
 }

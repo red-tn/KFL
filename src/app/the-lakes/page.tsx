@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
-import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getPageContent, getGalleryImages } from '@/lib/data'
 
@@ -144,9 +143,6 @@ export default async function TheLakesPage() {
         </div>
       </section>
 
-      
-      <AdBanner slot="lakes-middle" position="middle" />
-
       {/* Fish Species */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
@@ -226,8 +222,6 @@ export default async function TheLakesPage() {
         </div>
       </section>
 
-      
-      <AdBanner slot="lakes-bottom" position="bottom" />
     </>
   )
 }

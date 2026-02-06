@@ -30,15 +30,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={openSans.variable}>
-      <head>
-        <AdSenseScript />
-      </head>
       <body className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
           {children}
         </main>
         <Footer />
+        <AdSenseScript />
       </body>
     </html>
   )

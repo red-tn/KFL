@@ -28,6 +28,8 @@ export default function ActivityCard({
             alt={title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            priority
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-forest-700 to-forest-900 flex items-center justify-center">
