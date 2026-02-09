@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import './globals.css'
+import Script from 'next/script'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import AdSenseScript from '@/components/ads/AdSenseScript'
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -30,10 +30,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={openSans.variable}>
-      <head>
-        <AdSenseScript />
-      </head>
       <body className="flex flex-col min-h-screen">
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8003141165916453"
+          strategy="beforeInteractive"
+          crossOrigin="anonymous"
+        />
         <Header />
         <main className="flex-grow">
           {children}
