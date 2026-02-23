@@ -5,10 +5,10 @@ import { createClient } from '@/lib/supabase/client'
 import type { GalleryImage } from '@/lib/types'
 
 type CategoryKey =
-  | 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing'
+  | 'lakes' | 'deer-hunting' | 'turkey-hunting' | 'fishing' | 'lodging'
   | 'main-gallery'
-  | 'overview-deer' | 'overview-turkey' | 'overview-fishing'
-  | 'card-deer' | 'card-turkey' | 'card-fishing'
+  | 'overview-deer' | 'overview-turkey' | 'overview-fishing' | 'overview-lodging'
+  | 'card-deer' | 'card-turkey' | 'card-fishing' | 'card-lodging'
 
 // Gallery section types
 type SectionType = 'overview' | 'gallery' | 'cards'
@@ -26,17 +26,20 @@ const PAGE_GALLERIES: {
   { id: 'overview-deer', label: 'Deer Page Image', description: 'Main content image on Deer Hunting page', page: '/deer-hunting', type: 'overview', singleImage: true },
   { id: 'overview-turkey', label: 'Turkey Page Image', description: 'Main content image on Turkey Hunting page', page: '/turkey-hunting', type: 'overview', singleImage: true },
   { id: 'overview-fishing', label: 'Fishing Page Image', description: 'Main content image on Bass Fishing page', page: '/bass-fishing', type: 'overview', singleImage: true },
+  { id: 'overview-lodging', label: 'Lodging Page Image', description: 'Main content image on Lodging page', page: '/lodging', type: 'overview', singleImage: true },
 
   // Activity Cards on Home page - one for each activity
   { id: 'card-deer', label: 'Card: Deer Hunting', description: 'Home page activity card for Deer Hunting', page: '/', type: 'cards', singleImage: true },
   { id: 'card-turkey', label: 'Card: Turkey Hunting', description: 'Home page activity card for Turkey Hunting', page: '/', type: 'cards', singleImage: true },
   { id: 'card-fishing', label: 'Card: Bass Fishing', description: 'Home page activity card for Bass Fishing', page: '/', type: 'cards', singleImage: true },
+  { id: 'card-lodging', label: 'Card: Lodging', description: 'Home page activity card for Lodging', page: '/', type: 'cards', singleImage: true },
 
   // Page Galleries
   { id: 'lakes', label: 'Lakes Gallery', description: 'Gallery section on The Lakes page', page: '/the-lakes', type: 'gallery' },
   { id: 'deer-hunting', label: 'Deer Gallery', description: 'Gallery section on Deer Hunting page', page: '/deer-hunting', type: 'gallery' },
   { id: 'turkey-hunting', label: 'Turkey Gallery', description: 'Gallery section on Turkey Hunting page', page: '/turkey-hunting', type: 'gallery' },
   { id: 'fishing', label: 'Fishing Gallery', description: 'Gallery section on Bass Fishing page', page: '/bass-fishing', type: 'gallery' },
+  { id: 'lodging', label: 'Lodging Gallery', description: 'Gallery section on Lodging page', page: '/lodging', type: 'gallery' },
   { id: 'main-gallery', label: 'Main Gallery', description: 'The main /gallery page', page: '/gallery', type: 'gallery' },
 ]
 
@@ -46,11 +49,13 @@ const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
   'overview-deer': [{ url: '/images/IMG_2290.webp', title: 'Deer Hunting Overview' }],
   'overview-turkey': [{ url: '/images/IMG_2292.webp', title: 'Turkey Hunting Overview' }],
   'overview-fishing': [{ url: '/images/IMG_4621.webp', title: 'Bass Fishing Overview' }],
+  'overview-lodging': [{ url: '/images/IMG_4602.webp', title: 'Lodging Overview' }],
 
   // Activity Cards - one per activity
   'card-deer': [{ url: '/images/IMG_2289.webp', title: 'Deer Hunting Card' }],
   'card-turkey': [{ url: '/images/IMG_2294.webp', title: 'Turkey Hunting Card' }],
   'card-fishing': [{ url: '/images/IMG_4635.webp', title: 'Bass Fishing Card' }],
+  'card-lodging': [{ url: '/images/IMG_4602.webp', title: 'Lodging Card' }],
 
   // Page Galleries
   'lakes': [
@@ -93,6 +98,19 @@ const DEFAULT_IMAGES: Record<CategoryKey, { url: string; title: string }[]> = {
     { url: '/images/IMG_4624.webp', title: 'Scenic Lake' },
     { url: '/images/IMG_4626.webp', title: 'Peaceful Waters' },
     { url: '/images/IMG_4627.webp', title: 'Prime Fishing Spot' },
+  ],
+  'lodging': [
+    { url: '/images/IMG_4601.webp', title: 'Camp House 1 Front' },
+    { url: '/images/IMG_4602.webp', title: 'Camp House 1 with Flag' },
+    { url: '/images/IMG_4603.webp', title: 'Camp House 1 Side' },
+    { url: '/images/IMG_4641.webp', title: 'King Bedroom' },
+    { url: '/images/IMG_4642.webp', title: 'Star Quilt Bedroom' },
+    { url: '/images/IMG_4644.webp', title: 'Living Area with Fireplace' },
+    { url: '/images/IMG_1285-1.webp', title: 'Camp House 2 Interior' },
+    { url: '/images/IMG_1286.webp', title: 'Camp House 2 View' },
+    { url: '/images/IMG_1288.webp', title: 'Camp House 2 Kitchen' },
+    { url: '/images/IMG_1289.webp', title: 'Camp House 2 Living Area' },
+    { url: '/images/IMG_war_eagle.webp', title: 'War Eagle Deer Mount' },
   ],
   'main-gallery': [
     { url: '/images/IMG_4617.webp', title: 'Lake Scott' },

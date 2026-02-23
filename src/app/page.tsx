@@ -1,5 +1,6 @@
 export const revalidate = 0 // Don't cache - always fetch fresh data
 
+import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
@@ -112,6 +113,65 @@ export default async function Home() {
             {activities.map((activity) => (
               <ActivityCard key={activity.title} {...activity} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lodging Showcase */}
+      <section className="py-12 md:py-16">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+                <Image src="/images/IMG_4601.webp" alt="Camp House exterior" fill className="object-cover" />
+              </div>
+              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+                <Image src="/images/IMG_4644.webp" alt="Living area with fireplace" fill className="object-cover" />
+              </div>
+              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+                <Image src="/images/IMG_4641.webp" alt="King bedroom" fill className="object-cover" />
+              </div>
+              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+                <Image src="/images/IMG_4602.webp" alt="Camp House with flag" fill className="object-cover" />
+              </div>
+            </div>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Stay Right on the Water
+              </h2>
+              <p className="text-lg text-gray-600 mb-6">
+                Two fully-equipped camp houses sit right on our private lakes. Rest easy after a day in the field with all the comforts of home.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span className="text-gray-700">Two camp houses sleeping 8+ guests each</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span className="text-gray-700">Full kitchens, outdoor cookers, and grills</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span className="text-gray-700">Lodging included with all hunting packages</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span className="text-gray-700">$100/night for standalone stays</span>
+                </li>
+              </ul>
+              <Link href="/lodging" className="btn-primary">
+                View Lodging Details
+              </Link>
+            </div>
           </div>
         </div>
       </section>

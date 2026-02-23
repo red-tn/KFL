@@ -6,6 +6,7 @@ const quickLinks = [
   { name: 'Deer Hunting', href: '/deer-hunting' },
   { name: 'Turkey Hunting', href: '/turkey-hunting' },
   { name: 'Bass Fishing', href: '/bass-fishing' },
+  { name: 'Lodging', href: '/lodging' },
 ]
 
 const infoLinks = [

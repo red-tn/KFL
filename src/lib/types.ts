@@ -55,10 +55,12 @@ export type GalleryCategory =
   | 'overview-deer'
   | 'overview-turkey'
   | 'overview-fishing'
+  | 'overview-lodging'
   | 'card-lakes'
   | 'card-deer'
   | 'card-turkey'
   | 'card-fishing'
+  | 'card-lodging'
 
 export interface GalleryImage {
   id: string

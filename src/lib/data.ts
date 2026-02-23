@@ -202,6 +202,7 @@ export async function getOverviewImage(page: string): Promise<string | null> {
     'deer-hunting': 'overview-deer',
     'turkey-hunting': 'overview-turkey',
     'bass-fishing': 'overview-fishing',
+    'lodging': 'overview-lodging',
   }
 
   const category = categoryMap[page]
