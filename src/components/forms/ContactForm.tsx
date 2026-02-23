@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface FormData {
   name: string
@@ -8,6 +8,12 @@ interface FormData {
   phone: string
   interest: string
   message: string
+}
+
+function generateChallenge() {
+  const a = Math.floor(Math.random() * 10) + 1
+  const b = Math.floor(Math.random() * 10) + 1
+  return { question: `What is ${a} + ${b}?`, answer: String(a + b) }
 }
 
 export default function ContactForm() {
@@ -19,6 +25,13 @@ export default function ContactForm() {
     message: '',
   })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [challenge, setChallenge] = useState({ question: '', answer: '' })
+  const [challengeInput, setChallengeInput] = useState('')
+  const [challengeError, setChallengeError] = useState(false)
+
+  useEffect(() => {
+    setChallenge(generateChallenge())
+  }, [])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -29,6 +42,15 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setChallengeError(false)
+
+    if (challengeInput.trim() !== challenge.answer) {
+      setChallengeError(true)
+      setChallenge(generateChallenge())
+      setChallengeInput('')
+      return
+    }
+
     setStatus('loading')
 
     try {
@@ -41,6 +63,7 @@ export default function ContactForm() {
       if (response.ok) {
         setStatus('success')
         setFormData({ name: '', email: '', phone: '', interest: '', message: '' })
+        setChallengeInput('')
       } else {
         setStatus('error')
       }
@@ -156,6 +179,28 @@ export default function ContactForm() {
           className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-colors resize-none"
           placeholder="Tell us about your trip plans, questions, or preferred dates..."
         />
+      </div>
+
+      {/* Human Verification */}
+      <div>
+        <label htmlFor="challenge" className="block text-sm font-medium text-gray-700 mb-2">
+          Verify you&apos;re human: {challenge.question}
+        </label>
+        <input
+          type="text"
+          id="challenge"
+          required
+          value={challengeInput}
+          onChange={(e) => { setChallengeInput(e.target.value); setChallengeError(false); }}
+          className={`w-full px-4 py-3 rounded-lg border transition-colors focus:ring-2 focus:ring-forest-500 focus:border-forest-500 ${
+            challengeError ? 'border-red-400 bg-red-50' : 'border-gray-300'
+          }`}
+          placeholder="Your answer"
+          inputMode="numeric"
+        />
+        {challengeError && (
+          <p className="text-red-600 text-sm mt-1">Incorrect answer. Please try again.</p>
+        )}
       </div>
 
       {/* Error Message */}
