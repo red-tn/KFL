@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 
 interface GalleryImage {
@@ -17,7 +17,35 @@ interface ScrollableGalleryProps {
 
 export default function ScrollableGallery({ images, title }: ScrollableGalleryProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const selectedImage = selectedIndex !== null ? images[selectedIndex] : null
+
+  const goNext = useCallback(() => {
+    if (selectedIndex === null) return
+    setSelectedIndex(selectedIndex < images.length - 1 ? selectedIndex + 1 : 0)
+  }, [selectedIndex, images.length])
+
+  const goPrev = useCallback(() => {
+    if (selectedIndex === null) return
+    setSelectedIndex(selectedIndex > 0 ? selectedIndex - 1 : images.length - 1)
+  }, [selectedIndex, images.length])
+
+  const close = useCallback(() => setSelectedIndex(null), [])
+
+  useEffect(() => {
+    if (selectedIndex === null) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') goNext()
+      else if (e.key === 'ArrowLeft') goPrev()
+      else if (e.key === 'Escape') close()
+    }
+    window.addEventListener('keydown', handleKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [selectedIndex, goNext, goPrev, close])
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -54,16 +82,16 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
           {images.map((image, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-72 cursor-pointer group/item"
-              onClick={() => setSelectedImage(image)}
+              className="flex-shrink-0 w-80 cursor-pointer group/item"
+              onClick={() => setSelectedIndex(index)}
             >
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-md">
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
-                  className="object-cover group-hover/item:scale-105 transition-transform duration-300"
-                  style={image.rotation ? { transform: `rotate(${image.rotation}deg)` } : undefined}
+                  className="object-cover group-hover/item:scale-105 transition-transform duration-500"
+                  style={image.rotation ? { transform: `rotate(${image.rotation}deg) scale(1.1)` } : undefined}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover/item:bg-black/20 transition-colors duration-300" />
               </div>
@@ -87,31 +115,53 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
       </div>
 
       {/* Lightbox */}
-      {selectedImage && (
+      {selectedImage && selectedIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+          onClick={close}
         >
           <button
-            className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
-            onClick={() => setSelectedImage(null)}
+            className="absolute top-4 right-4 text-white/70 hover:text-white z-10"
+            onClick={close}
           >
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <div className="relative max-w-5xl max-h-[90vh] w-full h-full">
+
+          <div className="absolute top-5 left-5 text-white/50 text-sm z-10">
+            {selectedIndex + 1} / {images.length}
+          </div>
+
+          <button
+            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white z-10 p-2"
+            onClick={(e) => { e.stopPropagation(); goPrev() }}
+          >
+            <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+
+          <button
+            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white z-10 p-2"
+            onClick={(e) => { e.stopPropagation(); goNext() }}
+          >
+            <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+
+          <div className="relative max-w-5xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedImage.src}
               alt={selectedImage.alt}
               fill
               className="object-contain"
               style={selectedImage.rotation ? { transform: `rotate(${selectedImage.rotation}deg)` } : undefined}
-              onClick={(e) => e.stopPropagation()}
             />
           </div>
           {selectedImage.caption && (
-            <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-lg bg-black/50 px-4 py-2 rounded-lg">
+            <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-base bg-black/50 px-4 py-2 rounded-lg">
               {selectedImage.caption}
             </p>
           )}
