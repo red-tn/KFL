@@ -236,7 +236,7 @@ export default async function TurkeyHuntingPage() {
       {/* CTA */}
       <section className="py-16 bg-forest-700 text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Book Your Turkey Hunt?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-white">Ready to Book Your Turkey Hunt?</h2>
           <p className="text-xl text-forest-100 mb-8">
             Contact us to reserve your dates for spring season.
           </p>

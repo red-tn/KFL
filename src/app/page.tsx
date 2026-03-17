@@ -209,7 +209,7 @@ export default async function Home() {
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-forest-900 bg-texture-dark text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Ready for Your Next Adventure?
           </h2>
           <p className="text-xl text-forest-100 mb-8 max-w-2xl mx-auto">

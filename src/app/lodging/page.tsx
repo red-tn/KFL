@@ -302,7 +302,7 @@ export default async function LodgingPage() {
       {/* CTA */}
       <section className="py-16 bg-earth-700 text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Book Your Stay?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-white">Ready to Book Your Stay?</h2>
           <p className="text-xl text-earth-100 mb-8">
             Contact us to check availability and reserve your dates.
           </p>

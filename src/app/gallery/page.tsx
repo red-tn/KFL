@@ -77,7 +77,7 @@ export default async function GalleryPage() {
       {/* CTA */}
       <section className="py-16 bg-forest-700 text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Experience It Yourself?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-white">Ready to Experience It Yourself?</h2>
           <p className="text-xl text-forest-100 mb-8">
             Book your hunting or fishing adventure today.
           </p>

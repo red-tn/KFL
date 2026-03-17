@@ -151,7 +151,7 @@ export default async function ContactPage() {
 
               {/* Quick Booking CTA */}
               <div className="mt-8 p-6 bg-forest-700 rounded-xl text-white">
-                <h3 className="text-xl font-bold mb-2">Ready to Book?</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">Ready to Book?</h3>
                 <p className="text-forest-100 mb-4">
                   The fastest way to book is to give us a call. We can check availability and answer any questions.
                 </p>

@@ -227,7 +227,7 @@ export default async function BassFishingPage() {
       {/* CTA */}
       <section className="py-16 bg-primary-700 text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Cast Your Line?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-white">Ready to Cast Your Line?</h2>
           <p className="text-xl text-primary-100 mb-8">
             Book your stay and enjoy unlimited fishing on three private lakes.
           </p>

@@ -255,7 +255,7 @@ export default async function DirectionsPage() {
       {/* Lost? */}
       <section className="py-16 bg-earth-700 text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-4">Lost or Need Help?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-white">Lost or Need Help?</h2>
           <p className="text-xl text-earth-100 mb-8">
             Give us a call and we&apos;ll help guide you in.
           </p>
