@@ -29,7 +29,7 @@ export default function Footer() {
                 alt="King's Family Lakes"
                 width={50}
                 height={50}
-                className="w-12 h-12"
+                className="w-12 h-12 brightness-200 invert"
               />
               <span className="text-xl font-bold text-white">King&apos;s Family Lakes</span>
             </div>
