@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages } from '@/lib/data'
@@ -103,16 +104,20 @@ export default async function Home() {
       />
 
       {/* Activities Section */}
-      <section id="activities" className="py-12 md:py-16 bg-gray-50">
+      <section id="activities" className="py-12 md:py-16 bg-texture-light">
         <div className="container-custom">
-          <SectionHeader
-            title="Our Activities"
-            subtitle="From trophy bass fishing to world-class deer hunting, we offer unforgettable outdoor experiences for sportsmen of all skill levels."
-          />
+          <ScrollReveal>
+            <SectionHeader
+              title="Our Activities"
+              subtitle="From trophy bass fishing to world-class deer hunting, we offer unforgettable outdoor experiences for sportsmen of all skill levels."
+            />
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {activities.map((activity) => (
-              <ActivityCard key={activity.title} {...activity} />
+            {activities.map((activity, i) => (
+              <ScrollReveal key={activity.title} delay={i * 150}>
+                <ActivityCard {...activity} />
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -122,6 +127,7 @@ export default async function Home() {
       <section className="py-12 md:py-16">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <ScrollReveal>
             <div className="grid grid-cols-2 gap-3">
               <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
                 <Image src="/images/IMG_4601.webp" alt="Camp House exterior" fill className="object-cover" />
@@ -136,6 +142,8 @@ export default async function Home() {
                 <Image src="/images/IMG_4602.webp" alt="Camp House with flag" fill className="object-cover" />
               </div>
             </div>
+            </ScrollReveal>
+            <ScrollReveal delay={200}>
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Stay Right on the Water
@@ -173,6 +181,7 @@ export default async function Home() {
                 View Lodging Details
               </Link>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -200,7 +209,7 @@ export default async function Home() {
       <AdBanner slot="home-mid" position="middle" />
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-forest-800 text-white">
+      <section className="py-12 md:py-16 bg-forest-900 bg-texture-dark text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready for Your Next Adventure?
@@ -220,7 +229,7 @@ export default async function Home() {
       </section>
 
       {/* Pricing Preview */}
-      <section className="py-12 md:py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-texture-light">
         <div className="container-custom">
           <SectionHeader
             title="Simple, Transparent Pricing"

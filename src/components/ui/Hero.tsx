@@ -33,7 +33,7 @@ export default function Hero({
   }[size]
 
   return (
-    <section className={`relative ${heightClass} flex items-center justify-center overflow-hidden`}>
+    <section className={`relative ${heightClass} flex items-end overflow-hidden`}>
       {/* Background Video or Image */}
       <div className="absolute inset-0">
         {backgroundVideo ? (
@@ -61,16 +61,16 @@ export default function Hero({
 
       {/* Overlay */}
       {overlay && (
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
       )}
 
       {/* Content */}
-      <div className="relative z-10 container-custom text-center text-white">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white [text-shadow:_2px_2px_8px_rgb(0_0_0_/_80%)]">
+      <div className="relative z-10 container-custom text-center text-white mt-auto pb-16 md:pb-20 pt-32">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white drop-shadow-lg">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto text-white [text-shadow:_1px_1px_6px_rgb(0_0_0_/_70%)]">
+          <p className="text-base md:text-lg lg:text-xl mb-8 max-w-2xl mx-auto text-white/90 drop-shadow-md">
             {subtitle}
           </p>
         )}
