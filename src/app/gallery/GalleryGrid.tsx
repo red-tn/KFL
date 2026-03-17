@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import ImageSkeleton from '@/components/ui/ImageSkeleton'
 
 interface GalleryImage {
   src: string
@@ -84,10 +85,9 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
                 className="group relative w-full rounded-lg overflow-hidden bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest-500 break-inside-avoid block"
               >
                 <div className={getAspectClass(index) + ' relative'}>
-                  <Image
+                  <ImageSkeleton
                     src={image.src}
                     alt={image.alt}
-                    fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     style={image.rotation ? { transform: `rotate(${image.rotation}deg) scale(1.1)` } : undefined}

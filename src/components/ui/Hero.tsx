@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import ParallaxHero from './ParallaxHero'
 
 interface HeroProps {
   title: string
@@ -34,9 +35,9 @@ export default function Hero({
 
   return (
     <section className={`relative ${heightClass} flex items-end overflow-hidden`}>
-      {/* Background Video or Image */}
-      <div className="absolute inset-0">
-        {backgroundVideo ? (
+      {/* Background Video or Image with Parallax */}
+      {backgroundVideo ? (
+        <div className="absolute inset-0">
           <video
             autoPlay
             muted
@@ -46,7 +47,9 @@ export default function Hero({
           >
             <source src={backgroundVideo} type="video/mp4" />
           </video>
-        ) : backgroundImage ? (
+        </div>
+      ) : backgroundImage ? (
+        <ParallaxHero>
           <Image
             src={backgroundImage}
             alt=""
@@ -54,10 +57,10 @@ export default function Hero({
             className="object-cover"
             priority
           />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-forest-800 via-forest-900 to-gray-900" />
-        )}
-      </div>
+        </ParallaxHero>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-forest-800 via-forest-900 to-gray-900" />
+      )}
 
       {/* Overlay */}
       {overlay && (

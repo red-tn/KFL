@@ -5,6 +5,7 @@ import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import AnimatedPrice from '@/components/ui/AnimatedPrice'
 import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages } from '@/lib/data'
@@ -237,24 +238,36 @@ export default async function Home() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl p-6 shadow-md text-center">
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">Deer Hunting</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">$400</div>
-              <p className="text-gray-600">per person / full day</p>
-              <p className="text-sm text-forest-600 mt-2">Lodging included</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-md text-center">
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">Turkey Hunting</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">$1,000</div>
-              <p className="text-gray-600">per person / 2 days</p>
-              <p className="text-sm text-forest-600 mt-2">Lodging included</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-md text-center">
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">Bass Fishing</h3>
-              <div className="text-4xl font-bold text-forest-700 mb-2">$200</div>
-              <p className="text-gray-600">per person / full day</p>
-              <p className="text-sm text-gray-500 mt-2">Lodging available</p>
-            </div>
+            <ScrollReveal delay={0}>
+              <div className="bg-white rounded-xl p-6 shadow-md text-center hover:shadow-lg transition-shadow">
+                <h3 className="text-lg font-semibold text-gray-500 mb-2">Deer Hunting</h3>
+                <div className="text-4xl font-bold text-forest-700 mb-2">
+                  <AnimatedPrice value={400} />
+                </div>
+                <p className="text-gray-600">per person / full day</p>
+                <p className="text-sm text-forest-600 mt-2">Lodging included</p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={150}>
+              <div className="bg-white rounded-xl p-6 shadow-md text-center hover:shadow-lg transition-shadow">
+                <h3 className="text-lg font-semibold text-gray-500 mb-2">Turkey Hunting</h3>
+                <div className="text-4xl font-bold text-forest-700 mb-2">
+                  <AnimatedPrice value={1000} prefix="$" />
+                </div>
+                <p className="text-gray-600">per person / 2 days</p>
+                <p className="text-sm text-forest-600 mt-2">Lodging included</p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={300}>
+              <div className="bg-white rounded-xl p-6 shadow-md text-center hover:shadow-lg transition-shadow">
+                <h3 className="text-lg font-semibold text-gray-500 mb-2">Bass Fishing</h3>
+                <div className="text-4xl font-bold text-forest-700 mb-2">
+                  <AnimatedPrice value={200} />
+                </div>
+                <p className="text-gray-600">per person / full day</p>
+                <p className="text-sm text-gray-500 mt-2">Lodging available</p>
+              </div>
+            </ScrollReveal>
           </div>
 
           <div className="mt-8 max-w-2xl mx-auto bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
