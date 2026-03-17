@@ -55,14 +55,14 @@ export default function MessagesPage() {
                   if (!msg.is_read) markAsRead(msg.id)
                 }}
                 className={`w-full text-left p-4 hover:bg-gray-50 transition-colors ${
-                  selected?.id === msg.id ? 'bg-forest-50' : ''
+                  selected?.id === msg.id ? 'bg-pine-50' : ''
                 }`}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       {!msg.is_read && (
-                        <span className="w-2 h-2 bg-forest-600 rounded-full flex-shrink-0" />
+                        <span className="w-2 h-2 bg-pine-600 rounded-full flex-shrink-0" />
                       )}
                       <span className={`font-medium truncate ${msg.is_read ? 'text-gray-600' : 'text-gray-900'}`}>
                         {msg.name}
@@ -98,7 +98,7 @@ export default function MessagesPage() {
                     {new Date(selected.created_at).toLocaleString()}
                   </div>
                   {selected.interest && (
-                    <span className="inline-block mt-1 px-2 py-1 text-xs bg-forest-100 text-forest-700 rounded">
+                    <span className="inline-block mt-1 px-2 py-1 text-xs bg-pine-100 text-pine-700 rounded">
                       {selected.interest}
                     </span>
                   )}
@@ -110,7 +110,7 @@ export default function MessagesPage() {
               <div className="mt-8 flex gap-4">
                 <a
                   href={`mailto:${selected.email}`}
-                  className="bg-forest-700 text-white px-6 py-2 rounded-lg hover:bg-forest-800"
+                  className="bg-pine-700 text-white px-6 py-2 rounded-lg hover:bg-pine-800"
                 >
                   Reply via Email
                 </a>

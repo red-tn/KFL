@@ -27,8 +27,8 @@ export default function ImageSkeleton({
   return (
     <>
       {!loaded && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer" />
+        <div className="absolute inset-0 bg-bark-200 animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-bark-200 via-bark-100 to-bark-200 animate-shimmer" />
         </div>
       )}
       <Image

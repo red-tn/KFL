@@ -82,24 +82,24 @@ export default async function AdminDashboard() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Link
             href="/admin/activities"
-            className="p-4 bg-forest-50 rounded-lg text-center hover:bg-forest-100 transition-colors"
+            className="p-4 bg-pine-50 rounded-lg text-center hover:bg-pine-100 transition-colors"
           >
             <div className="text-2xl mb-2">🎯</div>
-            <div className="text-sm font-medium text-forest-800">Manage Activities</div>
+            <div className="text-sm font-medium text-pine-800">Manage Activities</div>
           </Link>
           <Link
             href="/admin/gallery"
-            className="p-4 bg-primary-50 rounded-lg text-center hover:bg-primary-100 transition-colors"
+            className="p-4 bg-pine-50 rounded-lg text-center hover:bg-pine-100 transition-colors"
           >
             <div className="text-2xl mb-2">🖼️</div>
-            <div className="text-sm font-medium text-primary-800">Upload Images</div>
+            <div className="text-sm font-medium text-pine-800">Upload Images</div>
           </Link>
           <Link
             href="/admin/settings"
-            className="p-4 bg-earth-50 rounded-lg text-center hover:bg-earth-100 transition-colors"
+            className="p-4 bg-clay-50 rounded-lg text-center hover:bg-clay-100 transition-colors"
           >
             <div className="text-2xl mb-2">⚙️</div>
-            <div className="text-sm font-medium text-earth-800">Site Settings</div>
+            <div className="text-sm font-medium text-clay-800">Site Settings</div>
           </Link>
           <Link
             href="/admin/messages"
@@ -116,13 +116,13 @@ export default async function AdminDashboard() {
         <div className="bg-white rounded-xl p-6 shadow-sm">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-gray-900">Recent Messages</h2>
-            <Link href="/admin/messages" className="text-forest-700 text-sm font-medium hover:text-forest-800">
+            <Link href="/admin/messages" className="text-pine-700 text-sm font-medium hover:text-pine-800">
               View all →
             </Link>
           </div>
           <div className="space-y-4">
             {recentMessages.map((msg) => (
-              <div key={msg.id} className="border-l-4 border-forest-500 pl-4 py-2">
+              <div key={msg.id} className="border-l-4 border-pine-500 pl-4 py-2">
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="font-medium text-gray-900">{msg.name}</div>
@@ -134,7 +134,7 @@ export default async function AdminDashboard() {
                 </div>
                 <div className="text-sm text-gray-600 mt-1 line-clamp-2">{msg.message}</div>
                 {msg.interest && (
-                  <span className="inline-block mt-2 text-xs bg-forest-100 text-forest-700 px-2 py-1 rounded">
+                  <span className="inline-block mt-2 text-xs bg-pine-100 text-pine-700 px-2 py-1 rounded">
                     {msg.interest}
                   </span>
                 )}

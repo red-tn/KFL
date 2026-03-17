@@ -220,7 +220,7 @@ function ImageCard({
       onDragOver={onDragOver}
       onDrop={onDrop}
       className={`bg-white rounded-lg shadow-sm border-2 overflow-hidden transition-all ${
-        isDragging ? 'border-forest-500 opacity-50' : 'border-gray-200 hover:border-forest-400'
+        isDragging ? 'border-pine-500 opacity-50' : 'border-gray-200 hover:border-pine-400'
       }`}
     >
       <div className="relative h-40 bg-gray-100 group overflow-hidden">
@@ -299,7 +299,7 @@ function ImageCard({
             />
             <button
               onClick={handleSave}
-              className="px-2 py-1 bg-forest-600 text-white text-sm rounded hover:bg-forest-700"
+              className="px-2 py-1 bg-pine-600 text-white text-sm rounded hover:bg-pine-700"
             >
               Save
             </button>
@@ -307,7 +307,7 @@ function ImageCard({
         ) : (
           <div
             onClick={() => setIsEditing(true)}
-            className="text-sm font-medium text-gray-900 cursor-pointer hover:text-forest-700"
+            className="text-sm font-medium text-gray-900 cursor-pointer hover:text-pine-700"
           >
             {image.title || 'Untitled'}
             <span className="text-gray-400 text-xs ml-1">(click to edit)</span>
@@ -410,7 +410,7 @@ function GallerySection({
           <a
             href={page}
             target="_blank"
-            className="text-sm text-forest-600 hover:text-forest-700 flex items-center gap-1"
+            className="text-sm text-pine-600 hover:text-pine-700 flex items-center gap-1"
           >
             View page
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -428,7 +428,7 @@ function GallerySection({
               <div className="flex justify-center gap-3">
                 <button
                   onClick={() => onAdd(category)}
-                  className="bg-forest-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-forest-700 flex items-center gap-2"
+                  className="bg-pine-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-pine-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -490,7 +490,7 @@ function GallerySection({
                 <div className="w-56">
                   <button
                     onClick={() => onAdd(category)}
-                    className="w-full h-full min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg hover:border-forest-500 hover:bg-forest-50 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-forest-600"
+                    className="w-full h-full min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg hover:border-pine-500 hover:bg-pine-50 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-pine-600"
                   >
                     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -546,7 +546,7 @@ function GallerySection({
                 <div className="flex-shrink-0 w-56">
                   <button
                     onClick={() => onAdd(category)}
-                    className="w-full h-full min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg hover:border-forest-500 hover:bg-forest-50 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-forest-600"
+                    className="w-full h-full min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg hover:border-pine-500 hover:bg-pine-50 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-pine-600"
                   >
                     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -822,7 +822,7 @@ export default function GalleryAdminPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-forest-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pine-600"></div>
       </div>
     )
   }
@@ -869,14 +869,14 @@ export default function GalleryAdminPage() {
             onClick={() => { setActiveType(st.type); setActiveCategory('all'); }}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
               activeType === st.type
-                ? 'bg-forest-600 text-white'
+                ? 'bg-pine-600 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
             <span>{st.icon}</span>
             {st.label}
             <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-              activeType === st.type ? 'bg-forest-700' : 'bg-gray-200'
+              activeType === st.type ? 'bg-pine-700' : 'bg-gray-200'
             }`}>
               {st.type === 'all'
                 ? PAGE_GALLERIES.length
@@ -893,7 +893,7 @@ export default function GalleryAdminPage() {
             onClick={() => setActiveCategory('all')}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               activeCategory === 'all'
-                ? 'bg-earth-600 text-white'
+                ? 'bg-clay-600 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
@@ -905,13 +905,13 @@ export default function GalleryAdminPage() {
               onClick={() => setActiveCategory(gallery.id)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
                 activeCategory === gallery.id
-                  ? 'bg-earth-600 text-white'
+                  ? 'bg-clay-600 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
               {gallery.label}
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                activeCategory === gallery.id ? 'bg-earth-700' : 'bg-gray-200'
+                activeCategory === gallery.id ? 'bg-clay-700' : 'bg-gray-200'
               }`}>
                 {imagesByCategory[gallery.id]?.length || 0}
               </span>

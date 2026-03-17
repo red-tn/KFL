@@ -119,13 +119,13 @@ export default async function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+              <h2 className="text-2xl font-bold text-bark-800 mb-6">Send Us a Message</h2>
               <ContactForm />
             </div>
 
             {/* Contact Info */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+              <h2 className="text-2xl font-bold text-bark-800 mb-6">Get in Touch</h2>
               <div className="space-y-6">
                 {contactInfo.map((info) => (
                   <a
@@ -133,31 +133,31 @@ export default async function ContactPage() {
                     href={info.href}
                     target={info.href.startsWith('http') ? '_blank' : undefined}
                     rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-forest-50 transition-colors group"
+                    className="flex items-start gap-4 p-4 rounded-lg bg-bark-100 hover:bg-pine-50 transition-colors group"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 bg-forest-100 rounded-lg flex items-center justify-center text-forest-700 group-hover:bg-forest-700 group-hover:text-white transition-colors">
+                    <div className="flex-shrink-0 w-12 h-12 bg-pine-100 rounded-lg flex items-center justify-center text-pine-700 group-hover:bg-pine-700 group-hover:text-white transition-colors">
                       {info.icon}
                     </div>
                     <div>
-                      <div className="text-sm text-gray-500">{info.type}</div>
-                      <div className="font-semibold text-gray-900 group-hover:text-forest-700">
+                      <div className="text-sm text-bark-400">{info.type}</div>
+                      <div className="font-semibold text-bark-800 group-hover:text-pine-700">
                         {info.value}
                       </div>
-                      <div className="text-sm text-gray-500">{info.description}</div>
+                      <div className="text-sm text-bark-400">{info.description}</div>
                     </div>
                   </a>
                 ))}
               </div>
 
               {/* Quick Booking CTA */}
-              <div className="mt-8 p-6 bg-forest-700 rounded-xl text-white">
+              <div className="mt-8 p-6 bg-pine-700 rounded-lg text-white">
                 <h3 className="text-xl font-bold mb-2 text-white">Ready to Book?</h3>
-                <p className="text-forest-100 mb-4">
+                <p className="text-pine-100 mb-4">
                   The fastest way to book is to give us a call. We can check availability and answer any questions.
                 </p>
                 <a
                   href={`tel:${phone.replace(/[^\d+]/g, '')}`}
-                  className="inline-flex items-center gap-2 bg-white text-forest-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                  className="inline-flex items-center gap-2 bg-white text-pine-700 px-6 py-3 rounded-lg font-semibold hover:bg-bark-100 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
@@ -171,17 +171,17 @@ export default async function ContactPage() {
       </section>
 
       {/* FAQs */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-bark-100">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+            <h2 className="text-3xl font-bold text-center text-bark-800 mb-8">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
               {faqs.map((faq) => (
-                <div key={faq.question} className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="font-bold text-gray-900 mb-2">{faq.question}</h3>
-                  <p className="text-gray-600">{faq.answer}</p>
+                <div key={faq.question} className="bg-white rounded-lg p-6 shadow-sm">
+                  <h3 className="font-bold text-bark-800 mb-2">{faq.question}</h3>
+                  <p className="text-bark-500">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -193,8 +193,8 @@ export default async function ContactPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Find Us</h2>
-            <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
+            <h2 className="text-2xl font-bold text-center text-bark-800 mb-6">Find Us</h2>
+            <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53789.12345678901!2d-88.12345678901234!3d32.69876543210987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8889a5f8e3f4c5d7%3A0x1234567890abcdef!2sEpes%2C%20AL%2035460!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
                 width="100%"
@@ -207,8 +207,8 @@ export default async function ContactPage() {
               />
             </div>
             <div className="text-center mt-4">
-              <p className="text-gray-600 mb-2">{city}, {state} - I-20, Exit 23</p>
-              <Link href="/directions" className="text-forest-700 font-semibold hover:text-forest-800">
+              <p className="text-bark-500 mb-2">{city}, {state} - I-20, Exit 23</p>
+              <Link href="/directions" className="text-pine-700 font-semibold hover:text-pine-800">
                 Get Detailed Directions →
               </Link>
             </div>

@@ -70,7 +70,7 @@ export default function SettingsPage() {
                 type="text"
                 value={settings.site_name}
                 onChange={(e) => setSettings({ ...settings, site_name: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
             </div>
             <div>
@@ -79,7 +79,7 @@ export default function SettingsPage() {
                 type="text"
                 value={settings.tagline}
                 onChange={(e) => setSettings({ ...settings, tagline: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
             </div>
           </div>
@@ -95,7 +95,7 @@ export default function SettingsPage() {
                 type="text"
                 value={settings.phone}
                 onChange={(e) => setSettings({ ...settings, phone: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
             </div>
             <div>
@@ -104,7 +104,7 @@ export default function SettingsPage() {
                 type="email"
                 value={settings.email}
                 onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
             </div>
             <div>
@@ -113,7 +113,7 @@ export default function SettingsPage() {
                 type="text"
                 value={settings.address_city}
                 onChange={(e) => setSettings({ ...settings, address_city: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
             </div>
             <div>
@@ -122,7 +122,7 @@ export default function SettingsPage() {
                 type="text"
                 value={settings.address_state}
                 onChange={(e) => setSettings({ ...settings, address_state: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
             </div>
             <div className="md:col-span-2">
@@ -131,7 +131,7 @@ export default function SettingsPage() {
                 type="text"
                 value={settings.address_directions}
                 onChange={(e) => setSettings({ ...settings, address_directions: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function SettingsPage() {
               type="url"
               value={settings.facebook_url || ''}
               onChange={(e) => setSettings({ ...settings, facebook_url: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
             />
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function SettingsPage() {
                 type="number"
                 value={settings.hunting_daily_rate}
                 onChange={(e) => setSettings({ ...settings, hunting_daily_rate: parseInt(e.target.value) })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
               <p className="text-xs text-gray-400 mt-1">Per person, full day</p>
             </div>
@@ -172,7 +172,7 @@ export default function SettingsPage() {
                 type="number"
                 value={settings.fishing_daily_rate || 200}
                 onChange={(e) => setSettings({ ...settings, fishing_daily_rate: parseInt(e.target.value) })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
               <p className="text-xs text-gray-400 mt-1">Per person, full day</p>
             </div>
@@ -182,7 +182,7 @@ export default function SettingsPage() {
                 type="number"
                 value={settings.lodging_nightly_rate}
                 onChange={(e) => setSettings({ ...settings, lodging_nightly_rate: parseInt(e.target.value) })}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               />
               <p className="text-xs text-gray-400 mt-1">Per person, per night</p>
             </div>
@@ -198,7 +198,7 @@ export default function SettingsPage() {
               type="text"
               value={settings.adsense_client_id || ''}
               onChange={(e) => setSettings({ ...settings, adsense_client_id: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
               placeholder="ca-pub-xxxxxxxxxx"
             />
           </div>
@@ -208,7 +208,7 @@ export default function SettingsPage() {
           <button
             type="submit"
             disabled={saving}
-            className="bg-forest-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-forest-800 disabled:opacity-50"
+            className="bg-pine-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-pine-800 disabled:opacity-50"
           >
             {saving ? 'Saving...' : 'Save Settings'}
           </button>

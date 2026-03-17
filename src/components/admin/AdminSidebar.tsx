@@ -51,7 +51,7 @@ export default function AdminSidebar({ user }: { user: User }) {
             href={item.href}
             className={`flex items-center px-6 py-3 text-sm transition-colors ${
               pathname === item.href
-                ? 'bg-forest-700 text-white'
+                ? 'bg-pine-700 text-white'
                 : 'text-gray-300 hover:bg-gray-800 hover:text-white'
             }`}
           >

@@ -74,15 +74,15 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-forest-50 rounded-xl p-8 text-center">
+      <div className="bg-pine-50 rounded-lg p-8 text-center">
         <div className="text-4xl mb-4">✓</div>
-        <h3 className="text-xl font-bold text-forest-800 mb-2">Message Sent!</h3>
-        <p className="text-forest-700 mb-4">
+        <h3 className="text-xl font-bold text-pine-800 mb-2">Message Sent!</h3>
+        <p className="text-pine-700 mb-4">
           Thank you for contacting us. We&apos;ll get back to you within 24 hours.
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="text-forest-700 font-semibold hover:text-forest-800"
+          className="text-pine-700 font-semibold hover:text-pine-800"
         >
           Send another message
         </button>
@@ -94,7 +94,7 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Name */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="name" className="block text-sm font-medium text-bark-600 mb-2">
           Name *
         </label>
         <input
@@ -104,14 +104,14 @@ export default function ContactForm() {
           required
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-colors"
+          className="w-full px-4 py-3 rounded-md border border-bark-200 focus:ring-2 focus:ring-pine-500 focus:border-pine-500 transition-colors"
           placeholder="Your name"
         />
       </div>
 
       {/* Email */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-bark-600 mb-2">
           Email *
         </label>
         <input
@@ -121,14 +121,14 @@ export default function ContactForm() {
           required
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-colors"
+          className="w-full px-4 py-3 rounded-md border border-bark-200 focus:ring-2 focus:ring-pine-500 focus:border-pine-500 transition-colors"
           placeholder="your@email.com"
         />
       </div>
 
       {/* Phone */}
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="phone" className="block text-sm font-medium text-bark-600 mb-2">
           Phone
         </label>
         <input
@@ -137,14 +137,14 @@ export default function ContactForm() {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-colors"
+          className="w-full px-4 py-3 rounded-md border border-bark-200 focus:ring-2 focus:ring-pine-500 focus:border-pine-500 transition-colors"
           placeholder="(555) 555-5555"
         />
       </div>
 
       {/* Interest */}
       <div>
-        <label htmlFor="interest" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="interest" className="block text-sm font-medium text-bark-600 mb-2">
           I&apos;m interested in...
         </label>
         <select
@@ -152,7 +152,7 @@ export default function ContactForm() {
           name="interest"
           value={formData.interest}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-colors"
+          className="w-full px-4 py-3 rounded-md border border-bark-200 focus:ring-2 focus:ring-pine-500 focus:border-pine-500 transition-colors"
         >
           <option value="">Select an option</option>
           <option value="deer-hunting">Deer Hunting</option>
@@ -166,7 +166,7 @@ export default function ContactForm() {
 
       {/* Message */}
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="message" className="block text-sm font-medium text-bark-600 mb-2">
           Message *
         </label>
         <textarea
@@ -176,14 +176,14 @@ export default function ContactForm() {
           rows={5}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-colors resize-none"
+          className="w-full px-4 py-3 rounded-md border border-bark-200 focus:ring-2 focus:ring-pine-500 focus:border-pine-500 transition-colors resize-none"
           placeholder="Tell us about your trip plans, questions, or preferred dates..."
         />
       </div>
 
       {/* Human Verification */}
       <div>
-        <label htmlFor="challenge" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="challenge" className="block text-sm font-medium text-bark-600 mb-2">
           Verify you&apos;re human: {challenge.question}
         </label>
         <input
@@ -192,8 +192,8 @@ export default function ContactForm() {
           required
           value={challengeInput}
           onChange={(e) => { setChallengeInput(e.target.value); setChallengeError(false); }}
-          className={`w-full px-4 py-3 rounded-lg border transition-colors focus:ring-2 focus:ring-forest-500 focus:border-forest-500 ${
-            challengeError ? 'border-red-400 bg-red-50' : 'border-gray-300'
+          className={`w-full px-4 py-3 rounded-md border transition-colors focus:ring-2 focus:ring-pine-500 focus:border-pine-500 ${
+            challengeError ? 'border-red-400 bg-red-50' : 'border-bark-200'
           }`}
           placeholder="Your answer"
           inputMode="numeric"
@@ -205,7 +205,7 @@ export default function ContactForm() {
 
       {/* Error Message */}
       {status === 'error' && (
-        <div className="bg-red-50 text-red-700 rounded-lg p-4">
+        <div className="bg-red-50 text-red-700 rounded-md p-4">
           Something went wrong. Please try again or call us directly at +1 (334) 341-3753.
         </div>
       )}
@@ -219,7 +219,7 @@ export default function ContactForm() {
         {status === 'loading' ? 'Sending...' : 'Send Message'}
       </button>
 
-      <p className="text-sm text-gray-500 text-center">
+      <p className="text-sm text-bark-400 text-center">
         We typically respond within 24 hours. For faster service, call us directly.
       </p>
     </form>

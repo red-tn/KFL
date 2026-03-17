@@ -1,17 +1,19 @@
 import type { Metadata } from 'next'
-import { Source_Sans_3, Playfair_Display } from 'next/font/google'
+import { Lato, Bitter } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
-const sourceSans = Source_Sans_3({
+const lato = Lato({
   subsets: ['latin'],
+  weight: ['400', '700'],
   variable: '--font-body',
 })
 
-const playfair = Playfair_Display({
+const bitter = Bitter({
   subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
   variable: '--font-display',
 })
 
@@ -34,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${sourceSans.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${lato.variable} ${bitter.variable}`}>
       <head>
         <Script
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-8003141165916453'}`}

@@ -7,26 +7,27 @@ import ActivityCard from '@/components/ui/ActivityCard'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import AnimatedPrice from '@/components/ui/AnimatedPrice'
 import Link from 'next/link'
+import Icon from '@/components/ui/Icon'
 import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages } from '@/lib/data'
 
 const features = [
   {
-    icon: '🏠',
+    icon: 'house' as const,
     title: 'Comfortable Lodging',
     description: 'Two fully-equipped camp houses with modern amenities for a comfortable stay.',
   },
   {
-    icon: '🎣',
+    icon: 'fish' as const,
     title: 'Three Private Lakes',
     description: 'Lake Scott (35 acres), Lake Shannon, and Lake Patrick - all stocked with bass.',
   },
   {
-    icon: '🦌',
+    icon: 'deer' as const,
     title: 'Prime Hunting Land',
     description: 'Hundreds of acres of maintained pastures and forest with strategic blind placements.',
   },
   {
-    icon: '📍',
+    icon: 'pin' as const,
     title: 'Easy Access',
     description: 'Located just off I-20 Exit 23 in Epes, Alabama. Easy to find, hard to leave.',
   },
@@ -129,52 +130,52 @@ export default async function Home() {
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <ScrollReveal>
             <div className="grid grid-cols-2 gap-3">
-              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-md">
                 <Image src="/images/IMG_4601.webp" alt="Camp House exterior" fill className="object-cover" />
               </div>
-              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-md">
                 <Image src="/images/IMG_4644.webp" alt="Living area with fireplace" fill className="object-cover" />
               </div>
-              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-md">
                 <Image src="/images/IMG_4641.webp" alt="King bedroom" fill className="object-cover" />
               </div>
-              <div className="relative aspect-square rounded-xl overflow-hidden shadow-md">
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-md">
                 <Image src="/images/IMG_4602.webp" alt="Camp House with flag" fill className="object-cover" />
               </div>
             </div>
             </ScrollReveal>
             <ScrollReveal delay={200}>
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-bark-800 mb-4">
                 Stay Right on the Water
               </h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-lg text-bark-500 mb-6">
                 Two fully-equipped camp houses sit right on our private lakes. Rest easy after a day in the field with all the comforts of home.
               </p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start space-x-3">
-                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <svg className="w-5 h-5 text-pine-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
-                  <span className="text-gray-700">Two camp houses sleeping 8+ guests each</span>
+                  <span className="text-bark-600">Two camp houses sleeping 8+ guests each</span>
                 </li>
                 <li className="flex items-start space-x-3">
-                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <svg className="w-5 h-5 text-pine-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
-                  <span className="text-gray-700">Full kitchens, outdoor cookers, and grills</span>
+                  <span className="text-bark-600">Full kitchens, outdoor cookers, and grills</span>
                 </li>
                 <li className="flex items-start space-x-3">
-                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <svg className="w-5 h-5 text-pine-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
-                  <span className="text-gray-700">Lodging included with all hunting packages</span>
+                  <span className="text-bark-600">Lodging included with all hunting packages</span>
                 </li>
                 <li className="flex items-start space-x-3">
-                  <svg className="w-5 h-5 text-forest-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <svg className="w-5 h-5 text-pine-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
-                  <span className="text-gray-700">$100/night for standalone stays</span>
+                  <span className="text-bark-600">$100/night for standalone stays</span>
                 </li>
               </ul>
               <Link href="/lodging" className="btn-primary">
@@ -197,9 +198,11 @@ export default async function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {features.map((feature) => (
               <div key={feature.title} className="text-center">
-                <div className="text-3xl md:text-4xl mb-3">{feature.icon}</div>
-                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-sm md:text-base text-gray-600">{feature.description}</p>
+                <div className="w-14 h-14 mx-auto mb-3 bg-pine-50 rounded-full flex items-center justify-center">
+                  <Icon name={feature.icon} className="w-7 h-7 text-pine-600" />
+                </div>
+                <h3 className="text-lg md:text-xl font-bold text-bark-800 mb-2">{feature.title}</h3>
+                <p className="text-sm md:text-base text-bark-500">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -207,19 +210,19 @@ export default async function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-forest-900 bg-texture-dark text-white">
+      <section className="py-12 md:py-16 bg-pine-800 bg-texture-dark text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Ready for Your Next Adventure?
           </h2>
-          <p className="text-xl text-forest-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-pine-100 mb-8 max-w-2xl mx-auto">
             Book your hunting or fishing trip today. Contact us to check availability and plan your perfect outdoor getaway.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="btn bg-white text-forest-800 hover:bg-gray-100 text-lg">
+            <Link href="/contact" className="btn bg-white text-pine-800 hover:bg-bark-100 text-lg">
               Contact Us
             </Link>
-            <Link href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="btn border-2 border-white text-white hover:bg-white hover:text-forest-800 text-lg">
+            <Link href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="btn border-2 border-white text-white hover:bg-white hover:text-pine-800 text-lg">
               Call {phone}
             </Link>
           </div>
@@ -236,45 +239,45 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <ScrollReveal delay={0}>
-              <div className="bg-white rounded-xl p-6 shadow-md text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-lg font-semibold text-gray-500 mb-2">Deer Hunting</h3>
-                <div className="text-4xl font-bold text-forest-700 mb-2">
+              <div className="bg-white rounded-lg p-6 shadow-md text-center hover:shadow-lg transition-shadow">
+                <h3 className="text-lg font-semibold text-bark-400 mb-2">Deer Hunting</h3>
+                <div className="text-4xl font-bold text-pine-700 mb-2">
                   <AnimatedPrice value={400} />
                 </div>
-                <p className="text-gray-600">per person / full day</p>
-                <p className="text-sm text-forest-600 mt-2">Lodging included</p>
+                <p className="text-bark-500">per person / full day</p>
+                <p className="text-sm text-pine-600 mt-2">Lodging included</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={150}>
-              <div className="bg-white rounded-xl p-6 shadow-md text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-lg font-semibold text-gray-500 mb-2">Turkey Hunting</h3>
-                <div className="text-4xl font-bold text-forest-700 mb-2">
+              <div className="bg-white rounded-lg p-6 shadow-md text-center hover:shadow-lg transition-shadow">
+                <h3 className="text-lg font-semibold text-bark-400 mb-2">Turkey Hunting</h3>
+                <div className="text-4xl font-bold text-pine-700 mb-2">
                   <AnimatedPrice value={1000} prefix="$" />
                 </div>
-                <p className="text-gray-600">per person / 2 days</p>
-                <p className="text-sm text-forest-600 mt-2">Lodging included</p>
+                <p className="text-bark-500">per person / 2 days</p>
+                <p className="text-sm text-pine-600 mt-2">Lodging included</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={300}>
-              <div className="bg-white rounded-xl p-6 shadow-md text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-lg font-semibold text-gray-500 mb-2">Bass Fishing</h3>
-                <div className="text-4xl font-bold text-forest-700 mb-2">
+              <div className="bg-white rounded-lg p-6 shadow-md text-center hover:shadow-lg transition-shadow">
+                <h3 className="text-lg font-semibold text-bark-400 mb-2">Bass Fishing</h3>
+                <div className="text-4xl font-bold text-pine-700 mb-2">
                   <AnimatedPrice value={200} />
                 </div>
-                <p className="text-gray-600">per person / full day</p>
-                <p className="text-sm text-gray-500 mt-2">Lodging available</p>
+                <p className="text-bark-500">per person / full day</p>
+                <p className="text-sm text-bark-400 mt-2">Lodging available</p>
               </div>
             </ScrollReveal>
           </div>
 
-          <div className="mt-8 max-w-2xl mx-auto bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+          <div className="mt-8 max-w-2xl mx-auto bg-amber-50 border border-amber-200 rounded-lg p-4 text-center">
             <p className="text-amber-700">
               <span className="font-semibold">Meals not included.</span> Camp houses have full kitchens, and outdoor cookers & grills are furnished.
             </p>
           </div>
 
           <div className="text-center mt-6">
-            <Link href="/deer-hunting" className="text-forest-700 font-semibold hover:text-forest-800">
+            <Link href="/deer-hunting" className="text-pine-700 font-semibold hover:text-pine-800">
               View all pricing details →
             </Link>
           </div>

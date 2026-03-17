@@ -30,7 +30,7 @@ export default function Gallery({ images, columns = 3 }: GalleryProps) {
           <button
             key={index}
             onClick={() => setSelectedImage(image)}
-            className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest-500"
+            className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-bark-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-pine-500"
           >
             <Image
               src={image.src}

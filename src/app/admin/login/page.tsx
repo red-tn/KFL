@@ -103,7 +103,7 @@ export default function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500 focus:border-pine-500"
               placeholder="admin@example.com"
             />
           </div>
@@ -119,7 +119,7 @@ export default function AdminLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500 focus:border-pine-500"
                 placeholder="••••••••"
               />
             </div>
@@ -128,7 +128,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-forest-700 text-white py-3 rounded-lg font-semibold hover:bg-forest-800 transition-colors disabled:opacity-50"
+            className="w-full bg-pine-700 text-white py-3 rounded-lg font-semibold hover:bg-pine-800 transition-colors disabled:opacity-50"
           >
             {loading ? (resetMode ? 'Sending...' : 'Signing in...') : (resetMode ? 'Send Reset Link' : 'Sign In')}
           </button>
@@ -136,7 +136,7 @@ export default function AdminLogin() {
           <button
             type="button"
             onClick={() => { setResetMode(!resetMode); setError(''); setMessage(''); }}
-            className="w-full text-sm text-forest-700 hover:text-forest-800 font-medium"
+            className="w-full text-sm text-pine-700 hover:text-pine-800 font-medium"
           >
             {resetMode ? 'Back to login' : 'Forgot password?'}
           </button>

@@ -94,16 +94,16 @@ export default async function BassFishingPage() {
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-bark-800 mb-6">
               Private Lake Fishing
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-bark-500">
               Whether you&apos;re here for hunting or just want a peaceful fishing getaway, our three private lakes offer excellent bass fishing year-round. With no public access, you&apos;ll enjoy uncrowded waters and healthy fish populations.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-200">
+            <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg bg-bark-200">
               {overviewImage && (
                 <Image
                   src={overviewImage}
@@ -114,17 +114,17 @@ export default async function BassFishingPage() {
               )}
             </div>
             <div className="space-y-4">
-              <div className="bg-forest-50 rounded-lg p-6">
-                <h3 className="font-bold text-forest-800 mb-2">Large Mouth Bass</h3>
-                <p className="text-gray-600">Trophy-sized bass in all three lakes. Lake Shannon is particularly known for producing our biggest fish.</p>
+              <div className="bg-pine-50 rounded-lg p-6">
+                <h3 className="font-bold text-pine-800 mb-2">Large Mouth Bass</h3>
+                <p className="text-bark-500">Trophy-sized bass in all three lakes. Lake Shannon is particularly known for producing our biggest fish.</p>
               </div>
-              <div className="bg-primary-50 rounded-lg p-6">
-                <h3 className="font-bold text-primary-800 mb-2">Brim (Bluegill)</h3>
-                <p className="text-gray-600">Abundant brim populations perfect for family fishing. Great for beginners and kids.</p>
+              <div className="bg-pine-50 rounded-lg p-6">
+                <h3 className="font-bold text-pine-800 mb-2">Brim (Bluegill)</h3>
+                <p className="text-bark-500">Abundant brim populations perfect for family fishing. Great for beginners and kids.</p>
               </div>
-              <div className="bg-earth-50 rounded-lg p-6">
-                <h3 className="font-bold text-earth-800 mb-2">Full Day Rates</h3>
-                <p className="text-gray-600">$200 per person for a full day of fishing. No half day options available.</p>
+              <div className="bg-clay-50 rounded-lg p-6">
+                <h3 className="font-bold text-clay-800 mb-2">Full Day Rates</h3>
+                <p className="text-bark-500">$200 per person for a full day of fishing. No half day options available.</p>
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default async function BassFishingPage() {
       </section>
 
       {/* Fishing Spots */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-bark-100">
         <div className="container-custom">
           <SectionHeader
             title="Where to Fish"
@@ -141,16 +141,16 @@ export default async function BassFishingPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {fishingSpots.map((spot) => (
-              <div key={spot.lake} className="bg-white rounded-xl p-6 shadow-md">
+              <div key={spot.lake} className="bg-white rounded-lg p-6 shadow-md">
                 <div className="flex justify-between items-start mb-2">
-                  <div className="text-sm text-forest-600 font-semibold">{spot.size}</div>
+                  <div className="text-sm text-pine-600 font-semibold">{spot.size}</div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{spot.lake}</h3>
-                <div className="text-sm text-primary-700 font-medium mb-3">{spot.species}</div>
-                <p className="text-gray-600 mb-4">{spot.description}</p>
-                <div className="bg-gray-50 rounded-lg p-3">
-                  <span className="text-sm text-gray-500">Best for: </span>
-                  <span className="text-sm font-medium text-gray-700">{spot.best_for}</span>
+                <h3 className="text-xl font-bold text-bark-800 mb-1">{spot.lake}</h3>
+                <div className="text-sm text-pine-700 font-medium mb-3">{spot.species}</div>
+                <p className="text-bark-500 mb-4">{spot.description}</p>
+                <div className="bg-bark-100 rounded-lg p-3">
+                  <span className="text-sm text-bark-400">Best for: </span>
+                  <span className="text-sm font-medium text-bark-600">{spot.best_for}</span>
                 </div>
               </div>
             ))}
@@ -170,8 +170,8 @@ export default async function BassFishingPage() {
             {tips.map((tip) => (
               <div key={tip.title} className="text-center">
                 <div className="text-4xl mb-4">{tip.icon}</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{tip.title}</h3>
-                <p className="text-gray-600 text-sm">{tip.description}</p>
+                <h3 className="text-lg font-bold text-bark-800 mb-2">{tip.title}</h3>
+                <p className="text-bark-500 text-sm">{tip.description}</p>
               </div>
             ))}
           </div>
@@ -179,25 +179,25 @@ export default async function BassFishingPage() {
       </section>
 
       {/* Pricing */}
-      <section className="py-12 bg-forest-700 text-white">
+      <section className="py-12 bg-pine-700 text-white">
         <div className="container-custom text-center">
           <h2 className="text-2xl font-bold mb-4">Fishing Rates</h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-6">
-            <div className="bg-white/10 rounded-xl p-6">
+            <div className="bg-white/10 rounded-lg p-6">
               <div className="text-3xl font-bold">${fishingRate}</div>
-              <div className="text-forest-200">per person / full day</div>
-              <div className="text-sm text-forest-300 mt-2">No half day options</div>
+              <div className="text-pine-200">per person / full day</div>
+              <div className="text-sm text-pine-300 mt-2">No half day options</div>
             </div>
-            <div className="bg-white/10 rounded-xl p-6">
+            <div className="bg-white/10 rounded-lg p-6">
               <div className="text-3xl font-bold">${lodgingRate}</div>
-              <div className="text-forest-200">per person / night</div>
-              <div className="text-sm text-forest-300 mt-2">Camp house lodging</div>
+              <div className="text-pine-200">per person / night</div>
+              <div className="text-sm text-pine-300 mt-2">Camp house lodging</div>
             </div>
           </div>
-          <p className="text-forest-100 max-w-2xl mx-auto mb-4">
+          <p className="text-pine-100 max-w-2xl mx-auto mb-4">
             Access to all three private lakes. Trophy bass from 10-15 lbs. Bring your gear and experience some of Alabama&apos;s best bass fishing.
           </p>
-          <p className="text-forest-200 text-sm">
+          <p className="text-pine-200 text-sm">
             Meals not included. Full kitchens available, outdoor cookers & grills furnished.
           </p>
         </div>
@@ -213,7 +213,7 @@ export default async function BassFishingPage() {
             />
             <ScrollableGallery images={galleryImages} />
             <div className="text-center mt-8">
-              <Link href="/gallery" className="inline-flex items-center text-forest-700 font-semibold hover:text-forest-800">
+              <Link href="/gallery" className="inline-flex items-center text-pine-700 font-semibold hover:text-pine-800">
                 View Full Photo Gallery
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -225,17 +225,17 @@ export default async function BassFishingPage() {
       )}
 
       {/* CTA */}
-      <section className="py-16 bg-primary-700 text-white">
+      <section className="py-16 bg-pine-800 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-bold mb-4 text-white">Ready to Cast Your Line?</h2>
-          <p className="text-xl text-primary-100 mb-8">
+          <p className="text-xl text-pine-100 mb-8">
             Book your stay and enjoy unlimited fishing on three private lakes.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="btn bg-white text-primary-700 hover:bg-gray-100">
+            <Link href="/contact" className="btn bg-white text-pine-700 hover:bg-bark-100">
               Book Your Stay
             </Link>
-            <Link href="/the-lakes" className="btn border-2 border-white text-white hover:bg-white hover:text-primary-700">
+            <Link href="/the-lakes" className="btn border-2 border-white text-white hover:bg-white hover:text-pine-700">
               Learn About The Lakes
             </Link>
           </div>

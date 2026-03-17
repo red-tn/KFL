@@ -8,11 +8,11 @@
   }
 
   body {
-    @apply font-sans text-gray-700 antialiased;
+    @apply font-sans text-bark-600 antialiased bg-bark-50;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display text-gray-900;
+    @apply font-display text-bark-800;
   }
 }
 
@@ -22,19 +22,19 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center px-7 py-3.5 rounded-lg font-semibold transition-all duration-300 tracking-wide;
+    @apply inline-flex items-center justify-center px-7 py-3.5 rounded-md font-semibold transition-all duration-300 tracking-wide;
   }
 
   .btn-primary {
-    @apply btn bg-forest-700 text-white hover:bg-forest-800 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+    @apply btn bg-pine-600 text-white border border-pine-700 hover:bg-pine-700 shadow-md hover:shadow-lg;
   }
 
   .btn-secondary {
-    @apply btn bg-earth-600 text-white hover:bg-earth-700 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+    @apply btn bg-clay-600 text-white border border-clay-700 hover:bg-clay-700 shadow-md hover:shadow-lg;
   }
 
   .btn-outline {
-    @apply btn border-2 border-forest-700 text-forest-700 hover:bg-forest-700 hover:text-white;
+    @apply btn border-2 border-pine-700 text-pine-700 hover:bg-pine-700 hover:text-white;
   }
 
   .section-padding {
@@ -42,7 +42,7 @@
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-xl;
+    @apply bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 border border-bark-200 hover:shadow-xl;
   }
 
   .card-image {
@@ -56,7 +56,7 @@
   /* Textured section backgrounds */
   .bg-texture-light {
     background-color: #faf8f5;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4c9b8' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c4b9aa' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
 
   .bg-texture-dark {
@@ -68,9 +68,9 @@
     height: 4px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(30, 74, 50, 0.15) 20%,
-      rgba(30, 74, 50, 0.25) 50%,
-      rgba(30, 74, 50, 0.15) 80%,
+      rgba(30, 68, 51, 0.15) 20%,
+      rgba(30, 68, 51, 0.25) 50%,
+      rgba(30, 68, 51, 0.15) 80%,
       transparent 100%
     );
   }

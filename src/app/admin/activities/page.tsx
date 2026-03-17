@@ -99,7 +99,7 @@ export default function ActivitiesPage() {
                 <td className="px-6 py-4 text-right">
                   <button
                     onClick={() => setEditing(activity)}
-                    className="text-forest-700 hover:text-forest-800 font-medium"
+                    className="text-pine-700 hover:text-pine-800 font-medium"
                   >
                     Edit
                   </button>
@@ -124,7 +124,7 @@ export default function ActivitiesPage() {
                   type="text"
                   value={editing.name}
                   onChange={(e) => setEditing({ ...editing, name: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                 />
               </div>
               <div>
@@ -133,7 +133,7 @@ export default function ActivitiesPage() {
                   value={editing.short_description || ''}
                   onChange={(e) => setEditing({ ...editing, short_description: e.target.value })}
                   rows={2}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                 />
               </div>
               <div>
@@ -142,7 +142,7 @@ export default function ActivitiesPage() {
                   value={editing.full_description || ''}
                   onChange={(e) => setEditing({ ...editing, full_description: e.target.value })}
                   rows={4}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -152,7 +152,7 @@ export default function ActivitiesPage() {
                     type="number"
                     value={editing.daily_rate || 0}
                     onChange={(e) => setEditing({ ...editing, daily_rate: parseInt(e.target.value) })}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                   />
                 </div>
                 <div>
@@ -161,7 +161,7 @@ export default function ActivitiesPage() {
                     type="text"
                     value={editing.season_info || ''}
                     onChange={(e) => setEditing({ ...editing, season_info: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                     placeholder="e.g., Year-round, Nov-Jan"
                   />
                 </div>
@@ -188,7 +188,7 @@ export default function ActivitiesPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-6 py-2 bg-forest-700 text-white rounded-lg hover:bg-forest-800 disabled:opacity-50"
+                className="px-6 py-2 bg-pine-700 text-white rounded-lg hover:bg-pine-800 disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>

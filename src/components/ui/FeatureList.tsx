@@ -44,14 +44,14 @@ export default function FeatureList({ features, columns = 2 }: FeatureListProps)
     <div className={`grid ${gridClass} gap-6`}>
       {features.map((feature, index) => (
         <div key={index} className="flex items-start space-x-4">
-          <div className="flex-shrink-0 w-10 h-10 bg-forest-100 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-forest-700" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+          <div className="flex-shrink-0 w-10 h-10 bg-pine-100 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-pine-700" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
               {icons[feature.icon || 'check']}
             </svg>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 mb-1">{feature.title}</h3>
-            <p className="text-gray-600 text-sm">{feature.description}</p>
+            <h3 className="font-semibold text-bark-800 mb-1">{feature.title}</h3>
+            <p className="text-bark-500 text-sm">{feature.description}</p>
           </div>
         </div>
       ))}

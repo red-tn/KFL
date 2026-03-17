@@ -94,7 +94,7 @@ export default function PagesPage() {
                 <td className="px-6 py-4 text-right">
                   <button
                     onClick={() => setEditing(page)}
-                    className="text-forest-700 hover:text-forest-800 font-medium"
+                    className="text-pine-700 hover:text-pine-800 font-medium"
                   >
                     Edit
                   </button>
@@ -119,7 +119,7 @@ export default function PagesPage() {
                   type="text"
                   value={editing.hero_title || ''}
                   onChange={(e) => setEditing({ ...editing, hero_title: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                 />
               </div>
               <div>
@@ -128,7 +128,7 @@ export default function PagesPage() {
                   value={editing.hero_subtitle || ''}
                   onChange={(e) => setEditing({ ...editing, hero_subtitle: e.target.value })}
                   rows={3}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                 />
               </div>
               <div>
@@ -137,7 +137,7 @@ export default function PagesPage() {
                   type="text"
                   value={editing.hero_video_url || ''}
                   onChange={(e) => setEditing({ ...editing, hero_video_url: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                   placeholder="/images/lake-overview.mp4 or leave empty for image only"
                 />
                 <p className="text-xs text-gray-500 mt-1">Video file path (e.g., /images/lake-overview.mp4). Leave empty to use hero images from Image Manager.</p>
@@ -148,7 +148,7 @@ export default function PagesPage() {
                   type="text"
                   value={editing.seo_title || ''}
                   onChange={(e) => setEditing({ ...editing, seo_title: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                   placeholder="Page title for search engines"
                 />
               </div>
@@ -158,7 +158,7 @@ export default function PagesPage() {
                   value={editing.seo_description || ''}
                   onChange={(e) => setEditing({ ...editing, seo_description: e.target.value })}
                   rows={2}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500"
                   placeholder="Description for search engines"
                 />
               </div>
@@ -173,7 +173,7 @@ export default function PagesPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-6 py-2 bg-forest-700 text-white rounded-lg hover:bg-forest-800 disabled:opacity-50"
+                className="px-6 py-2 bg-pine-700 text-white rounded-lg hover:bg-pine-800 disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>

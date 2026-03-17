@@ -30,7 +30,7 @@ export default function Header() {
 
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white shadow-md'
+      scrolled ? 'bg-bark-50/95 backdrop-blur-md shadow-lg' : 'bg-bark-50 shadow-md'
     }`}>
       <nav className="container-custom">
         <div className={`flex items-center justify-between transition-all duration-300 ${
@@ -54,10 +54,10 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   pathname === item.href
-                    ? 'bg-forest-100 text-forest-800'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-forest-700'
+                    ? 'bg-pine-100 text-pine-800'
+                    : 'text-bark-600 hover:bg-bark-100 hover:text-pine-700'
                 }`}
               >
                 {item.name}
@@ -67,7 +67,7 @@ export default function Header() {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Link href="/contact" className="btn-primary text-sm">
+            <Link href="/contact" className="btn-secondary text-sm">
               Book Now
             </Link>
           </div>
@@ -75,7 +75,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-md text-bark-600 hover:bg-bark-100"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span className="sr-only">Open menu</span>
@@ -95,16 +95,16 @@ export default function Header() {
         <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           mobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}>
-          <div className="py-4 border-t">
+          <div className="py-4 border-t border-bark-200">
             <div className="flex flex-col space-y-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-4 py-3 rounded-lg text-base font-medium ${
+                  className={`px-4 py-3 rounded-md text-base font-medium ${
                     pathname === item.href
-                      ? 'bg-forest-100 text-forest-800'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      ? 'bg-pine-100 text-pine-800'
+                      : 'text-bark-600 hover:bg-bark-100'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -113,7 +113,7 @@ export default function Header() {
               ))}
               <Link
                 href="/contact"
-                className="btn-primary text-center mt-4"
+                className="btn-secondary text-center mt-4"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Book Now

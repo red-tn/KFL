@@ -86,7 +86,7 @@ export default function ResetPassword() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500 focus:border-pine-500"
                 placeholder="••••••••"
               />
             </div>
@@ -102,7 +102,7 @@ export default function ResetPassword() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-forest-500 focus:border-forest-500"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pine-500 focus:border-pine-500"
                 placeholder="••••••••"
               />
             </div>
@@ -110,7 +110,7 @@ export default function ResetPassword() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-forest-700 text-white py-3 rounded-lg font-semibold hover:bg-forest-800 transition-colors disabled:opacity-50"
+              className="w-full bg-pine-700 text-white py-3 rounded-lg font-semibold hover:bg-pine-800 transition-colors disabled:opacity-50"
             >
               {loading ? 'Updating...' : 'Update Password'}
             </button>

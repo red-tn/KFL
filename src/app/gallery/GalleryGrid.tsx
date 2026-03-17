@@ -66,7 +66,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
     return (
       <section className="section-padding bg-texture-light">
         <div className="container-custom text-center">
-          <p className="text-gray-500">No images in gallery yet. Add images in the admin panel.</p>
+          <p className="text-bark-400">No images in gallery yet. Add images in the admin panel.</p>
         </div>
       </section>
     )
@@ -82,7 +82,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
               <button
                 key={`${image.src}-${index}`}
                 onClick={() => setSelectedIndex(index)}
-                className="group relative w-full rounded-lg overflow-hidden bg-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-forest-500 break-inside-avoid block"
+                className="group relative w-full rounded-lg overflow-hidden bg-bark-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-pine-500 break-inside-avoid block"
               >
                 <div className={getAspectClass(index) + ' relative'}>
                   <ImageSkeleton
@@ -101,7 +101,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             ))}
           </div>
 
-          <div className="text-center mt-10 text-sm text-gray-400 tracking-wide uppercase">
+          <div className="text-center mt-10 text-sm text-bark-300 tracking-wide uppercase">
             {images.length} photos
           </div>
         </div>

@@ -46,42 +46,42 @@ export default async function GalleryPage() {
       {/* Activity Links */}
       <section className="section-padding">
         <div className="container-custom">
-          <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
+          <h2 className="text-2xl font-bold text-center text-bark-800 mb-8">
             Explore Our Activities
           </h2>
           <div className="grid md:grid-cols-4 gap-6">
-            <Link href="/the-lakes" className="group text-center p-6 bg-primary-50 rounded-xl hover:bg-primary-100 transition-colors">
+            <Link href="/the-lakes" className="group text-center p-6 bg-pine-50 rounded-lg hover:bg-pine-100 transition-colors">
               <div className="text-4xl mb-3">🎣</div>
-              <h3 className="font-bold text-gray-900 group-hover:text-primary-700">The Lakes</h3>
-              <p className="text-sm text-gray-600 mt-1">Three private lakes</p>
+              <h3 className="font-bold text-bark-800 group-hover:text-pine-700">The Lakes</h3>
+              <p className="text-sm text-bark-500 mt-1">Three private lakes</p>
             </Link>
-            <Link href="/deer-hunting" className="group text-center p-6 bg-forest-50 rounded-xl hover:bg-forest-100 transition-colors">
+            <Link href="/deer-hunting" className="group text-center p-6 bg-pine-50 rounded-lg hover:bg-pine-100 transition-colors">
               <div className="text-4xl mb-3">🦌</div>
-              <h3 className="font-bold text-gray-900 group-hover:text-forest-700">Deer Hunting</h3>
-              <p className="text-sm text-gray-600 mt-1">World-class hunting</p>
+              <h3 className="font-bold text-bark-800 group-hover:text-pine-700">Deer Hunting</h3>
+              <p className="text-sm text-bark-500 mt-1">World-class hunting</p>
             </Link>
-            <Link href="/turkey-hunting" className="group text-center p-6 bg-earth-50 rounded-xl hover:bg-earth-100 transition-colors">
+            <Link href="/turkey-hunting" className="group text-center p-6 bg-clay-50 rounded-lg hover:bg-clay-100 transition-colors">
               <div className="text-4xl mb-3">🦃</div>
-              <h3 className="font-bold text-gray-900 group-hover:text-earth-700">Turkey Hunting</h3>
-              <p className="text-sm text-gray-600 mt-1">Spring season</p>
+              <h3 className="font-bold text-bark-800 group-hover:text-clay-700">Turkey Hunting</h3>
+              <p className="text-sm text-bark-500 mt-1">Spring season</p>
             </Link>
-            <Link href="/bass-fishing" className="group text-center p-6 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors">
+            <Link href="/bass-fishing" className="group text-center p-6 bg-bark-100 rounded-lg hover:bg-bark-200 transition-colors">
               <div className="text-4xl mb-3">🐟</div>
-              <h3 className="font-bold text-gray-900">Bass Fishing</h3>
-              <p className="text-sm text-gray-600 mt-1">Trophy bass fishing</p>
+              <h3 className="font-bold text-bark-800">Bass Fishing</h3>
+              <p className="text-sm text-bark-500 mt-1">Trophy bass fishing</p>
             </Link>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-forest-700 text-white">
+      <section className="py-16 bg-pine-700 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-bold mb-4 text-white">Ready to Experience It Yourself?</h2>
-          <p className="text-xl text-forest-100 mb-8">
+          <p className="text-xl text-pine-100 mb-8">
             Book your hunting or fishing adventure today.
           </p>
-          <Link href="/contact" className="btn bg-white text-forest-700 hover:bg-gray-100">
+          <Link href="/contact" className="btn bg-white text-pine-700 hover:bg-bark-100">
             Contact Us
           </Link>
         </div>

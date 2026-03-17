@@ -68,7 +68,7 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
           className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 -translate-x-1/2"
           aria-label="Scroll left"
         >
-          <svg className="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+          <svg className="w-5 h-5 text-bark-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
         </button>
@@ -85,7 +85,7 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
               className="flex-shrink-0 w-80 cursor-pointer group/item"
               onClick={() => setSelectedIndex(index)}
             >
-              <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-md">
+              <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-md">
                 <Image
                   src={image.src}
                   alt={image.alt}
@@ -96,7 +96,7 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
                 <div className="absolute inset-0 bg-black/0 group-hover/item:bg-black/20 transition-colors duration-300" />
               </div>
               {image.caption && (
-                <p className="mt-2 text-sm text-gray-600 text-center">{image.caption}</p>
+                <p className="mt-2 text-sm text-bark-500 text-center">{image.caption}</p>
               )}
             </div>
           ))}
@@ -108,7 +108,7 @@ export default function ScrollableGallery({ images, title }: ScrollableGalleryPr
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 translate-x-1/2"
           aria-label="Scroll right"
         >
-          <svg className="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+          <svg className="w-5 h-5 text-bark-600" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
           </svg>
         </button>
