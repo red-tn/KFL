@@ -20,7 +20,7 @@ export default function ParallaxHero({ children }: { children: React.ReactNode }
   }, [])
 
   return (
-    <div ref={ref} className="relative overflow-hidden">
+    <div ref={ref} className="absolute inset-0 overflow-hidden">
       <div
         className="absolute inset-0 will-change-transform"
         style={{ transform: `translateY(${offset}px) scale(1.1)` }}
