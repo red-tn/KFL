@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 
 interface AdUnitProps {
-  slot: string
+  slot?: string
   format?: 'auto' | 'fluid' | 'rectangle' | 'vertical' | 'horizontal'
   responsive?: boolean
   className?: string
@@ -21,11 +21,13 @@ export default function AdUnit({
   responsive = true,
   className = ''
 }: AdUnitProps) {
-  const adRef = useRef<HTMLDivElement>(null)
+  const adRef = useRef<HTMLModElement>(null)
   const isLoaded = useRef(false)
 
+  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
+
   useEffect(() => {
-    if (isLoaded.current) return
+    if (isLoaded.current || !adsenseId) return
 
     try {
       if (typeof window !== 'undefined' && adRef.current) {
@@ -35,29 +37,21 @@ export default function AdUnit({
     } catch (error) {
       console.error('AdSense error:', error)
     }
-  }, [])
-
-  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
+  }, [adsenseId])
 
   if (!adsenseId) {
-    // Placeholder for development
-    return (
-      <div className={`bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm ${className}`} style={{ minHeight: '90px' }}>
-        Ad Space
-      </div>
-    )
+    return null
   }
 
   return (
-    <div ref={adRef} className={className}>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client={adsenseId}
-        data-ad-slot={slot}
-        data-ad-format={format}
-        data-full-width-responsive={responsive ? 'true' : 'false'}
-      />
-    </div>
+    <ins
+      ref={adRef}
+      className={`adsbygoogle ${className}`}
+      style={{ display: 'block' }}
+      data-ad-client={adsenseId}
+      {...(slot ? { 'data-ad-slot': slot } : {})}
+      data-ad-format={format}
+      data-full-width-responsive={responsive ? 'true' : 'false'}
+    />
   )
 }

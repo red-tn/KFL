@@ -32,8 +32,8 @@ export default function RootLayout({
     <html lang="en" className={openSans.variable}>
       <body className="flex flex-col min-h-screen">
         <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8003141165916453"
-          strategy="beforeInteractive"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-8003141165916453'}`}
+          strategy="afterInteractive"
           crossOrigin="anonymous"
         />
         <Header />

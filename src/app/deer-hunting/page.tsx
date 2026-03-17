@@ -6,6 +6,7 @@ import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import PricingCard from '@/components/ui/PricingCard'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
+import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getPageContent, getGalleryImages, getOverviewImage } from '@/lib/data'
 
@@ -152,6 +153,8 @@ export default async function DeerHuntingPage() {
           </div>
         </div>
       </section>
+
+      <AdBanner slot="deer-mid" position="middle" />
 
       {/* Features */}
       <section className="section-padding">
