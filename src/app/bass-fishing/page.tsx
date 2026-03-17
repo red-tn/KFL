@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Hero from '@/components/ui/Hero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollableGallery from '@/components/ui/ScrollableGallery'
-import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getPageContent, getGalleryImages, getOverviewImage } from '@/lib/data'
 
@@ -158,8 +157,6 @@ export default async function BassFishingPage() {
           </div>
         </div>
       </section>
-
-      <AdBanner slot="fishing-mid" position="middle" />
 
       {/* Tips */}
       <section className="section-padding">

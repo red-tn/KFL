@@ -6,7 +6,6 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import ActivityCard from '@/components/ui/ActivityCard'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import AnimatedPrice from '@/components/ui/AnimatedPrice'
-import AdBanner from '@/components/ads/AdBanner'
 import Link from 'next/link'
 import { getSiteSettings, getFeaturedActivities, getPageContent, getActivityCardImages } from '@/lib/data'
 
@@ -206,8 +205,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      <AdBanner slot="home-mid" position="middle" />
 
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-forest-900 bg-texture-dark text-white">

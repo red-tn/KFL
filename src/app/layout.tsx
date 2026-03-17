@@ -35,12 +35,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${sourceSans.variable} ${playfair.variable}`}>
-      <body className="flex flex-col min-h-screen">
+      <head>
         <Script
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-8003141165916453'}`}
           strategy="afterInteractive"
           crossOrigin="anonymous"
         />
+      </head>
+      <body className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
           {children}
